@@ -28,9 +28,11 @@ public:
 	void set_border_color(float r, float g, float b);
 	void set_scale(float x_scale, float y_scale, float z_scale = 1.f);
 
+	// must set vertices AND primitives before any draw call
 	void set_vertices(const std::vector<Vector3>& vertices);
 	void set_primitives(const std::vector<Primitive*>& new_primitives);
 
+	// must also load buffers to OpenGL before draw calls
     void UpdateGLBuffer() override;
     void Draw(const Renderer& renderer, const Vector3& position) override;
 	
