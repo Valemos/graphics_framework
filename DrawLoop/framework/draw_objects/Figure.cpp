@@ -97,16 +97,16 @@ void Figure::Draw(const Renderer& renderer, const Vector3& position)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id_);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_.size() * sizeof(unsigned), index_buffer_.data(), GL_STATIC_DRAW);
 
-	glLineWidth(5.f);
-	int buffer_offset = 0;
+	glLineWidth(1.f);
+	unsigned first_index_position = 0;
 	for (auto* primitive : primitives)
 	{
 		glUniform4fv(color_loc, 1, value_ptr(fill_color));
-		primitive->Draw((void*)buffer_offset);
+		primitive->Draw((void*)first_index_position);
 
 		glUniform4fv(color_loc, 1, value_ptr(border_color));
-		primitive->DrawBorder((void*)buffer_offset);
+		primitive->DrawBorder((void*)first_index_position);
 
-		buffer_offset += primitive->get_indices().size();
+		first_index_position += primitive->get_indices().size() * sizeof(GLuint);
 	}
 }

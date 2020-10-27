@@ -32,12 +32,14 @@ public:
 			p0 = { -0.5f, -0.5f },
 			p1 = { 0.5f, -0.5f },
 			p2 = { 0.5f, 0.5f },
-			p3 = { 1.f, 0.5f };
+			p3 = { 1.f, 0.5f },
+			p4 = { -1.f, 1.f };
 
 		
-		task_figure_->set_vertices({ p0, p1, p2, p3 });
+		task_figure_->set_vertices({ p0, p1, p2, p3, p4 });
 		task_figure_->set_primitives({
-			new Quad({ 0, 2, 3, 1 })
+			new Quad({ 0, 2, 3, 1 }),
+			new Triangle({ 0, 2, 4 })
 		});
 		task_figure_->UpdateGLBuffer();
 		
