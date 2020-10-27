@@ -31,13 +31,15 @@ public:
 		const Vector3
 			p0 = { -0.5f, -0.5f },
 			p1 = { 0.5f, -0.5f },
-			p2 = { 0.f,  0.5f },
-			p3 = { 1.f, 1.f };
+			p2 = { 0.5f, 0.5f },
+			p3 = { 1.f, 0.5f };
+
 		
 		task_figure_->set_vertices({ p0, p1, p2, p3 });
 		task_figure_->set_primitives({
-			new Quad({ 0, 1, 2, 3 })
+			new Quad({ 0, 2, 3, 1 })
 		});
+		task_figure_->UpdateGLBuffer();
 		
 		// background color
 		glClearColor(1.0, 116 / 255.f, 0.0, 1.0);
@@ -49,7 +51,6 @@ public:
 		// Draw test object
 		glClear(GL_COLOR_BUFFER_BIT);
 		task_figure_->Draw(ProgramInputHandler::renderer, Vector3());
-
 		return 0;
 	}
 

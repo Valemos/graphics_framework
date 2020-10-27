@@ -1,17 +1,2 @@
-﻿  Vector3.cpp
-  ProgramInputHandler.cpp
-  Figure.cpp
-  Primitive.cpp
-  Quad.cpp
-  Triangle.cpp
-  main.cpp
-  Generating Code...
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-main.obj : error LNK2019: unresolved external symbol "public: __thiscall Figure::Figure(void)" (??0Figure@@QAE@XZ) referenced in function "public: __thiscall TestProgram::TestProgram(float)" (??0TestProgram@@QAE@M@Z)
-main.obj : error LNK2019: unresolved external symbol "public: void __thiscall Figure::set_fill_color(float,float,float)" (?set_fill_color@Figure@@QAEXMMM@Z) referenced in function "public: virtual int __thiscall TestProgram::Init(class ProgramInputHandler *)" (?Init@TestProgram@@UAEHPAVProgramInputHandler@@@Z)
-main.obj : error LNK2019: unresolved external symbol "public: void __thiscall Figure::set_border_color(float,float,float)" (?set_border_color@Figure@@QAEXMMM@Z) referenced in function "public: virtual int __thiscall TestProgram::Init(class ProgramInputHandler *)" (?Init@TestProgram@@UAEHPAVProgramInputHandler@@@Z)
-main.obj : error LNK2019: unresolved external symbol "public: void __thiscall Figure::set_scale(float,float,float)" (?set_scale@Figure@@QAEXMMM@Z) referenced in function "public: virtual int __thiscall TestProgram::Init(class ProgramInputHandler *)" (?Init@TestProgram@@UAEHPAVProgramInputHandler@@@Z)
-main.obj : error LNK2019: unresolved external symbol "public: void __thiscall Figure::set_vertices(class std::vector<class Vector3,class std::allocator<class Vector3> > const &)" (?set_vertices@Figure@@QAEXABV?$vector@VVector3@@V?$allocator@VVector3@@@std@@@std@@@Z) referenced in function "public: virtual int __thiscall TestProgram::Init(class ProgramInputHandler *)" (?Init@TestProgram@@UAEHPAVProgramInputHandler@@@Z)
-main.obj : error LNK2019: unresolved external symbol "public: void __thiscall Figure::set_primitives(class std::vector<class Primitive *,class std::allocator<class Primitive *> > const &)" (?set_primitives@Figure@@QAEXABV?$vector@PAVPrimitive@@V?$allocator@PAVPrimitive@@@std@@@std@@@Z) referenced in function "public: virtual int __thiscall TestProgram::Init(class ProgramInputHandler *)" (?Init@TestProgram@@UAEHPAVProgramInputHandler@@@Z)
-D:\coding\c_c++\SimpleGraphicalFramework\Debug\DrawLoop.exe : fatal error LNK1120: 6 unresolved externals
+﻿  main.cpp
+  DrawLoop.vcxproj -> D:\coding\c_c++\SimpleGraphicalFramework\Debug\DrawLoop.exe

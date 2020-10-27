@@ -61,53 +61,50 @@ void Figure::UpdateGLBuffer()
 	glGenVertexArrays(1, &vertex_array_object_id_);
 	glBindVertexArray(vertex_array_object_id_);
 
-	glGenBuffers(1, &vertex_buffer_id_);
-	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
-	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.size(), vertex_buffer_.data(), GL_STATIC_DRAW);
-	
 	glGenBuffers(1, &index_buffer_id_);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id_);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_.size(), index_buffer_.data(), GL_STATIC_DRAW);
 
+	glGenBuffers(1, &vertex_buffer_id_);
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.size(), vertex_buffer_.data(), GL_STATIC_DRAW);
+	
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 }
 
 void Figure::Draw(const Renderer& renderer, const Vector3& position)
 {
-	const unsigned int shaderProgram = renderer.GetShaderProgram();
-	glUseProgram(shaderProgram);
+	const unsigned int shader_program = renderer.GetShaderProgram();
+	glUseProgram(shader_program);
+	static const int transform_loc = glGetUniformLocation(shader_program, "transform");
+	static const int color_loc = glGetUniformLocation(shader_program, "fillColor");
 
 	// calculate transform matrix
 	glm::mat4 transform = glm::mat4(1.0f);
-
 	transform = translate(transform, glm::vec3(position.x, position.y, position.z));
 	transform = scale(transform, renderer.GetScaleForGL());
 	transform = scale(transform, figure_scale);
+	glUniformMatrix4fv(transform_loc, 1, GL_FALSE, value_ptr(transform));
+
 	
-	// get variable locations from shader
-	static const int transformLoc = glGetUniformLocation(shaderProgram, "transform");
-	static const int colorLoc = glGetUniformLocation(shaderProgram, "fillColor");
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, value_ptr(transform));
-
-
 	glBindVertexArray(vertex_array_object_id_);
 	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
-	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.size(), vertex_buffer_.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.size() * sizeof(float), vertex_buffer_.data(), GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id_);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_.size(), index_buffer_.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_.size() * sizeof(unsigned), index_buffer_.data(), GL_STATIC_DRAW);
 
-	
+	glLineWidth(5.f);
 	int buffer_offset = 0;
 	for (auto* primitive : primitives)
 	{
-		glUniform4fv(colorLoc, 1, glm::value_ptr(fill_color));
+		glUniform4fv(color_loc, 1, value_ptr(fill_color));
 		primitive->Draw((void*)buffer_offset);
 
-		glUniform4fv(colorLoc, 1, glm::value_ptr(border_color));
+		glUniform4fv(color_loc, 1, value_ptr(border_color));
 		primitive->DrawBorder((void*)buffer_offset);
 
 		buffer_offset += primitive->get_indices().size();
