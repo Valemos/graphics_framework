@@ -61,14 +61,18 @@ void Drawable::set_primitives(const std::vector<Primitive*>& new_primitives)
 void Drawable::InitGLBuffer()
 {
 	glGenVertexArrays(1, &vertex_array_object_id_);
+	glBindVertexArray(vertex_array_object_id_);
+
 	glGenBuffers(1, &index_buffer_id_);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id_);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_.size() * sizeof(unsigned), 0, GL_STATIC_DRAW);
+
 	glGenBuffers(1, &vertex_buffer_id_);
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.size() * sizeof(float), 0, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	
-	LoadGLBuffers();
-	
 }
 
 void Drawable::LoadGLBuffers()
@@ -76,9 +80,9 @@ void Drawable::LoadGLBuffers()
 	glBindVertexArray(vertex_array_object_id_);
 	glEnableVertexAttribArray(0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
-	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.size() * sizeof(float), vertex_buffer_.data(), GL_STATIC_DRAW);
-	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id_);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_.size() * sizeof(unsigned), index_buffer_.data(), GL_STATIC_DRAW);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.size() * sizeof(float), vertex_buffer_.data(), GL_STATIC_DRAW);
 }

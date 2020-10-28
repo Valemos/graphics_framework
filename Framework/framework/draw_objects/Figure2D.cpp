@@ -40,7 +40,7 @@ void Figure2D::Draw(const Renderer& renderer, const Vector3& position)
 
 	LoadGLBuffers();
 	
-	glLineWidth(10.f);
+	glLineWidth(2.f);
 	unsigned first_index_position = 0;
 	for (auto* primitive : primitives)
 	{
