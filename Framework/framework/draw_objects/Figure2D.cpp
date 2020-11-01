@@ -24,7 +24,7 @@ void Figure2D::set_scale(float x_scale, float y_scale, float z_scale)
 	figure_scale = glm::vec3(x_scale, y_scale, z_scale);
 }
 
-void Figure2D::Draw(Renderer& renderer, const Vector3& position)
+void Figure2D::Draw(Renderer& renderer)
 {
 	const unsigned int shader_program = renderer.get_shader_program();
 	glUseProgram(shader_program);
@@ -33,7 +33,7 @@ void Figure2D::Draw(Renderer& renderer, const Vector3& position)
 
 	// calculate transform matrix
 	glm::mat4 transform = glm::mat4(1.0f);
-	transform = translate(transform, glm::vec3(position.x, position.y, position.z));
+	transform = translate(transform, glm::vec3(object_position_.x, object_position_.y, object_position_.z));
 	transform = scale(transform, figure_scale);
 	glUniformMatrix4fv(transform_loc, 1, GL_FALSE, value_ptr(transform));
 

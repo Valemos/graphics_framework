@@ -1,16 +1,19 @@
 #ifndef INTERFACE_DRAWABLE
 #define INTERFACE_DRAWABLE
+#include "Vector3.h"
 
 class Renderer;
-class Vector3;
 class Primitive;
 
 #include <vector>
+#include "Vector3.h"
 
 class Drawable
 {
 	
 protected:
+	Vector3 object_position_;
+	
 	unsigned int vertex_buffer_id_ = 0;
 	std::vector<float> vertex_buffer_;
 
@@ -32,6 +35,8 @@ public:
 	void set_vertices(const std::vector<Vector3>& vertices);
 	void set_primitives(const std::vector<Primitive*>& new_primitives);
 
+	Vector3& get_position();
+	
 	// generates GL buffers and sets up all attributes
 	virtual void InitGLBuffer();
 
@@ -39,7 +44,7 @@ public:
 	virtual void LoadGLBuffers();
 
 	// Draw function can be different in other implementations
-	virtual void Draw(Renderer& renderer, const Vector3& position) = 0;
+	virtual void Draw(Renderer& renderer) = 0;
 };
 
 #endif // !INTERFACE_DRAWABLE

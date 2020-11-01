@@ -53,28 +53,33 @@ Vector3 Vector3::Direction(const Vector3& other, float distance_sqr) const
 
 	const float distance = sqrt(distance_sqr);
 	return Vector3(
-		(this->x - other.x) / distance, 
-		(this->y - other.y) / distance, 
-		(this->z - other.z) / distance);
+		(x - other.x) / distance, 
+		(y - other.y) / distance, 
+		(z - other.z) / distance);
 }
 
 float Vector3::ScalarMultiply(const Vector3& other) const
 {
 	// scalar multiplication of vectors
-	return this->x * other.x + this->y * other.y + this->z * other.z;
+	return x * other.x + y * other.y + z * other.z;
+}
+
+Vector3 Vector3::Cross(const Vector3& other) const
+{
+	return { y * other.z - z * other.y , z * other.x - x * other.z, x * other.y - y * other.x};
 }
 
 float Vector3::Length() const
 {
-	return this->x * this->x + this->y * this->y + this->z * this->z;
+	return x * x + y * y + z * z;
 }
 
 void Vector3::Normalize()
 {
 	const float len = Length();
-	this->x /= len;
-	this->y /= len;
-	this->z /= len;
+	x /= len;
+	y /= len;
+	z /= len;
 }
 
 Vector3 Vector3::Normal() const
@@ -83,59 +88,83 @@ Vector3 Vector3::Normal() const
 	if (len > VECTOR_FLOAT_ACCURACY)
 	{
 		return Vector3(
-			this->x / len,
-			this->y / len,
-			this->z / len);
+			x / len,
+			y / len,
+			z / len);
 	}
 	return Vector3();
 }
 
 Vector3 Vector3::Scale(const Vector3& other) const
 {
-	return {this->x * other.x,
-			this->y * other.y,
-			this->z * other.z };
+	return {x * other.x,
+			y * other.y,
+			z * other.z };
 }
 
 Vector3 Vector3::ScaleInv(const Vector3& other) const
 {
-	return { this->x / other.x,
-			this->y / other.y,
-			this->z / other.z };
+	return { x / other.x,
+			y / other.y,
+			z / other.z };
+}
+
+Vector3& Vector3::operator=(const glm::vec3& other)
+{
+	x = other.x;
+	y = other.y;
+	z = other.z;
+	return *this;
 }
 
 Vector3 Vector3::operator+(const Vector3& other) const
 {
-	return Vector3(this->x + other.x, this->x + other.y, this->z + other.z);
+	return Vector3(x + other.x, x + other.y, z + other.z);
 }
 
 Vector3 Vector3::operator-(const Vector3& other) const
 {
-	return Vector3(this->x - other.x, this->x - other.y, this->z - other.z);
+	return Vector3(x - other.x, x - other.y, z - other.z);
 }
 
 Vector3 Vector3::operator+=(const Vector3& other)
 {
-	this->x += other.x;
-	this->y += other.y;
-	this->z += other.z;
+	x += other.x;
+	y += other.y;
+	z += other.z;
 	return *this;
 }
 
 Vector3 Vector3::operator-=(const Vector3& other)
 {
-	this->x -= other.x;
-	this->y -= other.y;
-	this->z -= other.z;
+	x -= other.x;
+	y -= other.y;
+	z -= other.z;
 	return *this;
+}
+
+bool Vector3::operator==(const Vector3& other) const
+{
+	return
+		(x - other.x) < VECTOR_FLOAT_ACCURACY &&
+		(y - other.y) < VECTOR_FLOAT_ACCURACY &&
+		(z - other.z) < VECTOR_FLOAT_ACCURACY;
+}
+
+bool Vector3::operator!=(const Vector3& other) const
+{
+	return
+		(x - other.x) > VECTOR_FLOAT_ACCURACY ||
+		(y - other.y) > VECTOR_FLOAT_ACCURACY ||
+		(z - other.z) > VECTOR_FLOAT_ACCURACY;
 }
 
 Vector3 Vector3::operator*(float a) const
 {
-	return Vector3(this->x * a, this->y * a, this->z * a);
+	return Vector3(x * a, y * a, z * a);
 }
 
 Vector3 Vector3::operator/(float a) const
 {
-	return Vector3(this->x / a, this->y / a, this->z / a);
+	return Vector3(x / a, y / a, z / a);
 }

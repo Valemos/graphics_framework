@@ -58,6 +58,11 @@ void Drawable::set_primitives(const std::vector<Primitive*>& new_primitives)
 	}
 }
 
+Vector3& Drawable::get_position()
+{
+	return object_position_;
+}
+
 void Drawable::InitGLBuffer()
 {
 	glGenVertexArrays(1, &vertex_array_object_id_);

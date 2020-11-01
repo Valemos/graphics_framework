@@ -14,8 +14,8 @@ public:
 	float z;
 
 	Vector3(float x = 0.f, float y = 0.f, float z = 0.f);
-	~Vector3();
-
+	~Vector3() = default;
+	
 	std::string Str() const;
 	glm::vec3 ToGlm() const
 	{
@@ -29,7 +29,7 @@ public:
 	Vector3 Direction(const Vector3& other, float distance_sqr) const;
 
 	float ScalarMultiply(const Vector3& other) const;
-
+	Vector3 Cross(const Vector3& other) const;
 	
 	float Length() const;	
 
@@ -45,6 +45,7 @@ public:
 
 
 	Vector3& operator=(const Vector3& other) = default;
+	Vector3& operator=(const glm::vec3& other);
 	
 	Vector3 operator+(const Vector3& other) const;
 	Vector3 operator-(const Vector3& other) const;
@@ -52,6 +53,10 @@ public:
 	Vector3 operator/(float a) const;
 	Vector3 operator+=(const Vector3& other);
 	Vector3 operator-=(const Vector3& other);
+
+	// comparison
+	bool operator==(const Vector3& other) const;
+	bool operator!=(const Vector3& other) const;
 };
 
 
