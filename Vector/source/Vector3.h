@@ -2,6 +2,7 @@
 #define GRAVITY_SIMULATION_VECTOR
 
 #include <string>
+#include <glm/vec3.hpp>
 
 constexpr float VECTOR_FLOAT_ACCURACY = 0.0000001f;
 
@@ -13,40 +14,44 @@ public:
 	float z;
 
 	Vector3(float x = 0.f, float y = 0.f, float z = 0.f);
-	~Vector3() = default;
+	~Vector3();
 
-	std::string str() const;
-	
+	std::string Str() const;
+	glm::vec3 ToGlm() const
+	{
+		return {x, y, z};
+	}
+
 	// work with other vectors
-	float distanceSquared(const Vector3& other) const;
-	float distance(const Vector3& other) const;
-	Vector3 direction(const Vector3& other) const;
-	Vector3 direction(const Vector3& other, float distanceSqr) const;
+	float DistanceSquared(const Vector3& other) const;
+	float Distance(const Vector3& other) const;
+	Vector3 Direction(const Vector3& other) const;
+	Vector3 Direction(const Vector3& other, float distance_sqr) const;
 
-	float scalarMult(const Vector3& other) const;
+	float ScalarMultiply(const Vector3& other) const;
 
-	// work only with this vector
-
-	float length() const;
 	
+	float Length() const;	
+
 	// makes module of vector equal one
-	void normalize();
-	Vector3 normal() const;
+	void Normalize();
+	Vector3 Normal() const;
 
 	// scales each coordinate respectively
-	Vector3 scale(const Vector3& other) const;
+	Vector3 Scale(const Vector3& other) const;
 
 	// inverse operation to scale()
-	Vector3 scaleInv(const Vector3& other) const;
+	Vector3 ScaleInv(const Vector3& other) const;
 
 
+	Vector3& operator=(const Vector3& other) = default;
+	
 	Vector3 operator+(const Vector3& other) const;
 	Vector3 operator-(const Vector3& other) const;
 	Vector3 operator*(float a) const;
 	Vector3 operator/(float a) const;
 	Vector3 operator+=(const Vector3& other);
 	Vector3 operator-=(const Vector3& other);
-	Vector3& operator=(const Vector3& other) = default;
 };
 
 

@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\cpp_libs\GLM\glm\detail\glm.cpp" />
     <ClCompile Include="..\Vector\source\Vector3.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="framework\draw_objects\Drawable.cpp" />
     <ClCompile Include="framework\draw_objects\Figure2D.cpp" />
     <ClCompile Include="framework\draw_objects\Object3D.cpp" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Vector\source\Vector3.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="framework\draw_objects\Drawable.h" />
     <ClInclude Include="framework\draw_objects\Figure2D.h" />
     <ClInclude Include="framework\draw_objects\Object3D.h" />

@@ -7,7 +7,7 @@
 
 ProgramInputHandler* ProgramInputHandler::instance_ = nullptr;
 
-Vector3 ProgramInputHandler::window_size_ = { 0.0, 0.0 };
+Vector3 ProgramInputHandler::window_size = { 0.0, 0.0 };
 Renderer ProgramInputHandler::renderer = Renderer();
 
 Vector3* ProgramInputHandler::keyboard_move_dir = new Vector3{ 0.0, 0.0 };
@@ -33,7 +33,7 @@ ProgramInputHandler::~ProgramInputHandler()
 
 ProgramInputHandler::ProgramInputHandler(const std::string& shader_path, int width, int height)
 {
-	window_size_ = { static_cast<float>(width), static_cast<float>(height) };
+	window_size = { static_cast<float>(width), static_cast<float>(height) };
 	ProgramInputHandler::shader_path = shader_path;
 }
 
@@ -41,15 +41,15 @@ int ProgramInputHandler::RunProgram(ProgramFramework* program)
 {
     // create window
     const int err_code = renderer.InitGraphics(
-		static_cast<int>(window_size_.x), 
-		static_cast<int>(window_size_.y)
+		static_cast<int>(window_size.x), 
+		static_cast<int>(window_size.y)
 	);
 
 	if (err_code != 0){
         return err_code;
 	}
 
-	GLFWwindow* window = renderer.GetWindow();
+	GLFWwindow* window = renderer.get_window();
 	glfwSetKeyCallback(window, CallbackKeyboard);
 	glfwSetWindowSizeCallback(window, CallbackWindowResize);
 	glfwSetCursorPosCallback(window, CallbackMouseMoved);
@@ -84,7 +84,7 @@ int ProgramInputHandler::RunProgram(ProgramFramework* program)
 
 GLFWwindow* ProgramInputHandler::GetWindow()
 {
-	return renderer.GetWindow();
+	return renderer.get_window();
 }
 
 void ProgramInputHandler::CallbackKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -113,19 +113,13 @@ void ProgramInputHandler::CallbackKeyboard(GLFWwindow* window, int key, int scan
 		keyboard_move_dir->y -= 1;
 	}
 
-	keyboard_move_dir->normalize();
+	keyboard_move_dir->Normalize();
 }
 
 void ProgramInputHandler::CallbackWindowResize(GLFWwindow* window, int width, int height)
-{
-	// change global scale to keep up with new window size
-	auto newScale = renderer.GetScale()
-							.scale(window_size_)
-							.scaleInv(Vector3{(float)width, (float)height});
-	renderer.SetScale(newScale);
-	
+{	
 	glViewport(0, 0, width, height);
-	window_size_ = { static_cast<float>(width), static_cast<float>(height) };
+	window_size = { static_cast<float>(width), static_cast<float>(height) };
 }
 
 void ProgramInputHandler::CallbackMouseButton(GLFWwindow* window, int button, int action, int mods)
@@ -135,12 +129,16 @@ void ProgramInputHandler::CallbackMouseButton(GLFWwindow* window, int button, in
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
 		delete clicked_position;
-		clicked_position = new Vector3{ static_cast<float>(xpos), static_cast<float>(ypos) };
-		*clicked_position = clicked_position->scale(renderer.GetScale());
+
+		// convert clicked position to NDC
+		clicked_position = new Vector3{
+			static_cast<float>(xpos) / window_size.x * 2 - 1,
+			static_cast<float>(ypos) / window_size.y * 2 - 1
+		};
 	}
 }
 
 void ProgramInputHandler::CallbackMouseMoved(GLFWwindow* window, double xpos, double ypos)
 {
-	*mouse_position = Vector3{ static_cast<float>(xpos), static_cast<float>(ypos) }.scale(renderer.GetScale());
+	*mouse_position = Vector3{ static_cast<float>(xpos) / window_size.x * 2 - 1, static_cast<float>(ypos) / window_size.x * 2 - 1 };
 }

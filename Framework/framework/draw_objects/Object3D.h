@@ -10,6 +10,5 @@ public:
 	glm::vec3 edge_color{};
 	glm::vec3 figure_scale{};
 	
-	void Draw(const Renderer& renderer, const Vector3& position) override;
+	void Draw(Renderer& renderer, const Vector3& position) override;
 };
-

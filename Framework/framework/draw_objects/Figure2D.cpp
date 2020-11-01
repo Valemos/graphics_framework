@@ -24,9 +24,9 @@ void Figure2D::set_scale(float x_scale, float y_scale, float z_scale)
 	figure_scale = glm::vec3(x_scale, y_scale, z_scale);
 }
 
-void Figure2D::Draw(const Renderer& renderer, const Vector3& position)
+void Figure2D::Draw(Renderer& renderer, const Vector3& position)
 {
-	const unsigned int shader_program = renderer.GetShaderProgram();
+	const unsigned int shader_program = renderer.get_shader_program();
 	glUseProgram(shader_program);
 	static const int transform_loc = glGetUniformLocation(shader_program, "transform");
 	static const int color_loc = glGetUniformLocation(shader_program, "fillColor");
@@ -34,7 +34,6 @@ void Figure2D::Draw(const Renderer& renderer, const Vector3& position)
 	// calculate transform matrix
 	glm::mat4 transform = glm::mat4(1.0f);
 	transform = translate(transform, glm::vec3(position.x, position.y, position.z));
-	transform = scale(transform, renderer.GetScaleForGL());
 	transform = scale(transform, figure_scale);
 	glUniformMatrix4fv(transform_loc, 1, GL_FALSE, value_ptr(transform));
 

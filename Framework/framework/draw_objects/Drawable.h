@@ -39,7 +39,7 @@ public:
 	virtual void LoadGLBuffers();
 
 	// Draw function can be different in other implementations
-	virtual void Draw(const Renderer& renderer, const Vector3& position) = 0;
+	virtual void Draw(Renderer& renderer, const Vector3& position) = 0;
 };
 
 #endif // !INTERFACE_DRAWABLE

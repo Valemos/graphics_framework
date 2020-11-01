@@ -6,40 +6,29 @@
 
 Renderer::Renderer()
 {
-    main_window = nullptr;
-    shaderProgram = -1; // will write maximum possible value for uint
-    globalScale = { 1.0, 1.0, 1.0 };
+    main_window_ = nullptr;
+    shader_program_ = -1; // will write maximum possible value for uint
 }
 
-GLFWwindow* Renderer::GetWindow() const
+GLFWwindow* Renderer::get_window() const
 {
-    return this->main_window;
+    return this->main_window_;
 }
 
 void Renderer::LoadShadersFromFile(const std::string& file_path)
 {
 	const auto program_code = ParseShader(file_path);
-    shaderProgram = InitShaders(program_code);
+    shader_program_ = InitShaders(program_code);
 }
 
-int Renderer::GetShaderProgram() const
+int Renderer::get_shader_program() const
 {
-    return shaderProgram;
+    return shader_program_;
 }
 
-glm::vec3 Renderer::GetScaleForGL() const
+Camera& Renderer::get_camera()
 {
-    return glm::vec3(globalScale.x, globalScale.y, globalScale.z);
-}
-
-Vector3 Renderer::GetScale() const
-{
-    return globalScale;
-}
-
-void Renderer::SetScale(Vector3 scale)
-{
-    globalScale = scale;
+    return main_camera_;
 }
 
 int Renderer::InitGraphics(int width, int height)
@@ -49,15 +38,15 @@ int Renderer::InitGraphics(int width, int height)
     }
 
     /* Create a windowed mode window and its OpenGL context */
-    main_window = glfwCreateWindow(width, height, "Figure", NULL, NULL);
-    if (!main_window)
+    main_window_ = glfwCreateWindow(width, height, "Figure", NULL, NULL);
+    if (!main_window_)
     {
         glfwTerminate();
         return -1;
     }
 
     /* Make the window's context current */
-    glfwMakeContextCurrent(main_window);
+    glfwMakeContextCurrent(main_window_);
 
     GLenum err = glewInit();
     if (GLEW_OK != err)

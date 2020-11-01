@@ -11,6 +11,9 @@
 class ProgramInputHandler
 {
 public:
+	// we store previous window size to rescale images with global scale
+	static Vector3 window_size;
+	
 	static Vector3* clicked_position;
 	static Vector3* mouse_position;
 	static Vector3* keyboard_move_dir;
@@ -30,9 +33,6 @@ public:
 private:
 	static ProgramInputHandler* instance_;
 	ProgramInputHandler(const std::string& shader_path, int width, int height);
-
-	// we store previous window size to rescale images with global scale
-	static Vector3 window_size_;
 };
 
 

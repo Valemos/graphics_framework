@@ -25,7 +25,7 @@ public:
 	void set_scale(float x_scale, float y_scale, float z_scale = 1.f);
 
 	// before Draw must initialize primitives and load buffers to OpenGL
-    void Draw(const Renderer& renderer, const Vector3& position) override;
+    void Draw(Renderer& renderer, const Vector3& position) override;
 };
 
 #endif // !GL_LAB1_FIGURE
