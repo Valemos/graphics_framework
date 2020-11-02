@@ -84,7 +84,7 @@ public:
 	int Init(ProgramInputHandler*) override
 	{
 		// create vertices for primitives
-		//axis_ = new ThreeAxis();
+		axis_ = new ThreeAxis();
 		
 		draw_object_ = new Dodecahedron({ 0.0, 171 / 255.0, 88 / 255.0 }, { 0, 0, 0 });
 		draw_object_->Position() = object_position_;
@@ -119,8 +119,8 @@ public:
 			UpdateCameraSphericalCoordinate();
 		}
 
-		glClear(GL_COLOR_BUFFER_BIT);
-		//axis_->Draw(ProgramInputHandler::renderer);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		axis_->Draw(ProgramInputHandler::renderer);
 		draw_object_->DrawWireframe(ProgramInputHandler::renderer);
 		
 		SetConsoleCursorPosition(console_handle_, {0, 0});

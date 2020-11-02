@@ -10,6 +10,6 @@ int main()
 	//ProgramInputHandler* program = ProgramInputHandler::GetInstance("../Framework/framework/shaders/main_shaders.shader", 800,600);
 	//program->RunProgram(new Test2DProgram(60.f));
 
-	ProgramInputHandler* program = ProgramInputHandler::GetInstance("../Framework/framework/shaders/main_shaders.shader", 800, 600);
+	ProgramInputHandler* program = ProgramInputHandler::GetInstance("D:/coding/c_c++/SimpleGraphicalFramework/Framework/framework/shaders/main_shaders.shader", 800, 600);
 	return program->RunProgram(new Test3DObjectsProgram(60.f));
 }
