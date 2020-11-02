@@ -14,7 +14,7 @@ public:
 	AxisObject(Vector3 main_vector, Vector3 orthogonal, const glm::vec3& surface_color, const glm::vec3& edge_color = {0, 0, 0}, const glm::vec3& figure_scale = { 1, 1, 1 })
 		: Object3D(surface_color, edge_color, figure_scale)
 	{
-		auto face_shift = main_vector.Length() / 8;
+		auto face_shift = main_vector.Length() / 16;
 		auto cross_product = main_vector.Cross(orthogonal);
 
 		std::vector<Vector3> vertices;

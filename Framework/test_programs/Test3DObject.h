@@ -28,9 +28,9 @@ class Test3DObjectsProgram : public ProgramFramework
 	Object3D* draw_object_;
 	
 	// camera
-	float theta_angle_ = 90.f / 180 * PI;
+	float theta_angle_ = - 90.f / 180 * PI;
 	float phi_angle_ = 0.f;
-	float radius_ = 5.f;
+	float radius_ = 8.f;
 	Vector3 camera_position_;
 	float orthogonal_projection_dimention = 5;
 
@@ -85,6 +85,7 @@ public:
 	{
 		// create vertices for primitives
 		axis_ = new ThreeAxis();
+		axis_->SetPosition({-3, -3, -3});
 		
 		draw_object_ = new Dodecahedron({ 0.0, 171 / 255.0, 88 / 255.0 }, { 0, 0, 0 });
 		draw_object_->Position() = object_position_;
@@ -121,6 +122,7 @@ public:
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		axis_->Draw(ProgramInputHandler::renderer);
+		draw_object_->Draw(ProgramInputHandler::renderer);
 		draw_object_->DrawWireframe(ProgramInputHandler::renderer);
 		
 		SetConsoleCursorPosition(console_handle_, {0, 0});

@@ -86,12 +86,12 @@ public:
 
 		// front than back vertex
 		std::vector<unsigned> right = { index++, index++ };
-		vertices.emplace_back(Vector3{ (-1 - 1 / golden_ratio_), 0,  1 / golden_ratio_ });
-		vertices.emplace_back(Vector3{ (-1 - 1 / golden_ratio_), 0, -1 / golden_ratio_ });
-		
-		std::vector<unsigned> left = { index++, index++ };
 		vertices.emplace_back(Vector3{-(-1 - 1 / golden_ratio_), 0,  1 / golden_ratio_});
 		vertices.emplace_back(Vector3{-(-1 - 1 / golden_ratio_), 0, -1 / golden_ratio_});
+		
+		std::vector<unsigned> left = { index++, index++ };
+		vertices.emplace_back(Vector3{ (-1 - 1 / golden_ratio_), 0,  1 / golden_ratio_ });
+		vertices.emplace_back(Vector3{ (-1 - 1 / golden_ratio_), 0, -1 / golden_ratio_ });
 
 		// top than bottom vertex
 		std::vector<unsigned> front = { index++, index++ };
@@ -117,25 +117,31 @@ public:
 		
 		// add all vertices to buffer
 		// and connect vertices
-		auto roof_primitives = CreateRoofPrimitives(cube_front, front, 0, false);
+
+		//front
+		auto roof_primitives = CreateRoofPrimitives(cube_front, front, 0, true);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
-		
-		roof_primitives = CreateRoofPrimitives(cube_back, back, 0, true);
+
+		// back
+		roof_primitives = CreateRoofPrimitives(cube_back, back, 0, false);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
-		
-		roof_primitives = CreateRoofPrimitives(cube_left, left, 0, false);
+
+		// left
+		roof_primitives = CreateRoofPrimitives(cube_left, left, 0, true);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
-		
+
+		// right
 		roof_primitives = CreateRoofPrimitives(cube_right, right, 0, false);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
-		
+
+		// bottom
 		roof_primitives = CreateRoofPrimitives(cube_bot, bottom, 3, true);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
-		
+
+		// top
 		roof_primitives = CreateRoofPrimitives(cube_top, top, 3, false);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
 
-		
 		InitBuffers(vertices, primitives);
 	}
 };
