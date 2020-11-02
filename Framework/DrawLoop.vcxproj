@@ -148,7 +148,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\cpp_libs\GLM\glm\detail\glm.cpp" />
     <ClCompile Include="..\Vector\source\Vector3.cpp" />
-    <ClCompile Include="framework\basic_3d_objects\Cube.cpp" />
     <ClCompile Include="framework\draw_objects\Camera.cpp" />
     <ClCompile Include="framework\draw_objects\Drawable.cpp" />
     <ClCompile Include="framework\draw_objects\Figure2D.cpp" />
@@ -163,6 +162,9 @@
   <ItemGroup>
     <ClInclude Include="..\Vector\source\Vector3.h" />
     <ClInclude Include="framework\basic_3d_objects\Cube.h" />
+    <ClInclude Include="framework\basic_3d_objects\Dodecahedron.h" />
+    <ClInclude Include="framework\basic_3d_objects\Sphere.h" />
+    <ClInclude Include="framework\basic_3d_objects\Surface.h" />
     <ClInclude Include="framework\draw_objects\Camera.h" />
     <ClInclude Include="framework\draw_objects\Drawable.h" />
     <ClInclude Include="framework\draw_objects\Figure2D.h" />

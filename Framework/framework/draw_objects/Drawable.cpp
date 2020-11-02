@@ -58,7 +58,7 @@ void Drawable::set_primitives(const std::vector<Primitive*>& new_primitives)
 	}
 }
 
-Vector3& Drawable::get_position()
+Vector3& Drawable::Position()
 {
 	return object_position_;
 }

@@ -25,12 +25,15 @@ public:
 
 	int RunProgram(ProgramFramework*);
 	static GLFWwindow* GetWindow();
+	static void SetKeyboardCallback(void (*additional_callback) (GLFWwindow* window, int key, int scancode, int action, int mods));
 	static void CallbackKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void CallbackWindowResize(GLFWwindow* window, int width, int height);
 	static void CallbackMouseButton(GLFWwindow* window, int button, int action, int mods);
 	static void CallbackMouseMoved(GLFWwindow* window, double xpos, double ypos);
 	
 private:
+	static void (*additional_callback_) (GLFWwindow* window, int key, int scancode, int action, int mods);
+	
 	static ProgramInputHandler* instance_;
 	ProgramInputHandler(const std::string& shader_path, int width, int height);
 };

@@ -7,7 +7,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-void Object3D::LoadGLTransform(Renderer& renderer, const Vector3& position)
+void Object3D::LoadGLTransform(Renderer& renderer, const Vector3& position) const
 {
 	// calculate local space transform matrix
 	glm::mat4 transform = glm::mat4(1.0f);
@@ -19,11 +19,7 @@ void Object3D::LoadGLTransform(Renderer& renderer, const Vector3& position)
 	// camera transform
 	const float window_aspect_ratio = ProgramInputHandler::window_size.x / ProgramInputHandler::window_size.y;
 	auto& camera = renderer.get_camera();
-
-	transform =
-		camera.get_projection_matrix(window_aspect_ratio) *
-		camera.get_view_matrix() *
-		transform;
+	transform = camera.get_projection(window_aspect_ratio) * camera.get_view_matrix() * transform;
 
 	static const auto transform_loc = glGetUniformLocation(renderer.get_shader_program(), "transform");
 	glUniformMatrix4fv(transform_loc, 1, GL_FALSE, value_ptr(transform));

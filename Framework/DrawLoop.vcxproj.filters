@@ -51,9 +51,6 @@
     <ClCompile Include="framework\draw_objects\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="framework\basic_3d_objects\Cube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework\ProgramFramework.h">
@@ -96,6 +93,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\basic_3d_objects\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\basic_3d_objects\Sphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\basic_3d_objects\Surface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\basic_3d_objects\Dodecahedron.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

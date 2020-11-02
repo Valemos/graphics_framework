@@ -1,0 +1,48 @@
+#pragma once
+
+#include "../draw_objects/Object3D.h"
+#include "../draw_objects/Quad.h"
+
+class Surface : public Object3D
+{
+	const float grid_step = 0.01;
+	
+public:
+	
+	Surface(std::vector<std::vector<float>> grid_values, const glm::vec3& surface_color, const glm::vec3& edge_color, const glm::vec3& figure_scale)
+		: Object3D(surface_color, edge_color, figure_scale)
+	{
+		std::vector<Vector3> vertices;
+		std::vector<std::vector<unsigned>> vertex_indices;
+		std::vector<Primitive*> primitives;
+		vertices.reserve(grid_values[0].size() * grid_values.size());
+		primitives.reserve((grid_values[0].size() - 1) * (grid_values.size() - 1));
+
+		// put all indices into one buffer and save their indices in grid
+		unsigned cur_index = 0;
+		for (unsigned y_i = 0; y_i < grid_values.size(); ++y_i)
+		{
+			for (unsigned x_i = 0; x_i < grid_values[y_i].size(); ++x_i)
+			{
+				vertex_indices[y_i][x_i] = cur_index++;
+				vertices.emplace_back(Vector3{ x_i * grid_step, grid_values[y_i][x_i], y_i * grid_step });
+			}
+		}
+
+		// create Quads
+		for (unsigned y_i = 1; y_i < vertex_indices.size(); ++y_i)
+		{
+			for (unsigned x_i = 1; x_i < vertex_indices[y_i].size(); ++x_i)
+			{
+				primitives.emplace_back(new Quad({
+					vertex_indices[y_i - 1]	[x_i - 1],
+					vertex_indices[y_i]		[x_i - 1],
+					vertex_indices[y_i]		[x_i],
+					vertex_indices[y_i - 1]	[x_i]
+				}));
+			}
+		}
+
+		InitBuffers(vertices, primitives);
+	}
+};

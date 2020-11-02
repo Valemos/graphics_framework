@@ -44,6 +44,8 @@ public:
 				new Triangle({ 0, 2, 4 })
 			});
 
+		task_figure_->Position() = Vector3{0, 0, 0};
+		
 		// background color
 		glClearColor(1.0, 116 / 255.f, 0.0, 1.0);
 		return 0;
@@ -53,7 +55,7 @@ public:
 	{
 		// Draw test object
 		glClear(GL_COLOR_BUFFER_BIT);
-		task_figure_->Draw(ProgramInputHandler::renderer, Vector3());
+		task_figure_->Draw(ProgramInputHandler::renderer);
 		return 0;
 	}
 };

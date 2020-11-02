@@ -30,8 +30,9 @@ public:
 
 	float ScalarMultiply(const Vector3& other) const;
 	Vector3 Cross(const Vector3& other) const;
-	
-	float Length() const;	
+
+	float LengthSqr() const;	
+	float Length() const;
 
 	// makes module of vector equal one
 	void Normalize();

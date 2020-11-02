@@ -31,6 +31,16 @@ Camera& Renderer::get_camera()
     return main_camera_;
 }
 
+void Renderer::set_global_scale(glm::vec3 global_scale)
+{
+    global_scale_ = global_scale;
+}
+
+glm::vec3 Renderer::get_global_scale() const
+{
+    return global_scale_;
+}
+
 int Renderer::InitGraphics(int width, int height)
 {
     if (!glfwInit()) {

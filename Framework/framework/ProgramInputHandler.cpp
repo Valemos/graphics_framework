@@ -14,6 +14,7 @@ Vector3* ProgramInputHandler::keyboard_move_dir = new Vector3{ 0.0, 0.0 };
 Vector3* ProgramInputHandler::mouse_position = new Vector3{0.0, 0.0};
 Vector3* ProgramInputHandler::clicked_position = nullptr;
 
+void (*ProgramInputHandler::additional_callback_) (GLFWwindow* window, int key, int scancode, int action, int mods) = nullptr;
 
 ProgramInputHandler* ProgramInputHandler::GetInstance(const std::string& shader_path, int width, int height)
 {
@@ -87,6 +88,12 @@ GLFWwindow* ProgramInputHandler::GetWindow()
 	return renderer.get_window();
 }
 
+void ProgramInputHandler::SetKeyboardCallback(
+	void(* additional_callback)(GLFWwindow* window, int key, int scancode, int action, int mods))
+{
+	additional_callback_ = additional_callback;
+}
+
 void ProgramInputHandler::CallbackKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	const int key_A = glfwGetKey(window, GLFW_KEY_A);
@@ -114,6 +121,8 @@ void ProgramInputHandler::CallbackKeyboard(GLFWwindow* window, int key, int scan
 	}
 
 	keyboard_move_dir->Normalize();
+
+	additional_callback_(window, key, scancode, action, mods);
 }
 
 void ProgramInputHandler::CallbackWindowResize(GLFWwindow* window, int width, int height)

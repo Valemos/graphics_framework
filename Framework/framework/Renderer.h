@@ -7,7 +7,7 @@
 #include <glm/vec3.hpp>
 
 #include "Vector3.h"
-#include "../Camera.h"
+#include "draw_objects/Camera.h"
 
 struct ShaderSourceCode {
         std::string Vertex;
@@ -24,12 +24,16 @@ public:
 	GLFWwindow* get_window() const;
 	int get_shader_program() const;
 	Camera& get_camera();
-	
+	void set_global_scale(glm::vec3 global_scale);
+	glm::vec3 get_global_scale() const;
+
 private:
+	
 	Camera main_camera_ = Camera({0, 0, 0}, {0, 0, 0});
 	
 	GLFWwindow* main_window_;
 	unsigned int shader_program_;
+	glm::vec3 global_scale_;
 	
 	ShaderSourceCode ParseShader(const std::string& filePath) const;
 	static unsigned int InitShaders(const ShaderSourceCode& code);

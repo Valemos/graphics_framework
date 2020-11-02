@@ -35,7 +35,7 @@ public:
 	void set_vertices(const std::vector<Vector3>& vertices);
 	void set_primitives(const std::vector<Primitive*>& new_primitives);
 
-	Vector3& get_position();
+	Vector3& Position();
 	
 	// generates GL buffers and sets up all attributes
 	virtual void InitGLBuffer();

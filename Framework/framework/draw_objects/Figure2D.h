@@ -10,9 +10,9 @@
 
 class Figure2D : public Drawable
 {
-	glm::vec3 fill_color;
-	glm::vec3 border_color;
-	glm::vec3 figure_scale;
+	glm::vec3 fill_color_;
+	glm::vec3 border_color_;
+	glm::vec3 figure_scale_;
 
 public:
     std::string name;
