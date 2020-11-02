@@ -8,6 +8,7 @@ class Primitive;
 #include <vector>
 #include "Vector3.h"
 
+
 class Drawable
 {
 	
@@ -35,7 +36,7 @@ public:
 	void set_vertices(const std::vector<Vector3>& vertices);
 	void set_primitives(const std::vector<Primitive*>& new_primitives);
 
-	Vector3& Position();
+	virtual Vector3& Position();
 	
 	// generates GL buffers and sets up all attributes
 	virtual void InitGLBuffer();
@@ -45,6 +46,9 @@ public:
 
 	// Draw function can be different in other implementations
 	virtual void Draw(Renderer& renderer) = 0;
+
+	// Draw function can be different in other implementations
+	virtual void DrawWireframe(Renderer& renderer) {};
 };
 
 #endif // !INTERFACE_DRAWABLE

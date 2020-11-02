@@ -32,12 +32,11 @@ void Object3D::Draw(Renderer& renderer)
 	static const auto color_loc = glGetUniformLocation(shader_program, "fillColor");
 
 	LoadGLTransform(renderer, object_position_);
-	
 	LoadGLBuffers();
 
 	// draw all primitives
 	unsigned first_index_position = 0;
-	glUniform4fv(color_loc, 1, value_ptr(surface_color));
+	glUniform4fv(color_loc, 1, value_ptr(primary_color));
 	for (auto* primitive : primitives)
 	{
 		primitive->Draw((void*)first_index_position);

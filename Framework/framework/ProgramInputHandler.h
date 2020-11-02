@@ -13,7 +13,6 @@ class ProgramInputHandler
 public:
 	// we store previous window size to rescale images with global scale
 	static Vector3 window_size;
-	
 	static Vector3* clicked_position;
 	static Vector3* mouse_position;
 	static Vector3* keyboard_move_dir;
@@ -24,6 +23,7 @@ public:
 	~ProgramInputHandler();
 
 	int RunProgram(ProgramFramework*);
+	
 	static GLFWwindow* GetWindow();
 	static void SetKeyboardCallback(void (*additional_callback) (GLFWwindow* window, int key, int scancode, int action, int mods));
 	static void CallbackKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -32,11 +32,11 @@ public:
 	static void CallbackMouseMoved(GLFWwindow* window, double xpos, double ypos);
 	
 private:
-	static void (*additional_callback_) (GLFWwindow* window, int key, int scancode, int action, int mods);
+	static GLFWwindow* main_window_;
 	
+	static void (*additional_callback_) (GLFWwindow* window, int key, int scancode, int action, int mods);
 	static ProgramInputHandler* instance_;
 	ProgramInputHandler(const std::string& shader_path, int width, int height);
 };
-
 
 #endif // !GL_LAB1_INPUT_HANDLER

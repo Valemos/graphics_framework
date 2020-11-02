@@ -51,6 +51,9 @@
     <ClCompile Include="framework\draw_objects\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="framework\draw_objects\Line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework\ProgramFramework.h">
@@ -102,6 +105,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\basic_3d_objects\Dodecahedron.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\basic_3d_objects\AxisObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\draw_objects\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -151,6 +151,7 @@
     <ClCompile Include="framework\draw_objects\Camera.cpp" />
     <ClCompile Include="framework\draw_objects\Drawable.cpp" />
     <ClCompile Include="framework\draw_objects\Figure2D.cpp" />
+    <ClCompile Include="framework\draw_objects\Line.cpp" />
     <ClCompile Include="framework\draw_objects\Object3D.cpp" />
     <ClCompile Include="framework\draw_objects\Primitive.cpp" />
     <ClCompile Include="framework\draw_objects\Quad.cpp" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Vector\source\Vector3.h" />
+    <ClInclude Include="framework\basic_3d_objects\AxisObject.h" />
     <ClInclude Include="framework\basic_3d_objects\Cube.h" />
     <ClInclude Include="framework\basic_3d_objects\Dodecahedron.h" />
     <ClInclude Include="framework\basic_3d_objects\Sphere.h" />
@@ -168,6 +170,7 @@
     <ClInclude Include="framework\draw_objects\Camera.h" />
     <ClInclude Include="framework\draw_objects\Drawable.h" />
     <ClInclude Include="framework\draw_objects\Figure2D.h" />
+    <ClInclude Include="framework\draw_objects\Line.h" />
     <ClInclude Include="framework\draw_objects\Object3D.h" />
     <ClInclude Include="framework\draw_objects\Primitive.h" />
     <ClInclude Include="framework\draw_objects\Quad.h" />

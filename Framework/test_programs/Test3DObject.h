@@ -11,6 +11,7 @@
 #include "math.h"
 
 // for additional key keyboard callback
+#include "../framework/basic_3d_objects/AxisObject.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
@@ -22,7 +23,8 @@ static float g_increment_zoom_value = 0;
 class Test3DObjectsProgram : public ProgramFramework
 {
 	const Vector3 object_position_{ 0, 0, 0 };
-	
+
+	ThreeAxis* axis_;
 	Object3D* draw_object_;
 	
 	// camera
@@ -37,7 +39,8 @@ class Test3DObjectsProgram : public ProgramFramework
 public:
 	explicit Test3DObjectsProgram(float fps)
 		: ProgramFramework(fps),
-		draw_object_(nullptr)
+		draw_object_(nullptr),
+		axis_(nullptr)
 	{
 		console_handle_ = GetStdHandle(STD_OUTPUT_HANDLE);
 		ProgramInputHandler::SetKeyboardCallback(keyboard_callback);
@@ -81,6 +84,7 @@ public:
 	int Init(ProgramInputHandler*) override
 	{
 		// create vertices for primitives
+		//axis_ = new ThreeAxis();
 		
 		draw_object_ = new Dodecahedron({ 0.0, 171 / 255.0, 88 / 255.0 }, { 0, 0, 0 });
 		draw_object_->Position() = object_position_;
@@ -116,10 +120,11 @@ public:
 		}
 
 		glClear(GL_COLOR_BUFFER_BIT);
+		//axis_->Draw(ProgramInputHandler::renderer);
 		draw_object_->DrawWireframe(ProgramInputHandler::renderer);
+		
 		SetConsoleCursorPosition(console_handle_, {0, 0});
 		std::cout << "pos " << camera_position_.Str() << std::endl;
-		
 		return 0;
 	}
 

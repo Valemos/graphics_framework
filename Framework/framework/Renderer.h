@@ -19,9 +19,7 @@ class Renderer
 public:
 	Renderer();
 
-	int InitGraphics(int width, int height);
     void LoadShadersFromFile(const std::string& file_path);
-	GLFWwindow* get_window() const;
 	int get_shader_program() const;
 	Camera& get_camera();
 	void set_global_scale(glm::vec3 global_scale);
@@ -31,7 +29,6 @@ private:
 	
 	Camera main_camera_ = Camera({0, 0, 0}, {0, 0, 0});
 	
-	GLFWwindow* main_window_;
 	unsigned int shader_program_;
 	glm::vec3 global_scale_;
 	

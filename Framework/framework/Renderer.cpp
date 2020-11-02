@@ -6,13 +6,7 @@
 
 Renderer::Renderer()
 {
-    main_window_ = nullptr;
     shader_program_ = -1; // will write maximum possible value for uint
-}
-
-GLFWwindow* Renderer::get_window() const
-{
-    return this->main_window_;
 }
 
 void Renderer::LoadShadersFromFile(const std::string& file_path)
@@ -39,34 +33,6 @@ void Renderer::set_global_scale(glm::vec3 global_scale)
 glm::vec3 Renderer::get_global_scale() const
 {
     return global_scale_;
-}
-
-int Renderer::InitGraphics(int width, int height)
-{
-    if (!glfwInit()) {
-        return -1;
-    }
-
-    /* Create a windowed mode window and its OpenGL context */
-    main_window_ = glfwCreateWindow(width, height, "Figure", NULL, NULL);
-    if (!main_window_)
-    {
-        glfwTerminate();
-        return -1;
-    }
-
-    /* Make the window's context current */
-    glfwMakeContextCurrent(main_window_);
-
-    GLenum err = glewInit();
-    if (GLEW_OK != err)
-    {
-        return -1;
-    }
-
-    glViewport(0, 0, width, height);
-
-    return 0;
 }
 
 ShaderSourceCode Renderer::ParseShader(const std::string& filePath) const

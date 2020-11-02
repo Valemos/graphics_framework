@@ -14,10 +14,29 @@ class Dodecahedron : public Object3D
 		std::vector<Primitive*> output;
 		output.reserve(4);
 
-		output.emplace_back(new Triangle({cube_face[0], cube_face[1], points[0] }));
-		output.emplace_back(new Quad({cube_face[1], cube_face[2], points[1], points[0] }));
-		output.emplace_back(new Triangle({cube_face[2], cube_face[3], points[1] }));
-		output.emplace_back(new Quad({cube_face[3], cube_face[0], points[0], points[1] }));
+		std::vector<unsigned> shifted_face;
+		shifted_face.resize(cube_face.size());
+
+		for (int i = 0; i < cube_face.size(); ++i)
+		{
+			shifted_face[(i + face_rotation) % cube_face.size()] = cube_face[i];
+		}
+
+		unsigned first_point, second_point;
+		if (flip_points)
+		{
+			first_point = points[1];
+			second_point = points[0];
+		}else
+		{
+			first_point = points[0];
+			second_point = points[1];
+		}
+		
+		output.emplace_back(new Triangle({shifted_face[0], shifted_face[1], first_point }));
+		output.emplace_back(new Quad({shifted_face[1], shifted_face[2], second_point, first_point }));
+		output.emplace_back(new Triangle({shifted_face[2], shifted_face[3], second_point }));
+		output.emplace_back(new Quad({shifted_face[3], shifted_face[0], first_point, second_point }));
 		
 		return output;
 	}
@@ -77,11 +96,11 @@ public:
 		// top than bottom vertex
 		std::vector<unsigned> front = { index++, index++ };
 		vertices.emplace_back(Vector3{ 0, 1 / golden_ratio_, -(1 + 1 / golden_ratio_) });
-		vertices.emplace_back(Vector3{ 0, 1 / golden_ratio_, -(1 + 1 / golden_ratio_) });
+		vertices.emplace_back(Vector3{ 0, -1 / golden_ratio_, -(1 + 1 / golden_ratio_) });
 
 		std::vector<unsigned> back = { index++, index++ };
 		vertices.emplace_back(Vector3{0, 1 / golden_ratio_, (1 + 1 / golden_ratio_)});
-		vertices.emplace_back(Vector3{0, 1 / golden_ratio_, (1 + 1 / golden_ratio_)});
+		vertices.emplace_back(Vector3{0, -1 / golden_ratio_, (1 + 1 / golden_ratio_)});
 
 
 		// Cube faces
@@ -98,28 +117,22 @@ public:
 		
 		// add all vertices to buffer
 		// and connect vertices
-		auto roof_primitives = 
-			CreateRoofPrimitives(cube_front, front, 0, false);
+		auto roof_primitives = CreateRoofPrimitives(cube_front, front, 0, false);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
 		
-		roof_primitives = 
-			CreateRoofPrimitives(cube_back, back, 0, false);
+		roof_primitives = CreateRoofPrimitives(cube_back, back, 0, true);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
 		
-		roof_primitives = 
-			CreateRoofPrimitives(cube_left, left, 0, false);
+		roof_primitives = CreateRoofPrimitives(cube_left, left, 0, false);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
 		
-		roof_primitives = 
-			CreateRoofPrimitives(cube_right, right, 0, false);
+		roof_primitives = CreateRoofPrimitives(cube_right, right, 0, false);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
 		
-		roof_primitives = 
-			CreateRoofPrimitives(cube_bot, bottom, 0, false);
+		roof_primitives = CreateRoofPrimitives(cube_bot, bottom, 3, true);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
 		
-		roof_primitives = 
-			CreateRoofPrimitives(cube_top, top, 0, false);
+		roof_primitives = CreateRoofPrimitives(cube_top, top, 3, false);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
 
 		

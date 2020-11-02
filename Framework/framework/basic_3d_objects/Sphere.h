@@ -1,7 +1,7 @@
 #pragma once
 
-#include "framework/draw_objects/Object3D.h"
-#include "framework/draw_objects/Triangle.h"
+#include "../framework/draw_objects/Object3D.h"
+#include "../framework/draw_objects/Triangle.h"
 #include "cmath"
 
 class Sphere : public Object3D

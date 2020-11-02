@@ -7,6 +7,7 @@
 
 ProgramInputHandler* ProgramInputHandler::instance_ = nullptr;
 
+GLFWwindow* ProgramInputHandler::main_window_ = nullptr;
 Vector3 ProgramInputHandler::window_size = { 0.0, 0.0 };
 Renderer ProgramInputHandler::renderer = Renderer();
 
@@ -41,23 +42,38 @@ ProgramInputHandler::ProgramInputHandler(const std::string& shader_path, int wid
 int ProgramInputHandler::RunProgram(ProgramFramework* program)
 {
     // create window
-    const int err_code = renderer.InitGraphics(
-		static_cast<int>(window_size.x), 
-		static_cast<int>(window_size.y)
-	);
-
-	if (err_code != 0){
-        return err_code;
+	if (!glfwInit()) {
+		return -1;
 	}
 
-	GLFWwindow* window = renderer.get_window();
-	glfwSetKeyCallback(window, CallbackKeyboard);
-	glfwSetWindowSizeCallback(window, CallbackWindowResize);
-	glfwSetCursorPosCallback(window, CallbackMouseMoved);
-	glfwSetMouseButtonCallback(window, CallbackMouseButton);
+	/* Create a windowed mode window and its OpenGL context */
+	main_window_ = glfwCreateWindow(static_cast<int>(window_size.x), static_cast<int>(window_size.y), "Figure", NULL, NULL);
+	if (!main_window_)
+	{
+		glfwTerminate();
+		return -1;
+	}
+
+	/* Make the window's context current */
+	glfwMakeContextCurrent(main_window_);
+
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		return -1;
+	}
+
+	glViewport(0, 0, static_cast<int>(window_size.x), static_cast<int>(window_size.y));
+
+	glfwSetKeyCallback(main_window_, CallbackKeyboard);
+	glfwSetWindowSizeCallback(main_window_, CallbackWindowResize);
+	glfwSetCursorPosCallback(main_window_, CallbackMouseMoved);
+	glfwSetMouseButtonCallback(main_window_, CallbackMouseButton);
 
     renderer.LoadShadersFromFile(shader_path);
 
+	glEnable(GL_DEPTH_TEST);
+	
 	program->Init(this);
 	program->previousUpdateTime = glfwGetTime();
 	
@@ -85,7 +101,7 @@ int ProgramInputHandler::RunProgram(ProgramFramework* program)
 
 GLFWwindow* ProgramInputHandler::GetWindow()
 {
-	return renderer.get_window();
+	return main_window_;
 }
 
 void ProgramInputHandler::SetKeyboardCallback(
