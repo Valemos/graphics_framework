@@ -63,6 +63,13 @@ public:
 		y_axis_.Position() = position;
 		z_axis_.Position() = position;
 	}
+
+	void SetScale(const Vector3& scale)
+	{
+		x_axis_.figure_scale = { scale.x, scale.x, scale.x };
+		y_axis_.figure_scale = { scale.y, scale.y, scale.y };
+		z_axis_.figure_scale = { scale.z, scale.z, scale.z };
+	}
 	
 	void Draw(Renderer& renderer) override
 	{

@@ -1,5 +1,8 @@
 #include "Camera.h"
 
+
+#include <iostream>
+#include <sstream>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 
@@ -21,7 +24,7 @@ void Camera::UpdateCameraUp(const Vector3& new_camera_up)
 	camera_direction_ = (camera_position_ - camera_target_).Normal();
 	camera_up_ = new_camera_up;
 	camera_right_ = camera_up_.Cross(camera_direction_);
-	camera_up_ = camera_direction_.Cross(camera_right_);
+	camera_up_ = camera_direction_.Cross(camera_right_).Normal();
 	UpdateViewMatrix();
 }
 
@@ -90,4 +93,13 @@ glm::mat4 Camera::get_projection(float aspect_ratio) const
 	{
 		return get_orthogonal_projection(aspect_ratio);
 	}
+}
+
+std::string Camera::Str() const
+{
+	std::stringstream ss;
+	ss	<< "position: " << camera_position_.Str() << std::endl
+		<< "direction: " << camera_direction_.Str() << std::endl
+		<< "up: " << camera_up_.Str() << std::endl;
+	return ss.str();
 }

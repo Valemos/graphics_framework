@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sstream>
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp>
 
@@ -8,7 +9,7 @@
 
 enum DrawMode
 {
-	Perspective, Orthogonal
+	Perspective = 0, Orthogonal = 1
 };
 
 class Camera
@@ -26,7 +27,7 @@ class Camera
 	const float near_plane_ = 0.1f;
 	const float far_plane_ = 100.f;
 	
-	float ortho_minimal_dim = 100.f;
+	float ortho_minimal_dim = 2.f;
 	
 public:
 	
@@ -54,4 +55,5 @@ public:
 	glm::mat4 get_perspective_projection(float aspect_ratio) const;
 	glm::mat4 get_orthogonal_projection(float aspect_ratio) const;
 	glm::mat4 get_projection(float aspect_ratio) const;
+	std::string Str() const;
 };
