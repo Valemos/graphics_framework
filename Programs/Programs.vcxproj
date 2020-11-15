@@ -21,20 +21,19 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ca4a5f2a-6493-4e7b-8dcb-ebaae0bbd2d4}</ProjectGuid>
-    <RootNamespace>Framework</RootNamespace>
+    <ProjectGuid>{a011e5d9-a5a7-4514-9099-b19d85b10d7c}</ProjectGuid>
+    <RootNamespace>Programs</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Framework</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -87,25 +86,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(ProjectDir)..\Vector\source;$(ProjectDir)framework\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(SolutionDir)Vector\source;$(SolutionDir)Framework\framework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\coding\cpp_libs\GLEW\lib\Release\Win32;D:\coding\cpp_libs\GLFW\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Framework.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-    </ProjectReference>
-    <Lib>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;</AdditionalDependencies>
-    </Lib>
-    <Lib>
-      <AdditionalLibraryDirectories>D:\coding\cpp_libs\GLEW\lib\Release\Win32;D:\coding\cpp_libs\GLFW\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -113,27 +103,18 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(ProjectDir)..\Vector\source;$(ProjectDir)framework\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(SolutionDir)Vector\source;$(SolutionDir)Framework\framework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\coding\cpp_libs\GLEW\lib\Release\Win32;D:\coding\cpp_libs\GLFW\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Framework.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-    </ProjectReference>
-    <Lib>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;</AdditionalDependencies>
-    </Lib>
-    <Lib>
-      <AdditionalLibraryDirectories>D:\coding\cpp_libs\GLEW\lib\Release\Win32;D:\coding\cpp_libs\GLFW\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -164,48 +145,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\cpp_libs\GLM\glm\detail\glm.cpp" />
-    <ClCompile Include="..\Vector\source\Vector3.cpp" />
-    <ClCompile Include="framework\2d_objects\Grid2D.cpp" />
-    <ClCompile Include="framework\ButtonHandler.cpp" />
-    <ClCompile Include="framework\draw_objects\Camera.cpp" />
-    <ClCompile Include="framework\draw_objects\Drawable.cpp" />
-    <ClCompile Include="framework\draw_objects\Figure2D.cpp" />
-    <ClCompile Include="framework\draw_objects\Line.cpp" />
-    <ClCompile Include="framework\draw_objects\Object3D.cpp" />
-    <ClCompile Include="framework\draw_objects\Primitive.cpp" />
-    <ClCompile Include="framework\draw_objects\Quad.cpp" />
-    <ClCompile Include="framework\draw_objects\Triangle.cpp" />
-    <ClCompile Include="framework\ProgramInputHandler.cpp" />
-    <ClCompile Include="framework\Renderer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="programs_source\GridVisualization.cpp" />
+    <ClCompile Include="programs_source\ProgramMultipleObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework\2d_objects\Grid2D.h" />
-    <ClInclude Include="framework\basic_3d_objects\AxisObject.h" />
-    <ClInclude Include="framework\basic_3d_objects\Cube.h" />
-    <ClInclude Include="framework\basic_3d_objects\Dodecahedron.h" />
-    <ClInclude Include="framework\basic_3d_objects\Sphere.h" />
-    <ClInclude Include="framework\basic_3d_objects\Surface.h" />
-    <ClInclude Include="framework\ButtonHandler.h" />
-    <ClInclude Include="framework\draw_objects\Camera.h" />
-    <ClInclude Include="framework\draw_objects\Drawable.h" />
-    <ClInclude Include="framework\draw_objects\Figure2D.h" />
-    <ClInclude Include="framework\draw_objects\Line.h" />
-    <ClInclude Include="framework\draw_objects\Object3D.h" />
-    <ClInclude Include="framework\draw_objects\Primitive.h" />
-    <ClInclude Include="framework\draw_objects\Quad.h" />
-    <ClInclude Include="framework\draw_objects\Triangle.h" />
-    <ClInclude Include="framework\ProgramFramework.h" />
-    <ClInclude Include="framework\ProgramInputHandler.h" />
-    <ClInclude Include="framework\Renderer.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="framework\shaders\main_shaders.shader" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Vector\Vector.vcxproj">
-      <Project>{c0cb62e7-8ede-48a6-b701-d0683cbb61d3}</Project>
+    <ProjectReference Include="..\Framework\DrawLoop.vcxproj">
+      <Project>{ca4a5f2a-6493-4e7b-8dcb-ebaae0bbd2d4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="programs_source\GridVisualization.h" />
+    <ClInclude Include="programs_source\ProgramMultipleObjects.h" />
+    <ClInclude Include="programs_source\Test2DObject.h" />
+    <ClInclude Include="programs_source\Test3DObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

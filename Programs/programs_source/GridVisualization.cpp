@@ -80,7 +80,7 @@ int GridVisualization::Step()
     return 0;
 }
 
-Vector3& GridVisualization::ShiftTowardsPoint(Vector3& point, Vector3& target, float koeficient, float accuracy) const
+Vector3& GridVisualization::ShiftTowardsPoint(Vector3& point, Vector3& target, float coefficient, float accuracy) const
 {
     if (abs(point.x - target.x) < accuracy &&
         abs(point.y - target.y) < accuracy)
@@ -90,7 +90,7 @@ Vector3& GridVisualization::ShiftTowardsPoint(Vector3& point, Vector3& target, f
 
     const float distance_sqr = point.DistanceSquared(target);
     const Vector3 direction = point.Direction(target, distance_sqr);
-    const Vector3 shift = direction * -koeficient / distance_sqr;
+    const Vector3 shift = direction * -coefficient / distance_sqr;
     point += shift;
 
     if (shift.LengthSqr() - distance_sqr > accuracy)

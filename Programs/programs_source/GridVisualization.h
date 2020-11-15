@@ -38,6 +38,6 @@ public:
     int Init() override;
     int Step() override;
 
-    Vector3& ShiftTowardsPoint(Vector3& point, Vector3& target, float koeficient, float accuracy = 0.00001) const;
+    Vector3& ShiftTowardsPoint(Vector3& point, Vector3& target, float coefficient, float accuracy = 0.00001) const;
     void UpdateGridPoints(float coefficient);
 };

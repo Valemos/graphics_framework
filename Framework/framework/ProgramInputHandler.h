@@ -31,7 +31,7 @@ public:
 
 	int RunProgram(ProgramFramework*);
 	static void ClearScreen();
-	static void SetClearColor(double r, double g, double b, double a = 1.f);
+	static void SetClearColor(double r, double g, double b, double a = 1.0);
 	static void SetClearColor(int r, int g, int b, int a = 255);
 
 	static GLFWwindow* GetWindow();
