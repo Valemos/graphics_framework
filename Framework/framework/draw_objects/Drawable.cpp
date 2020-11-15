@@ -89,5 +89,5 @@ void Drawable::LoadGLBuffers()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_.size() * sizeof(unsigned), index_buffer_.data(), GL_STATIC_DRAW);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
-	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.size() * sizeof(float), vertex_buffer_.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_.size() * sizeof(float), vertex_buffer_.data(), GL_DYNAMIC_DRAW);
 }

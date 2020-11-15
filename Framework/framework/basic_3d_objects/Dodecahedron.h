@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../draw_objects/Object3D.h"
-#include "../draw_objects/Triangle.h"
-#include "../draw_objects/Quad.h"
+#include "draw_objects/Object3D.h"
+#include "draw_objects/Triangle.h"
+#include "draw_objects/Quad.h"
 #include <math.h>
 
 class Dodecahedron : public Object3D

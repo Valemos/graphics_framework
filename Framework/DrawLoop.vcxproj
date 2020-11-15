@@ -89,7 +89,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(SolutionDir)Vector\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(ProjectDir)..\Vector\source;$(ProjectDir)framework\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -106,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(SolutionDir)Vector\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(ProjectDir)..\Vector\source;$(ProjectDir)framework\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,7 +147,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\cpp_libs\GLM\glm\detail\glm.cpp" />
+    <ClCompile Include="..\programs\GridVisualization.cpp" />
+    <ClCompile Include="..\programs\Lab2_3d_objects.cpp" />
     <ClCompile Include="..\Vector\source\Vector3.cpp" />
+    <ClCompile Include="framework\2d_objects\Grid2D.cpp" />
+    <ClCompile Include="framework\ButtonHandler.cpp" />
     <ClCompile Include="framework\draw_objects\Camera.cpp" />
     <ClCompile Include="framework\draw_objects\Drawable.cpp" />
     <ClCompile Include="framework\draw_objects\Figure2D.cpp" />
@@ -161,12 +165,17 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\programs\GridVisualization.h" />
+    <ClInclude Include="..\programs\Test2DObject.h" />
+    <ClInclude Include="..\programs\Test3DObject.h" />
     <ClInclude Include="..\Vector\source\Vector3.h" />
+    <ClInclude Include="framework\2d_objects\Grid2D.h" />
     <ClInclude Include="framework\basic_3d_objects\AxisObject.h" />
     <ClInclude Include="framework\basic_3d_objects\Cube.h" />
     <ClInclude Include="framework\basic_3d_objects\Dodecahedron.h" />
     <ClInclude Include="framework\basic_3d_objects\Sphere.h" />
     <ClInclude Include="framework\basic_3d_objects\Surface.h" />
+    <ClInclude Include="framework\ButtonHandler.h" />
     <ClInclude Include="framework\draw_objects\Camera.h" />
     <ClInclude Include="framework\draw_objects\Drawable.h" />
     <ClInclude Include="framework\draw_objects\Figure2D.h" />
@@ -178,8 +187,6 @@
     <ClInclude Include="framework\ProgramFramework.h" />
     <ClInclude Include="framework\ProgramInputHandler.h" />
     <ClInclude Include="framework\Renderer.h" />
-    <ClInclude Include="test_programs\Test2DObject.h" />
-    <ClInclude Include="test_programs\Test3DObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="framework\shaders\lighting_shaders .shader" />

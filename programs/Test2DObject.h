@@ -21,13 +21,13 @@ public:
 		delete task_figure_;
 	}
 
-	int Init(ProgramInputHandler* input_handler) override
+	int Init() override
 	{
 		// create test object
 		task_figure_->name = "Test";
-		task_figure_->set_fill_color(0.0, 153 / 255.f, 37 / 255.f);
-		task_figure_->set_border_color(0.0, 0.0, 0.0);
-		task_figure_->set_scale(1.0, 1.0);
+		task_figure_->SetFillColor(0.0, 153 / 255.f, 37 / 255.f);
+		task_figure_->SetBorderColor(0.0, 0.0, 0.0);
+		task_figure_->SetScale(1.0, 1.0);
 
 		// points for primitives
 		const Vector3
@@ -51,7 +51,7 @@ public:
 		return 0;
 	}
 
-	int Step(ProgramInputHandler* input_handler) override
+	int Step() override
 	{
 		// Draw test object
 		glClear(GL_COLOR_BUFFER_BIT);

@@ -14,5 +14,5 @@ unsigned Line::get_triangle_indices_count() const
 
 void Line::Draw(const void* offset) const
 {
-	glDrawElements(GL_LINES, vertex_indices_.size(), GL_UNSIGNED_INT, offset);
+	glDrawElements(GL_LINE_STRIP, vertex_indices_.size(), GL_UNSIGNED_INT, offset);
 }

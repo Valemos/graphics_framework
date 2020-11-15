@@ -22,6 +22,11 @@ public:
 		return {x, y, z};
 	}
 
+	static Vector3 FromGlm(glm::vec3 v)
+	{
+		return {v.x, v.y, v.z};
+	}
+
 	// work with other vectors
 	float DistanceSquared(const Vector3& other) const;
 	float Distance(const Vector3& other) const;

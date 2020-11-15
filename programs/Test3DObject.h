@@ -11,7 +11,7 @@
 #include "math.h"
 
 // for additional key keyboard callback
-#include "../framework/basic_3d_objects/AxisObject.h"
+#include "basic_3d_objects/AxisObject.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
@@ -19,6 +19,7 @@
 
 static const float g_camera_move_speed_ = 0.1;
 static float g_increment_zoom_value = 0;
+
 
 class Test3DObjectsProgram : public ProgramFramework
 {
@@ -43,45 +44,42 @@ public:
 		axis_(nullptr)
 	{
 		console_handle_ = GetStdHandle(STD_OUTPUT_HANDLE);
-		ProgramInputHandler::SetKeyboardCallback(keyboard_callback);
+
+
+		auto handlers = std::vector<ButtonHandler>{
+			ButtonHandler(Equal, HandlePlus),
+			ButtonHandler(Minus, HandleMinus),
+			ButtonHandler(P, HandlePerspectiveMode),
+			ButtonHandler(O, HandleOrthogonalMode)
+		};
+		ProgramInputHandler::AddButtonHandlers(handlers);
 	}
 
-	static void keyboard_callback (GLFWwindow* window, int key, int scancode, int action, int mods)
+	static int HandlePlus(void*)
 	{
-		// + - to zoom in and out
-
-		const int key_plus = glfwGetKey(window, GLFW_KEY_EQUAL);
-		const int key_minus = glfwGetKey(window, GLFW_KEY_MINUS);
-
-		const int key_p = glfwGetKey(window, GLFW_KEY_P);
-		const int key_o = glfwGetKey(window, GLFW_KEY_O);
-		
-		if (key_p == GLFW_PRESS)
-		{
-			ProgramInputHandler::renderer.get_camera().set_draw_mode(Perspective);
-		}
-		else if (key_o == GLFW_PRESS)
-		{
-			ProgramInputHandler::renderer.get_camera().set_draw_mode(Orthogonal);
-		}
-
-		int zoom_value = 0;
-		if (key_minus == GLFW_PRESS)
-		{
-			zoom_value -= 1;
-		}
-		if (key_plus == GLFW_PRESS)
-		{
-			zoom_value += 1;
-		}
-
-		if (zoom_value != 0)
-		{
-			g_increment_zoom_value = zoom_value * g_camera_move_speed_;
-		} 
+		g_increment_zoom_value += g_camera_move_speed_;
+		return 0;
 	}
-	
-	int Init(ProgramInputHandler*) override
+
+	static int HandleMinus(void*)
+	{
+		g_increment_zoom_value -= g_camera_move_speed_;
+		return 0;
+	}
+
+	static int HandlePerspectiveMode(void*)
+	{
+		ProgramInputHandler::renderer.get_camera().set_draw_mode(Perspective);
+		return 0;
+	}
+
+	static int HandleOrthogonalMode(void*)
+	{
+		ProgramInputHandler::renderer.get_camera().set_draw_mode(Orthogonal);
+		return 0;
+	}
+
+	int Init() override
 	{
 		// create vertices for primitives
 		axis_ = new ThreeAxis();
@@ -100,7 +98,7 @@ public:
 		return 0;
 	}
 
-	int Step(ProgramInputHandler*) override
+	int Step() override
 	{
 		const auto keyboard_input = *ProgramInputHandler::keyboard_move_dir;
 

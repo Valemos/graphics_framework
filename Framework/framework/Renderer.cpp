@@ -25,12 +25,12 @@ Camera& Renderer::get_camera()
     return main_camera_;
 }
 
-void Renderer::set_global_scale(glm::vec3 global_scale)
+void Renderer::SetGlobalScale(glm::vec3 global_scale)
 {
     global_scale_ = global_scale;
 }
 
-glm::vec3 Renderer::get_global_scale() const
+glm::vec3 Renderer::GetGlobalScale() const
 {
     return global_scale_;
 }

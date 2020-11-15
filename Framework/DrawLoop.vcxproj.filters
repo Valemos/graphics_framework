@@ -54,6 +54,18 @@
     <ClCompile Include="framework\draw_objects\Line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="framework\2d_objects\Grid2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\ButtonHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\programs\GridVisualization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\programs\Lab2_3d_objects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework\ProgramFramework.h">
@@ -86,12 +98,6 @@
     <ClInclude Include="framework\draw_objects\Object3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="test_programs\Test2DObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="test_programs\Test3DObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="framework\draw_objects\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -111,6 +117,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\draw_objects\Line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\2d_objects\Grid2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\ButtonHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\programs\GridVisualization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\programs\Test2DObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\programs\Test3DObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

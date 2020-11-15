@@ -2,6 +2,7 @@
 
 #include <thread>
 #include <iostream>
+#include <vector>
 #include "Renderer.h"
 
 
@@ -11,11 +12,47 @@ GLFWwindow* ProgramInputHandler::main_window_ = nullptr;
 Vector3 ProgramInputHandler::window_size = { 0.0, 0.0 };
 Renderer ProgramInputHandler::renderer = Renderer();
 
-Vector3* ProgramInputHandler::keyboard_move_dir = new Vector3{ 0.0, 0.0 };
 Vector3* ProgramInputHandler::mouse_position = new Vector3{0.0, 0.0};
 Vector3* ProgramInputHandler::clicked_position = nullptr;
 
-void (*ProgramInputHandler::additional_callback_) (GLFWwindow* window, int key, int scancode, int action, int mods) = nullptr;
+Vector3* ProgramInputHandler::keyboard_move_dir = new Vector3{ 0.0, 0.0 };
+
+// default button handlers
+
+static int default_handler_w(void*)
+{
+	ProgramInputHandler::keyboard_move_dir->y += 1;
+	return 0;
+};
+
+static int default_handler_s(void*)
+{
+	ProgramInputHandler::keyboard_move_dir->y -= 1;
+	return 0;
+};
+
+static int default_handler_a(void*)
+{
+	ProgramInputHandler::keyboard_move_dir->x -= 1;
+	return 0;
+};
+
+static int default_handler_d(void*)
+{
+	ProgramInputHandler::keyboard_move_dir->x += 1;
+	return 0;
+};
+
+const std::vector<ButtonHandler> ProgramInputHandler::default_handlers = {
+	ButtonHandler(W, default_handler_w),
+	ButtonHandler(A, default_handler_a),
+	ButtonHandler(S, default_handler_s),
+	ButtonHandler(D, default_handler_d)
+};
+
+std::vector<ButtonHandler> ProgramInputHandler::button_handlers(
+	default_handlers.begin(), 
+	default_handlers.end());
 
 ProgramInputHandler* ProgramInputHandler::GetInstance(const std::string& shader_path, int width, int height)
 {
@@ -33,10 +70,10 @@ ProgramInputHandler::~ProgramInputHandler()
 	delete keyboard_move_dir;
 }
 
-ProgramInputHandler::ProgramInputHandler(const std::string& shader_path, int width, int height)
+ProgramInputHandler::ProgramInputHandler(const std::string& path, int width, int height)
 {
 	window_size = { static_cast<float>(width), static_cast<float>(height) };
-	ProgramInputHandler::shader_path = shader_path;
+	shader_path = path;
 }
 
 int ProgramInputHandler::RunProgram(ProgramFramework* program)
@@ -64,7 +101,7 @@ int ProgramInputHandler::RunProgram(ProgramFramework* program)
 	}
 
 	glViewport(0, 0, static_cast<int>(window_size.x), static_cast<int>(window_size.y));
-
+	
 	glfwSetKeyCallback(main_window_, CallbackKeyboard);
 	glfwSetWindowSizeCallback(main_window_, CallbackWindowResize);
 	glfwSetCursorPosCallback(main_window_, CallbackMouseMoved);
@@ -74,7 +111,7 @@ int ProgramInputHandler::RunProgram(ProgramFramework* program)
 
 	glEnable(GL_DEPTH_TEST);
 	
-	program->Init(this);
+	program->Init();
 	program->previousUpdateTime = glfwGetTime();
 	
 	while (!glfwWindowShouldClose(GetWindow())) {
@@ -86,7 +123,7 @@ int ProgramInputHandler::RunProgram(ProgramFramework* program)
 			continue;
 		}
 
-		if (program->Step(this) != 0)
+		if (program->Step() != 0)
 		{
 			break;
 		}
@@ -96,7 +133,7 @@ int ProgramInputHandler::RunProgram(ProgramFramework* program)
 	}
 
 	glfwTerminate();
-	return program->Finish(this);
+	return program->Finish();
 }
 
 GLFWwindow* ProgramInputHandler::GetWindow()
@@ -104,46 +141,61 @@ GLFWwindow* ProgramInputHandler::GetWindow()
 	return main_window_;
 }
 
-void ProgramInputHandler::SetKeyboardCallback(
-	void(* additional_callback)(GLFWwindow* window, int key, int scancode, int action, int mods))
-{
-	additional_callback_ = additional_callback;
-}
-
 void ProgramInputHandler::CallbackKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	const int key_A = glfwGetKey(window, GLFW_KEY_A);
-	const int key_D = glfwGetKey(window, GLFW_KEY_D);
-	const int key_W = glfwGetKey(window, GLFW_KEY_W);
-	const int key_S = glfwGetKey(window, GLFW_KEY_S);
-
 	*keyboard_move_dir = { 0, 0 };
 
-	if (key_A == GLFW_PRESS) {
-		keyboard_move_dir->x -= 1;
-	}
-
-	if (key_D == GLFW_PRESS) {
-		keyboard_move_dir->x += 1;
-	}
-
-	// handle up and down
-	if (key_W == GLFW_PRESS) {
-		keyboard_move_dir->y += 1;
-	}
-
-	if (key_S == GLFW_PRESS) {
-		keyboard_move_dir->y -= 1;
+	for (auto handler : button_handlers)
+	{
+		const int key_status = glfwGetKey(window, handler.GetType());
+		if (key_status == GLFW_PRESS)
+		{
+			if (handler.Handle() != 0)
+			{
+				std::cout << "button " << handler.GetType() << "unhandled" << std::endl;
+			}
+		}
 	}
 
 	keyboard_move_dir->Normalize();
+}
 
-	additional_callback_(window, key, scancode, action, mods);
+void ProgramInputHandler::AddButtonHandlers(std::vector<ButtonHandler>& handlers)
+{
+	button_handlers.insert(button_handlers.end(), handlers.begin(), handlers.end());
+}
+
+void ProgramInputHandler::RemoveButtonHandlers(std::vector<Key>& key_types)
+{
+	auto new_handlers = std::vector<ButtonHandler>();
+	new_handlers.reserve(button_handlers.size());
+	for (auto it_handler = button_handlers.begin(); it_handler != button_handlers.end();)
+	{
+		for (auto it_key = key_types.begin(); it_key != key_types.end();)
+		{
+			if (it_handler->GetType() == *it_key)
+			{
+				button_handlers.erase(it_handler);
+				key_types.erase(it_key);
+				break;
+			}
+			++it_key;
+		}
+		++it_handler;
+	}
 }
 
 void ProgramInputHandler::CallbackWindowResize(GLFWwindow* window, int width, int height)
 {	
 	glViewport(0, 0, width, height);
+
+	const auto prev_scale = renderer.GetGlobalScale();
+	renderer.SetGlobalScale({
+		prev_scale.x * window_size.x / width, 
+		prev_scale.y * window_size.y / height,
+		prev_scale.z
+	});
+	
 	window_size = { static_cast<float>(width), static_cast<float>(height) };
 }
 
@@ -158,7 +210,8 @@ void ProgramInputHandler::CallbackMouseButton(GLFWwindow* window, int button, in
 		// convert clicked position to NDC
 		clicked_position = new Vector3{
 			static_cast<float>(xpos) / window_size.x * 2 - 1,
-			static_cast<float>(ypos) / window_size.y * 2 - 1
+			static_cast<float>(ypos) / window_size.y * 2 - 1,
+			0
 		};
 	}
 }

@@ -22,15 +22,15 @@ public:
     void LoadShadersFromFile(const std::string& file_path);
 	int get_shader_program() const;
 	Camera& get_camera();
-	void set_global_scale(glm::vec3 global_scale);
-	glm::vec3 get_global_scale() const;
+	void SetGlobalScale(glm::vec3 global_scale);
+	glm::vec3 GetGlobalScale() const;
 
 private:
 	
 	Camera main_camera_ = Camera({0, 0, 0}, {0, 0, 0});
 	
 	unsigned int shader_program_;
-	glm::vec3 global_scale_;
+	glm::vec3 global_scale_ {1, 1, 1};
 	
 	ShaderSourceCode ParseShader(const std::string& filePath) const;
 	static unsigned int InitShaders(const ShaderSourceCode& code);

@@ -7,7 +7,7 @@ class Primitive
 {
 public:
 	explicit Primitive(const std::vector<unsigned int>& indices);
-	virtual ~Primitive() = default;
+	virtual ~Primitive();
 
 	// we must create set of triangles for each primitive
 	virtual void Draw(const void* offset) const = 0;

@@ -3,7 +3,6 @@
 
 class ProgramInputHandler;
 
-
 class ProgramFramework
 {
 public:
@@ -18,9 +17,14 @@ public:
 	}
 	
 	virtual ~ProgramFramework() = default;
-	virtual int Init(ProgramInputHandler*) = 0;
-	virtual int Step(ProgramInputHandler*) = 0;
-	virtual int Finish(ProgramInputHandler*) { return 0; };
+	virtual int Init() = 0;
+	virtual int Step() = 0;
+
+	// "Finish" is optional
+	virtual int Finish()
+	{
+		return 0;
+	}
 };
 
 #endif

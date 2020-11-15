@@ -37,6 +37,9 @@ public:
 	void set_primitives(const std::vector<Primitive*>& new_primitives);
 
 	virtual Vector3& Position();
+
+
+	virtual void LoadGLTransform(Renderer& renderer, const Vector3& position) const {};
 	
 	// generates GL buffers and sets up all attributes
 	virtual void InitGLBuffer();

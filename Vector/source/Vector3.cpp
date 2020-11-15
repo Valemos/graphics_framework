@@ -40,9 +40,9 @@ Vector3 Vector3::Direction(const Vector3& other) const
 	// finds normalized direction vector
 	const float distance = Distance(other);
 	return Vector3(
-		other.x / distance, 
-		other.y / distance,
-		other.z / distance);
+		(x - other.x) / distance,
+		(y - other.y) / distance,
+		(z - other.z) / distance);
 }
 
 Vector3 Vector3::Direction(const Vector3& other, float distance_sqr) const
