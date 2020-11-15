@@ -24,6 +24,9 @@
     <ClCompile Include="programs_source\ProgramMultipleObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="programs_source\SpaceMetricGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="programs_source\GridVisualization.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="programs_source\Test3DObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\SpaceMetricGrid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

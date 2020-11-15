@@ -3,20 +3,20 @@
 
 class ProgramInputHandler;
 
-class ProgramFramework
+class Program
 {
 public:
 	double desiredUpdateTime;
 	double previousUpdateTime;
 
 	
-	ProgramFramework(float fps)
+	Program(float fps)
 	{
 		desiredUpdateTime = 1.0 / fps;
 		previousUpdateTime = 0.0;
 	}
 	
-	virtual ~ProgramFramework() = default;
+	virtual ~Program() = default;
 	virtual int Init() = 0;
 	virtual int Step() = 0;
 

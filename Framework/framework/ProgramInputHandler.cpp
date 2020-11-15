@@ -76,7 +76,7 @@ ProgramInputHandler::ProgramInputHandler(const std::string& path, int width, int
 	shader_path = path;
 }
 
-int ProgramInputHandler::RunProgram(ProgramFramework* program)
+int ProgramInputHandler::RunProgram(Program* program) const
 {
     // create window
 	if (!glfwInit()) {
@@ -84,7 +84,7 @@ int ProgramInputHandler::RunProgram(ProgramFramework* program)
 	}
 
 	/* Create a windowed mode window and its OpenGL context */
-	main_window_ = glfwCreateWindow(static_cast<int>(window_size.x), static_cast<int>(window_size.y), "Figure", NULL, NULL);
+	main_window_ = glfwCreateWindow(static_cast<int>(window_size.x), static_cast<int>(window_size.y), "Program", NULL, NULL);
 	if (!main_window_)
 	{
 		glfwTerminate();
@@ -167,7 +167,7 @@ void ProgramInputHandler::CallbackKeyboard(GLFWwindow* window, int key, int scan
 		{
 			if (handler.Handle() != 0)
 			{
-				std::cout << "button " << static_cast<int>(handler.GetType()) << "unhandled" << std::endl;
+				std::cout << "button " << static_cast<int>(handler.GetType()) << " unhandled" << std::endl;
 			}
 		}
 	}
@@ -192,9 +192,11 @@ void ProgramInputHandler::RemoveButtonHandlers(std::vector<Key>& key_types)
 			{
 				button_handlers.erase(it_handler);
 				key_types.erase(it_key);
-				break;
 			}
-			++it_key;
+			else
+			{
+				++it_key;
+			}
 		}
 		++it_handler;
 	}

@@ -15,7 +15,7 @@ float ProgramMultipleObjects::s_increment_zoom_value_ = 0;
 
 
 ProgramMultipleObjects::ProgramMultipleObjects(float fps):
-	ProgramFramework(fps), axis_(nullptr), draw_objects_{}
+	Program(fps), axis_(nullptr), draw_objects_{}
 {
 	console_handle_ = GetStdHandle(STD_OUTPUT_HANDLE);
 

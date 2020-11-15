@@ -7,7 +7,7 @@
 #include "Windows.h"
 #include <iostream>
 
-#include "ProgramFramework.h"
+#include "Program.h"
 #include "draw_objects/Object3D.h"
 #include "basic_3d_objects/Sphere.h"
 #include "basic_3d_objects/Dodecahedron.h"
@@ -24,7 +24,7 @@ static const float g_camera_move_speed_ = 0.1;
 static float g_increment_zoom_value = 0;
 
 
-class Test3DObjectsProgram : public ProgramFramework
+class Test3DObjectsProgram : public Program
 {
 	const Vector3 object_position_{ 0, 0, 0 };
 
@@ -42,7 +42,7 @@ class Test3DObjectsProgram : public ProgramFramework
 	
 public:
 	explicit Test3DObjectsProgram(float fps)
-		: ProgramFramework(fps),
+		: Program(fps),
 		axis_(nullptr),
 		draw_object_(nullptr)
 	{

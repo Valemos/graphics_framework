@@ -1,17 +1,17 @@
 #pragma once
 
-#include "../framework/ProgramFramework.h"
-#include "../framework/draw_objects/Figure2D.h"
-#include "../framework/draw_objects/Quad.h"
-#include "../framework/draw_objects/Triangle.h"
+#include "Program.h"
+#include "draw_objects/Figure2D.h"
+#include "draw_objects/Quad.h"
+#include "draw_objects/Triangle.h"
 
 
-class Test2DProgram : public ProgramFramework
+class Test2DProgram : public Program
 {
 	Figure2D* task_figure_;
 
 public:
-	Test2DProgram(float fps) : ProgramFramework(fps)
+	Test2DProgram(float fps) : Program(fps)
 	{
 		task_figure_ = new Figure2D();
 	}

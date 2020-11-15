@@ -89,11 +89,12 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(SolutionDir)Vector\source;$(SolutionDir)Framework\framework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\coding\c_c++\GraphicalFramework\Debug;</AdditionalLibraryDirectories>
       <AdditionalDependencies>Framework.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -106,13 +107,14 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(SolutionDir)Vector\source;$(SolutionDir)Framework\framework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\coding\c_c++\GraphicalFramework\Debug;</AdditionalLibraryDirectories>
       <AdditionalDependencies>Framework.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -148,6 +150,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="programs_source\GridVisualization.cpp" />
     <ClCompile Include="programs_source\ProgramMultipleObjects.cpp" />
+    <ClCompile Include="programs_source\SpaceMetricGrid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework\DrawLoop.vcxproj">
@@ -157,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="programs_source\GridVisualization.h" />
     <ClInclude Include="programs_source\ProgramMultipleObjects.h" />
+    <ClInclude Include="programs_source\SpaceMetricGrid.h" />
     <ClInclude Include="programs_source\Test2DObject.h" />
     <ClInclude Include="programs_source\Test3DObject.h" />
   </ItemGroup>

@@ -59,9 +59,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework\ProgramFramework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="framework\ProgramInputHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -111,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\ButtonHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\Program.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -90,6 +90,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(ProjectDir)..\Vector\source;$(ProjectDir)framework\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,6 +117,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\coding\cpp_libs\GLEW\include;D:\coding\cpp_libs\GLFW\include;D:\coding\cpp_libs\GLM;$(ProjectDir)..\Vector\source;$(ProjectDir)framework\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -195,7 +197,7 @@
     <ClInclude Include="framework\draw_objects\Primitive.h" />
     <ClInclude Include="framework\draw_objects\Quad.h" />
     <ClInclude Include="framework\draw_objects\Triangle.h" />
-    <ClInclude Include="framework\ProgramFramework.h" />
+    <ClInclude Include="framework\Program.h" />
     <ClInclude Include="framework\ProgramInputHandler.h" />
     <ClInclude Include="framework\Renderer.h" />
   </ItemGroup>

@@ -6,7 +6,7 @@
 #include "GLFW/glfw3.h"
 #include "Vector3.h"
 #include "Renderer.h"
-#include "ProgramFramework.h"
+#include "Program.h"
 #include <vector>
 #include "ButtonHandler.h"
 
@@ -29,7 +29,7 @@ public:
 	static ProgramInputHandler* GetInstance(const std::string& shader_path, int width, int height);
 	~ProgramInputHandler();
 
-	int RunProgram(ProgramFramework*);
+	int RunProgram(Program*) const;
 	static void ClearScreen();
 	static void SetClearColor(double r, double g, double b, double a = 1.0);
 	static void SetClearColor(int r, int g, int b, int a = 255);

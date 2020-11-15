@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ProgramFramework.h"
+#include "Program.h"
 #include "basic_3d_objects/Sphere.h"
 #include "basic_3d_objects/Dodecahedron.h"
 #include "basic_3d_objects/Surface.h"
@@ -12,7 +12,7 @@
 static constexpr float pi = 3.141592653589793f;
 static constexpr float pi2 = pi * 2;
 
-class ProgramMultipleObjects : public ProgramFramework
+class ProgramMultipleObjects : public Program
 {
 	// to reset console
 	HANDLE console_handle_;

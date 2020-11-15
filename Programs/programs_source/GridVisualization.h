@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ProgramInputHandler.h"
-#include "ProgramFramework.h"
+#include "Program.h"
 #include "ButtonHandler.h"
 #include "2d_objects/Grid2D.h"
 #include "draw_objects/Triangle.h"
@@ -9,7 +9,7 @@
 
 
 class GridVisualization :
-    public ProgramFramework
+    public Program
 {
     const float attraction_speed_ = 0.1 / 60;
     std::vector<Vector3> attraction_targets_;
@@ -28,13 +28,13 @@ class GridVisualization :
     static bool s_space_pressed;
 	
 public:
-    GridVisualization(Vector3 grid_start, Vector3 grid_step, int width_count, int height_count) : ProgramFramework(60.f), grid_start_(grid_start), grid_step_(grid_step), grid_width_count_(width_count), grid_height_count_(height_count)
+    GridVisualization(Vector3 grid_start, Vector3 grid_step, int width_count, int height_count) : Program(60.f), grid_start_(grid_start), grid_step_(grid_step), grid_width_count_(width_count), grid_height_count_(height_count)
     {
     }
 
     static int HandleSpace(void*);
 	
-    // Inherited via ProgramFramework
+    // Inherited via Program
     int Init() override;
     int Step() override;
 

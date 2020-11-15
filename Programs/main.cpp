@@ -5,6 +5,7 @@
 #include "programs_source/Test3DObject.h"
 #include "programs_source/ProgramMultipleObjects.h"
 #include "programs_source/GridVisualization.h"
+#include "programs_source/SpaceMetricGrid.h"
 
 const char* shader_path = "D:/coding/c_c++/GraphicalFramework/Framework/framework/shaders/main_shaders.shader";
 
@@ -44,8 +45,15 @@ int run_multiple_3d_objects()
 	return program->RunProgram(new ProgramMultipleObjects(60.f));
 }
 
+int run_space_metric_grid()
+{
+	ProgramInputHandler* program = ProgramInputHandler::GetInstance(shader_path, 800, 600);
+	ProgramInputHandler::renderer.SetGlobalScale({6 / 8.f, 1, 1});
+	return program->RunProgram(new SpaceMetricGrid(60.f));
+}
+
 int main()
 {
 	// call functions from above to use various programs
-	return run_3d_test();
+	return run_space_metric_grid();
 }
