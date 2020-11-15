@@ -9,7 +9,7 @@ class Dodecahedron : public Object3D
 {
 	const float golden_ratio_ = (1 + sqrt(5)) / 2;
 
-	std::vector<Primitive*> CreateRoofPrimitives(const std::vector<unsigned>& cube_face, const std::vector<unsigned>& points, int face_rotation, bool flip_points)
+	static std::vector<Primitive*> CreateRoofPrimitives(const std::vector<unsigned>& cube_face, const std::vector<unsigned>& points, int face_rotation, bool flip_points)
 	{
 		std::vector<Primitive*> output;
 		output.reserve(4);

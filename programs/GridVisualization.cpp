@@ -38,7 +38,7 @@ int GridVisualization::Init()
         }
     }
 
-    glClearColor(66 / 255.f, 135 / 255.f, 245 / 255.f, 1.0);
+    ProgramInputHandler::SetClearColor(66, 135, 245);
     main_grid_ = new Grid2D(points_grid_);
     main_grid_->SetScale(1, 1);
     main_grid_->SetBorderColor(0, 0, 0);
@@ -75,7 +75,7 @@ int GridVisualization::Step()
         UpdateGridPoints(attraction_speed_);
     }
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    ProgramInputHandler::ClearScreen();
     main_grid_->Draw(ProgramInputHandler::renderer);
     return 0;
 }

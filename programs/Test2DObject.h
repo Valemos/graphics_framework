@@ -47,14 +47,14 @@ public:
 		task_figure_->Position() = Vector3{0, 0, 0};
 		
 		// background color
-		glClearColor(1.0, 116 / 255.f, 0.0, 1.0);
+		ProgramInputHandler::SetClearColor(255, 116, 0, 255);
 		return 0;
 	}
 
 	int Step() override
 	{
 		// Draw test object
-		glClear(GL_COLOR_BUFFER_BIT);
+		ProgramInputHandler::ClearScreen();
 		task_figure_->Draw(ProgramInputHandler::renderer);
 		return 0;
 	}

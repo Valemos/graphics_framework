@@ -96,7 +96,7 @@ public:
 		ProgramInputHandler::renderer.get_camera().UpdateCameraUp({0, 1, 0});
 		ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
 		
-		glClearColor(0.0, 146 / 255.0, 250 / 255.0, 1.0);
+		ProgramInputHandler::SetClearColor(0, 146, 250);
 		return 0;
 	}
 
@@ -120,7 +120,7 @@ public:
 			UpdateCameraSphericalCoordinate();
 		}
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		ProgramInputHandler::ClearScreen();
 		axis_->Draw(ProgramInputHandler::renderer);
 		draw_object_->Draw(ProgramInputHandler::renderer);
 		draw_object_->DrawWireframe(ProgramInputHandler::renderer);

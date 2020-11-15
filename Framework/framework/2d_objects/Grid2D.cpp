@@ -31,7 +31,7 @@ Grid2D::Grid2D(std::vector<std::vector<Vector3>>& points_array)
 	// create horizontal lines from indices
 	for (unsigned row = 0; row < vertex_indices.size(); ++row)
 	{
-		primitives.emplace_back(new Line( *(new std::vector<unsigned>(vertex_indices[row]))));
+		primitives.emplace_back(new Line( std::vector<unsigned>(vertex_indices[row])));
 	}
 
 	// create vertical lines from indices

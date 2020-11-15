@@ -30,13 +30,13 @@ ProgramMultipleObjects::ProgramMultipleObjects(float fps):
 
 int ProgramMultipleObjects::HandlePlus(void*)
 {
-	s_increment_zoom_value_ += s_camera_move_speed;
+	s_increment_zoom_value_ -= s_camera_move_speed;
 	return 0;
 }
 
 int ProgramMultipleObjects::HandleMinus(void*)
 {
-	s_increment_zoom_value_ -= s_camera_move_speed;
+	s_increment_zoom_value_ += s_camera_move_speed;
 	return 0;
 }
 
@@ -98,13 +98,12 @@ int ProgramMultipleObjects::Init()
 	draw_objects_[4]->Position() = Vector3{-2, -4, 0};
 
 
-	ProgramInputHandler::renderer.get_camera().UpdateCameraPosition(camera_position_);
+	UpdateCameraSphericalCoordinate();
 	ProgramInputHandler::renderer.get_camera().UpdateCameraTarget({0, 0, 0});
 	ProgramInputHandler::renderer.get_camera().UpdateCameraUp(current_camera_up_);
 	ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(ortho_projection_dim_);
-	UpdateCameraSphericalCoordinate();
 
-	glClearColor(0.0, 146 / 255.0, 250 / 255.0, 1.0);
+	ProgramInputHandler::SetClearColor(0, 146, 250);
 	return 0;
 }
 
@@ -159,6 +158,7 @@ int ProgramMultipleObjects::Step()
 		}
 
 		// must change up vector when theta passes 0 degrees and 180 degrees
+		// to maintain the same orientation relative to center of a scene
 		if (prev_theta_angle < bot_angle_ && bot_angle_ < next_theta_angle ||
 			prev_theta_angle < top_angle_ && top_angle_ < next_theta_angle)
 		{
@@ -174,7 +174,7 @@ int ProgramMultipleObjects::Step()
 		ProgramInputHandler::renderer.get_camera().UpdateCameraUp(current_camera_up_);
 	}
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	ProgramInputHandler::ClearScreen();
 
 	draw_objects_[0]->Draw(ProgramInputHandler::renderer);
 	draw_objects_[1]->Draw(ProgramInputHandler::renderer);

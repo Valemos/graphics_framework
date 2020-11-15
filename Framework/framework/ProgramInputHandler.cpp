@@ -136,6 +136,21 @@ int ProgramInputHandler::RunProgram(ProgramFramework* program)
 	return program->Finish();
 }
 
+void ProgramInputHandler::ClearScreen()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void ProgramInputHandler::SetClearColor(double r, double g, double b, double a)
+{
+	glClearColor(r, g, b, a);
+}
+
+void ProgramInputHandler::SetClearColor(int r, int g, int b, int a)
+{
+	glClearColor(r / 255.f, g / 255.f, b / 255.f, a / 255.f);
+}
+
 GLFWwindow* ProgramInputHandler::GetWindow()
 {
 	return main_window_;
