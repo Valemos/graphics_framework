@@ -3,9 +3,9 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
-enum Key
+enum class Key
 {
-	UnknownKey = GLFW_KEY_UNKNOWN,
+	Unknown = GLFW_KEY_UNKNOWN,
 	Space = GLFW_KEY_SPACE,
 	Apostrophe = GLFW_KEY_APOSTROPHE,
 	Comma = GLFW_KEY_COMMA,
@@ -61,7 +61,7 @@ typedef int (*KeyHandler) (void*);
 
 class ButtonHandler
 {
-	Key key_type_ = Key::UnknownKey;
+	Key key_type_ = Key::Unknown;
 	KeyHandler handler_;
 	
 public:

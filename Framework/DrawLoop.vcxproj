@@ -148,7 +148,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\cpp_libs\GLM\glm\detail\glm.cpp" />
     <ClCompile Include="..\programs\GridVisualization.cpp" />
-    <ClCompile Include="..\programs\Lab2_3d_objects.cpp" />
+    <ClCompile Include="..\programs\ProgramMultipleObjects.cpp" />
     <ClCompile Include="..\Vector\source\Vector3.cpp" />
     <ClCompile Include="framework\2d_objects\Grid2D.cpp" />
     <ClCompile Include="framework\ButtonHandler.cpp" />
@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\programs\GridVisualization.h" />
+    <ClInclude Include="..\programs\ProgramMultipleObjects.h" />
     <ClInclude Include="..\programs\Test2DObject.h" />
     <ClInclude Include="..\programs\Test3DObject.h" />
     <ClInclude Include="..\Vector\source\Vector3.h" />

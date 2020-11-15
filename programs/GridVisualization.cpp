@@ -15,7 +15,7 @@ int GridVisualization::HandleSpace(void*)
 int GridVisualization::Init()
 {
     auto handlers = std::vector<ButtonHandler>{
-        ButtonHandler(Space, HandleSpace)
+        ButtonHandler(Key::Space, HandleSpace)
     };
     ProgramInputHandler::AddButtonHandlers(handlers);
 

@@ -1,19 +1,22 @@
 #pragma once
 
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
+
+// for console output
 #include "Windows.h"
 #include <iostream>
 
-#include "../framework/ProgramFramework.h"
-#include "../framework/draw_objects/Object3D.h"
-#include "../framework/basic_3d_objects/Sphere.h"
-#include "../framework/basic_3d_objects/Cube.h"
-#include "../framework/basic_3d_objects/Dodecahedron.h"
+#include "ProgramFramework.h"
+#include "draw_objects/Object3D.h"
+#include "basic_3d_objects/Sphere.h"
+#include "basic_3d_objects/Dodecahedron.h"
+#include "basic_3d_objects/AxisObject.h"
 #include "math.h"
 
 // for additional key keyboard callback
-#include "basic_3d_objects/AxisObject.h"
-#include "GL/glew.h"
-#include "GLFW/glfw3.h"
+#include "ButtonHandler.h"
+#include "ProgramInputHandler.h"
 
 #define PI (3.141592653589793)
 
@@ -33,24 +36,23 @@ class Test3DObjectsProgram : public ProgramFramework
 	float phi_angle_ = 0.f;
 	float radius_ = 8.f;
 	Vector3 camera_position_;
-	float orthogonal_projection_dimention = 5;
+	float orthogonal_projection_dimension = 5;
 
 	HANDLE console_handle_;
 	
 public:
 	explicit Test3DObjectsProgram(float fps)
 		: ProgramFramework(fps),
-		draw_object_(nullptr),
-		axis_(nullptr)
+		axis_(nullptr),
+		draw_object_(nullptr)
 	{
 		console_handle_ = GetStdHandle(STD_OUTPUT_HANDLE);
 
-
 		auto handlers = std::vector<ButtonHandler>{
-			ButtonHandler(Equal, HandlePlus),
-			ButtonHandler(Minus, HandleMinus),
-			ButtonHandler(P, HandlePerspectiveMode),
-			ButtonHandler(O, HandleOrthogonalMode)
+			ButtonHandler(Key::Equal, HandlePlus),
+			ButtonHandler(Key::Minus, HandleMinus),
+			ButtonHandler(Key::P, HandlePerspectiveMode),
+			ButtonHandler(Key::O, HandleOrthogonalMode)
 		};
 		ProgramInputHandler::AddButtonHandlers(handlers);
 	}
@@ -69,13 +71,13 @@ public:
 
 	static int HandlePerspectiveMode(void*)
 	{
-		ProgramInputHandler::renderer.get_camera().set_draw_mode(Perspective);
+		ProgramInputHandler::renderer.get_camera().set_draw_mode(DrawMode::Perspective);
 		return 0;
 	}
 
 	static int HandleOrthogonalMode(void*)
 	{
-		ProgramInputHandler::renderer.get_camera().set_draw_mode(Orthogonal);
+		ProgramInputHandler::renderer.get_camera().set_draw_mode(DrawMode::Orthogonal);
 		return 0;
 	}
 
@@ -92,7 +94,7 @@ public:
 		ProgramInputHandler::renderer.get_camera().UpdateCameraPosition(camera_position_);
 		ProgramInputHandler::renderer.get_camera().UpdateCameraTarget(draw_object_->Position());
 		ProgramInputHandler::renderer.get_camera().UpdateCameraUp({0, 1, 0});
-		ProgramInputHandler::renderer.get_camera().set_ortho_minimal_dimention(orthogonal_projection_dimention);
+		ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
 		
 		glClearColor(0.0, 146 / 255.0, 250 / 255.0, 1.0);
 		return 0;
@@ -105,8 +107,8 @@ public:
 		if (abs(g_increment_zoom_value) > VECTOR_FLOAT_ACCURACY)
 		{
 			radius_ += g_increment_zoom_value;
-			orthogonal_projection_dimention += g_increment_zoom_value;
-			ProgramInputHandler::renderer.get_camera().set_ortho_minimal_dimention(orthogonal_projection_dimention);
+			orthogonal_projection_dimension += g_increment_zoom_value;
+			ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
 			UpdateCameraSphericalCoordinate();
 			g_increment_zoom_value = 0;
 		}

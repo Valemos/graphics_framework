@@ -19,7 +19,7 @@ void Object3D::LoadGLTransform(Renderer& renderer, const Vector3& position) cons
 	// camera transform
 	const float window_aspect_ratio = ProgramInputHandler::window_size.x / ProgramInputHandler::window_size.y;
 	auto& camera = renderer.get_camera();
-	transform = camera.get_projection(window_aspect_ratio) * camera.get_view_matrix() * transform;
+	transform = camera.GetProjection(window_aspect_ratio) * camera.get_view_matrix() * transform;
 
 	static const auto transform_loc = glGetUniformLocation(renderer.get_shader_program(), "transform");
 	glUniformMatrix4fv(transform_loc, 1, GL_FALSE, value_ptr(transform));

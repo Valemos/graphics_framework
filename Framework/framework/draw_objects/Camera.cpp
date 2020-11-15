@@ -38,7 +38,7 @@ void Camera::set_draw_mode(DrawMode mode)
 	draw_mode_ = mode;
 }
 
-void Camera::set_ortho_minimal_dimention(float dimension)
+void Camera::SetOrthoMinimalDimention(float dimension)
 {
 	ortho_minimal_dim = dimension;
 }
@@ -83,16 +83,17 @@ glm::mat4 Camera::get_orthogonal_projection(float aspect_ratio) const
 		near_plane_, far_plane_);
 }
 
-glm::mat4 Camera::get_projection(float aspect_ratio) const
+glm::mat4 Camera::GetProjection(float aspect_ratio) const
 {
-	if (draw_mode_ == Perspective)
+	if (draw_mode_ == DrawMode::Perspective)
 	{
 		return get_perspective_projection(aspect_ratio);
 	}
-	else if (draw_mode_ == Orthogonal)
+	if (draw_mode_ == DrawMode::Orthogonal)
 	{
 		return get_orthogonal_projection(aspect_ratio);
 	}
+	return glm::identity<glm::mat4>();
 }
 
 std::string Camera::Str() const

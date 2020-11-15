@@ -2,9 +2,10 @@
 
 #include "ProgramInputHandler.h"
 
-#include "test_programs/Test2DObject.h"
-#include "test_programs/Test3DObject.h"
+#include "../programs/Test2DObject.h"
+#include "../programs/Test3DObject.h"
 #include "../programs/GridVisualization.h"
+#include "../programs/ProgramMultipleObjects.h"
 
 
 int Run2DTest()
@@ -37,6 +38,12 @@ int RunGravitySimulation()
 			{ grid_resolution, grid_resolution },
 			grid_points_x, grid_points_y)
 	);
+}
+
+int RunMultiple3DObjects()
+{
+	ProgramInputHandler* program = ProgramInputHandler::GetInstance("D:/coding/c_c++/SimpleGraphicalFramework/Framework/framework/shaders/main_shaders.shader", 800, 600);
+	return program->RunProgram(new ProgramMultipleObjects(60.f));
 }
 
 int main()

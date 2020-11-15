@@ -63,7 +63,7 @@
     <ClCompile Include="..\programs\GridVisualization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\programs\Lab2_3d_objects.cpp">
+    <ClCompile Include="..\programs\ProgramMultipleObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -132,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\programs\Test3DObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\programs\ProgramMultipleObjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

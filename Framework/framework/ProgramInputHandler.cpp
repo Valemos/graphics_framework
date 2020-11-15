@@ -44,10 +44,10 @@ static int default_handler_d(void*)
 };
 
 const std::vector<ButtonHandler> ProgramInputHandler::default_handlers = {
-	ButtonHandler(W, default_handler_w),
-	ButtonHandler(A, default_handler_a),
-	ButtonHandler(S, default_handler_s),
-	ButtonHandler(D, default_handler_d)
+	ButtonHandler(Key::W, default_handler_w),
+	ButtonHandler(Key::A, default_handler_a),
+	ButtonHandler(Key::S, default_handler_s),
+	ButtonHandler(Key::D, default_handler_d)
 };
 
 std::vector<ButtonHandler> ProgramInputHandler::button_handlers(
@@ -147,12 +147,12 @@ void ProgramInputHandler::CallbackKeyboard(GLFWwindow* window, int key, int scan
 
 	for (auto handler : button_handlers)
 	{
-		const int key_status = glfwGetKey(window, handler.GetType());
+		const int key_status = glfwGetKey(window, static_cast<int>(handler.GetType()));
 		if (key_status == GLFW_PRESS)
 		{
 			if (handler.Handle() != 0)
 			{
-				std::cout << "button " << handler.GetType() << "unhandled" << std::endl;
+				std::cout << "button " << static_cast<int>(handler.GetType()) << "unhandled" << std::endl;
 			}
 		}
 	}

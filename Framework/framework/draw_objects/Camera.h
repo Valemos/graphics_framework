@@ -7,14 +7,14 @@
 #include "Camera.h"
 #include "Vector3.h"
 
-enum DrawMode
+enum class DrawMode
 {
 	Perspective = 0, Orthogonal = 1
 };
 
 class Camera
 {
-	DrawMode draw_mode_ = Perspective;
+	DrawMode draw_mode_ = DrawMode::Perspective;
 	
 	glm::mat4 view_matrix_;
 	Vector3 camera_position_;
@@ -45,7 +45,7 @@ public:
 	void UpdateViewMatrix();
 
 	void set_draw_mode(DrawMode mode);
-	void set_ortho_minimal_dimention(float dimension);
+	void SetOrthoMinimalDimention(float dimension);
 	const Vector3& get_position() const;
 	const Vector3& get_target() const;
 	const Vector3& get_up() const;
@@ -54,6 +54,6 @@ public:
 	const glm::mat4& get_view_matrix() const;
 	glm::mat4 get_perspective_projection(float aspect_ratio) const;
 	glm::mat4 get_orthogonal_projection(float aspect_ratio) const;
-	glm::mat4 get_projection(float aspect_ratio) const;
+	glm::mat4 GetProjection(float aspect_ratio) const;
 	std::string Str() const;
 };
