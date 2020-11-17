@@ -8,10 +8,11 @@ class Grid2D : public Figure2D
 	unsigned grid_array_height_;
 	
 public:
-	Grid2D(std::vector<std::vector<Vector3>>& points_array);
+	Grid2D(std::vector<std::vector<Vector3>>& points_array, int intermediate_count = 0);
 
 	unsigned GetHeight() const;
 	unsigned GetWidth() const;
-	Vector3 GetPoint(unsigned x, unsigned y);
-	void ReplacePoint(unsigned x, unsigned y, Vector3& point_new);
+	std::vector<float>& GetPoints();
+	void UpdatePoint(Vector3& point, unsigned start_index);
+	void UpdatePoints(const std::vector<Vector3>& points_new);
 };

@@ -55,7 +55,7 @@ public:
 	{
 		// Draw test object
 		ProgramInputHandler::ClearScreen();
-		task_figure_->Draw(ProgramInputHandler::renderer);
+		task_figure_->Draw(ProgramInputHandler::renderer_);
 		return 0;
 	}
 };

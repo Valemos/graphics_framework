@@ -6,10 +6,19 @@
 
 
 #define PI 3.1415926535
+#define ACCURACY 0.000001f
 
 Vector3 SpaceMetricGrid::PolarToCartesian(Vector3& point) const
 {
 	return {point.x * cos(point.y), point.x * sin(point.y)};
+}
+
+Vector3 SpaceMetricGrid::CustomTransform(Vector3& point) const
+{
+	return {
+		point.x * cos(point.y + 2 * point.x),
+		point.x * sin(point.y + 2 * point.x)
+	};
 }
 
 std::vector<std::vector<Vector3>> SpaceMetricGrid::CalculateGridLines(float axis1_min, float axis1_max, float axis2_min, float axis2_max, float grid_step) const
@@ -19,7 +28,6 @@ std::vector<std::vector<Vector3>> SpaceMetricGrid::CalculateGridLines(float axis
 
 	const int lines_axis1 = (int) ceil((axis2_max - axis2_min) / grid_step);
 	const int lines_axis2 = lines_axis1;
-	const float angle_step = 2*PI / lines_axis2;
 	
 	// lines along axis 1
 	Vector3 cur_point{axis1_min, axis2_min};
@@ -31,13 +39,13 @@ std::vector<std::vector<Vector3>> SpaceMetricGrid::CalculateGridLines(float axis
 		// generate points with this fixed value of axis 2
 		do
 		{
-			new_line.emplace_back(PolarToCartesian(cur_point));
+			new_line.emplace_back(CustomTransform(cur_point));
 			cur_point.x += grid_step;
 		}
 		while (cur_point.x < axis1_max);
 
 		lines.emplace_back(new_line);
-		cur_point.y += angle_step;
+		cur_point.y += grid_step;
 		cur_point.x = axis1_min;
 	}
 	
@@ -51,8 +59,8 @@ std::vector<std::vector<Vector3>> SpaceMetricGrid::CalculateGridLines(float axis
 		// generate points with this fixed value of axis 2
 		do
 		{
-			new_line.emplace_back(PolarToCartesian(cur_point));
-			cur_point.y += angle_step;
+			new_line.emplace_back(CustomTransform(cur_point));
+			cur_point.y += grid_step;
 		}
 		while (cur_point.y < axis2_max);
 
@@ -69,7 +77,7 @@ int SpaceMetricGrid::Init()
 	figure_ = new Figure2D();
 
 	// calculate lines on grid along axis
-	auto lines = CalculateGridLines(0.01, 2, 0, 2*PI, 0.1);
+	auto lines = CalculateGridLines(0, 2, 0, 2 * PI, 2 * PI / 80);
 
 	std::vector<Vector3> vertices;
 	std::vector<Primitive*> primitives;
@@ -101,6 +109,6 @@ int SpaceMetricGrid::Init()
 int SpaceMetricGrid::Step()
 {
 	ProgramInputHandler::ClearScreen();
-	figure_->Draw(ProgramInputHandler::renderer);
+	figure_->Draw(ProgramInputHandler::renderer_);
 	return 0;
 }

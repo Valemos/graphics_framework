@@ -18,7 +18,7 @@
 #include "ButtonHandler.h"
 #include "ProgramInputHandler.h"
 
-#define PI (3.141592653589793)
+#define PI (3.141592653589793f)
 
 static const float g_camera_move_speed_ = 0.1;
 static float g_increment_zoom_value = 0;
@@ -32,8 +32,8 @@ class Test3DObjectsProgram : public Program
 	Object3D* draw_object_;
 	
 	// camera
-	float theta_angle_ = - 90.f / 180 * PI;
-	float phi_angle_ = 0.f;
+	float theta_angle_ = PI / 2;
+	float phi_angle_ = 90.f / 180 * PI;
 	float radius_ = 8.f;
 	Vector3 camera_position_;
 	float orthogonal_projection_dimension = 5;
@@ -71,13 +71,13 @@ public:
 
 	static int HandlePerspectiveMode(void*)
 	{
-		ProgramInputHandler::renderer.get_camera().set_draw_mode(DrawMode::Perspective);
+		ProgramInputHandler::renderer_.get_camera().set_draw_mode(DrawMode::Perspective);
 		return 0;
 	}
 
 	static int HandleOrthogonalMode(void*)
 	{
-		ProgramInputHandler::renderer.get_camera().set_draw_mode(DrawMode::Orthogonal);
+		ProgramInputHandler::renderer_.get_camera().set_draw_mode(DrawMode::Orthogonal);
 		return 0;
 	}
 
@@ -91,10 +91,10 @@ public:
 		draw_object_->Position() = object_position_;
 
 		UpdateCameraSphericalCoordinate();
-		ProgramInputHandler::renderer.get_camera().UpdateCameraPosition(camera_position_);
-		ProgramInputHandler::renderer.get_camera().UpdateCameraTarget(draw_object_->Position());
-		ProgramInputHandler::renderer.get_camera().UpdateCameraUp({0, 1, 0});
-		ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
+		ProgramInputHandler::renderer_.get_camera().UpdateCameraPosition(camera_position_);
+		ProgramInputHandler::renderer_.get_camera().UpdateCameraTarget(draw_object_->Position());
+		ProgramInputHandler::renderer_.get_camera().UpdateCameraUp({0, 1, 0});
+		ProgramInputHandler::renderer_.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
 		
 		ProgramInputHandler::SetClearColor(0, 146, 250);
 		return 0;
@@ -102,13 +102,13 @@ public:
 
 	int Step() override
 	{
-		const auto keyboard_input = *ProgramInputHandler::keyboard_move_dir;
+		const auto keyboard_input = *ProgramInputHandler::keyboard_move_dir_;
 
 		if (abs(g_increment_zoom_value) > VECTOR_FLOAT_ACCURACY)
 		{
 			radius_ += g_increment_zoom_value;
 			orthogonal_projection_dimension += g_increment_zoom_value;
-			ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
+			ProgramInputHandler::renderer_.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
 			UpdateCameraSphericalCoordinate();
 			g_increment_zoom_value = 0;
 		}
@@ -121,9 +121,9 @@ public:
 		}
 
 		ProgramInputHandler::ClearScreen();
-		axis_->Draw(ProgramInputHandler::renderer);
-		draw_object_->Draw(ProgramInputHandler::renderer);
-		draw_object_->DrawWireframe(ProgramInputHandler::renderer);
+		axis_->Draw(ProgramInputHandler::renderer_);
+		draw_object_->Draw(ProgramInputHandler::renderer_);
+		draw_object_->DrawWireframe(ProgramInputHandler::renderer_);
 		
 		SetConsoleCursorPosition(console_handle_, {0, 0});
 		std::cout << "pos " << camera_position_.Str() << std::endl;
@@ -135,6 +135,6 @@ public:
 		camera_position_.x = radius_ * sin(theta_angle_) * cos(phi_angle_);
 		camera_position_.y = radius_ * cos(theta_angle_);
 		camera_position_.z = radius_ * sin(theta_angle_) * sin(phi_angle_);
-		ProgramInputHandler::renderer.get_camera().UpdateCameraPosition(camera_position_);
+		ProgramInputHandler::renderer_.get_camera().UpdateCameraPosition(camera_position_);
 	}
 };

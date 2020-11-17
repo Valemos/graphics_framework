@@ -39,7 +39,7 @@ int GridVisualization::Init()
     }
 
     ProgramInputHandler::SetClearColor(66, 135, 245);
-    main_grid_ = new Grid2D(points_grid_);
+    main_grid_ = new Grid2D(points_grid_, intermediate_points_);
     main_grid_->SetScale(1, 1);
     main_grid_->SetBorderColor(0, 0, 0);
     main_grid_->SetBorderWidth(0.2);
@@ -60,14 +60,14 @@ int GridVisualization::Step()
 		s_last_space_press = glfwGetTime();
     }
 
-    if (ProgramInputHandler::clicked_position != nullptr)
+    if (ProgramInputHandler::clicked_position_ != nullptr)
     {
-        auto* result_coordinate = ProgramInputHandler::clicked_position;
+        auto* result_coordinate = ProgramInputHandler::clicked_position_;
         result_coordinate->y = -result_coordinate->y;
         attraction_targets_.emplace_back(*result_coordinate);
 
-        delete ProgramInputHandler::clicked_position;
-        ProgramInputHandler::clicked_position = nullptr;
+        delete ProgramInputHandler::clicked_position_;
+        ProgramInputHandler::clicked_position_ = nullptr;
     }
 
     if (!attraction_targets_.empty())
@@ -76,7 +76,7 @@ int GridVisualization::Step()
     }
 
     ProgramInputHandler::ClearScreen();
-    main_grid_->Draw(ProgramInputHandler::renderer);
+    main_grid_->Draw(ProgramInputHandler::renderer_);
     return 0;
 }
 
@@ -102,19 +102,14 @@ Vector3& GridVisualization::ShiftTowardsPoint(Vector3& point, Vector3& target, f
 
 void GridVisualization::UpdateGridPoints(float coefficient)
 {
-	const auto grid_height = main_grid_->GetHeight();
-	const auto grid_width = main_grid_->GetWidth();
-
-	for (auto y = 0; y < grid_height; ++y)
+    auto points = main_grid_->GetPoints();
+	for (int i = 0; i < points.size(); i += 3)
 	{
-		for (auto x = 0; x < grid_width; ++x)
-		{
-			for (auto target : attraction_targets_)
-			{
-				auto point = main_grid_->GetPoint(x, y);
-				point = ShiftTowardsPoint(point, target, coefficient);
-				main_grid_->ReplacePoint(x, y, point);
-			}
+        Vector3 point = { points[i], points[i + 1], points[i + 2] };
+        for (auto target : attraction_targets_)
+        {
+            point = ShiftTowardsPoint(point, target, coefficient);
 		}
+        main_grid_->UpdatePoint(point, i);
 	}
 }
