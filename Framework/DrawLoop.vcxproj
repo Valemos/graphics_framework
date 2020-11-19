@@ -178,6 +178,7 @@
     <ClCompile Include="framework\draw_objects\Primitive.cpp" />
     <ClCompile Include="framework\draw_objects\Quad.cpp" />
     <ClCompile Include="framework\draw_objects\Triangle.cpp" />
+    <ClCompile Include="framework\draw_objects\TriangleFan.cpp" />
     <ClCompile Include="framework\ProgramInputHandler.cpp" />
     <ClCompile Include="framework\Renderer.cpp" />
   </ItemGroup>
@@ -197,6 +198,7 @@
     <ClInclude Include="framework\draw_objects\Primitive.h" />
     <ClInclude Include="framework\draw_objects\Quad.h" />
     <ClInclude Include="framework\draw_objects\Triangle.h" />
+    <ClInclude Include="framework\draw_objects\TriangleFan.h" />
     <ClInclude Include="framework\Program.h" />
     <ClInclude Include="framework\ProgramInputHandler.h" />
     <ClInclude Include="framework\Renderer.h" />

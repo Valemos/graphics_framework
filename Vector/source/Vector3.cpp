@@ -45,13 +45,10 @@ Vector3 Vector3::Direction(const Vector3& other) const
 		(z - other.z) / distance);
 }
 
-Vector3 Vector3::Direction(const Vector3& other, float distance_sqr) const
+Vector3 Vector3::Direction(const Vector3& other, float distance) const
 {
 	// optimized direction
-	// provide with squared distance
-	// used to avoid calculating this distance again in some cases
-
-	const float distance = sqrt(distance_sqr);
+	// provide with distance to avoid calculating it again
 	return Vector3(
 		(x - other.x) / distance, 
 		(y - other.y) / distance, 
@@ -114,12 +111,46 @@ Vector3 Vector3::ScaleInv(const Vector3& other) const
 			 z / other.z };
 }
 
-Vector3& Vector3::operator=(const glm::vec3& other)
+Vector3 Vector3::Rotate(float x_angle, float y_angle, float z_angle) const
 {
-	x = other.x;
-	y = other.y;
-	z = other.z;
-	return *this;
+	Vector3 result = *this;
+	float cos_value = 0;
+	float sin_value = 0;
+	
+	if (x_angle > VECTOR_FLOAT_ACCURACY)
+	{
+		cos_value = cos(x_angle);
+		sin_value = sin(x_angle);
+		result = {
+			result.x,
+			result.y * cos_value - result.z * sin_value,
+			result.y * sin_value + result.z * cos_value
+		};
+	}
+
+	if (y_angle > VECTOR_FLOAT_ACCURACY)
+	{
+		cos_value = cos(y_angle);
+		sin_value = sin(y_angle);
+		result = {
+			result.x * cos_value - result.z * sin_value,
+			result.y,
+			result.x * sin_value + result.z * cos_value
+		};
+	}
+
+	if (z_angle > VECTOR_FLOAT_ACCURACY)
+	{
+		cos_value = cos(z_angle);
+		sin_value = sin(z_angle);
+		result = {
+			result.x * cos_value - result.y * sin_value,
+			result.x * sin_value + result.y * cos_value,
+			result.z
+		};
+	}
+
+	return result;
 }
 
 Vector3 Vector3::operator+(const Vector3& other) const

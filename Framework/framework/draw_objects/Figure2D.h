@@ -10,15 +10,17 @@
 
 class Figure2D : public Drawable
 {
+
+protected:
 	glm::vec3 figure_scale_ {1, 1, 1};
-	glm::vec3 fill_color_;
-	glm::vec3 border_color_;
+	glm::vec3 fill_color_ {0, 0, 0};
+	glm::vec3 border_color_ { 0, 0, 0 };
 	float border_width_ = 1.f;
 
 public:
     std::string name;
 
-	Figure2D();
+	Figure2D() = default;
 	~Figure2D() override = default;
 
 	void SetFillColor(float r, float g, float b);

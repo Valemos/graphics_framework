@@ -6,7 +6,7 @@
 
 Drawable::~Drawable()
 {
-	for(auto* prim : primitives)
+	for(auto* prim : primitives_)
 	{
 		delete prim;
 	}
@@ -16,12 +16,12 @@ Drawable::~Drawable()
 
 void Drawable::InitBuffers(const std::vector<Vector3>& vertices, const std::vector<Primitive*>& primitives)
 {
-	set_vertices(vertices);
-	set_primitives(primitives);
+	SetVertices(vertices);
+	SetPrimitives(primitives);
 	InitGLBuffer();
 }
 
-void Drawable::set_vertices(const std::vector<Vector3>& vertices)
+void Drawable::SetVertices(const std::vector<Vector3>& vertices)
 {
 	vertex_buffer_.clear();
 	vertex_buffer_.reserve(vertices.size() * 3);
@@ -33,17 +33,17 @@ void Drawable::set_vertices(const std::vector<Vector3>& vertices)
 	}
 }
 
-void Drawable::set_primitives(const std::vector<Primitive*>& new_primitives)
+void Drawable::SetPrimitives(const std::vector<Primitive*>& new_primitives)
 {
-	for (auto* prim : primitives)
+	for (auto* prim : primitives_)
 	{
 		delete prim;
 	}
-	primitives.clear();
-	primitives = new_primitives;
+	primitives_.clear();
+	primitives_ = new_primitives;
 
 	unsigned indices_count = 0;
-	for (auto* prim : primitives)
+	for (auto* prim : primitives_)
 	{
 		indices_count += prim->get_indices().size();
 	}
@@ -51,7 +51,7 @@ void Drawable::set_primitives(const std::vector<Primitive*>& new_primitives)
 	index_buffer_.clear();
 	index_buffer_.reserve(indices_count);
 
-	for (auto* prim : primitives)
+	for (auto* prim : primitives_)
 	{
 		auto indices = prim->get_indices();
 		index_buffer_.insert(index_buffer_.end(), indices.begin(), indices.end());

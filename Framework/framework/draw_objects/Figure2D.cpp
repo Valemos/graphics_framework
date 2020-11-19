@@ -5,10 +5,6 @@
 #include "Primitive.h"
 
 
-Figure2D::Figure2D(): fill_color_(0.f, 0.f, 0.f), border_color_(0.f, 0.f, 0.f), figure_scale_(1.f, 1.f, 1.f)
-{
-}
-
 void Figure2D::SetFillColor(float r, float g, float b)
 {
 	fill_color_ = glm::vec3(r, g, b);
@@ -36,7 +32,7 @@ void Figure2D::LoadGLTransform(Renderer& renderer, const Vector3& position) cons
 
 	// calculate transform matrix
 	glm::mat4 transform = glm::mat4(1.0f);
-	transform = translate(transform, glm::vec3(position.x, position.y, position.z));
+	transform = translate(transform, position.Scale(Vector3::FromGlm(renderer.GetGlobalScale())).ToGlm());
 	transform = scale(transform, figure_scale_);
 	transform = scale(transform, renderer.GetGlobalScale());
 	glUniformMatrix4fv(transform_loc, 1, GL_FALSE, value_ptr(transform));
@@ -52,10 +48,9 @@ void Figure2D::Draw(Renderer& renderer)
 	LoadGLTransform(renderer, object_position_);
 	LoadGLBuffers();
 
-	glLineWidth(border_width_);
 	glUniform4fv(color_loc, 1, value_ptr(fill_color_));
 	unsigned first_index_position = 0;
-	for (auto* primitive : primitives)
+	for (auto* primitive : primitives_)
 	{
 		primitive->Draw((void*)first_index_position);
 		first_index_position += primitive->get_indices().size() * sizeof(GLuint);
@@ -75,7 +70,7 @@ void Figure2D::DrawWireframe(Renderer& renderer)
 	glLineWidth(border_width_);
 	glUniform4fv(color_loc, 1, value_ptr(border_color_));
 	unsigned first_index_position = 0;
-	for (auto* primitive : primitives)
+	for (auto* primitive : primitives_)
 	{
 		primitive->DrawBorder((void*)first_index_position);
 		first_index_position += primitive->get_indices().size() * sizeof(GLuint);

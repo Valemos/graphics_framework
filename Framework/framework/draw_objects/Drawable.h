@@ -1,12 +1,11 @@
 #ifndef INTERFACE_DRAWABLE
 #define INTERFACE_DRAWABLE
-#include "Vector3.h"
 
 class Renderer;
 class Primitive;
 
-#include <vector>
 #include "Vector3.h"
+#include <vector>
 
 
 class Drawable
@@ -24,7 +23,7 @@ protected:
 	
 	unsigned int vertex_array_object_id_ = 0;
 
-	std::vector<Primitive*> primitives;
+	std::vector<Primitive*> primitives_;
 	
 public:
 	virtual ~Drawable();
@@ -33,8 +32,8 @@ public:
 	// loads all necessary data to graphics card
 	void InitBuffers(const std::vector<Vector3>& vertices, const std::vector<Primitive*>& primitives);
 	
-	void set_vertices(const std::vector<Vector3>& vertices);
-	void set_primitives(const std::vector<Primitive*>& new_primitives);
+	void SetVertices(const std::vector<Vector3>& vertices);
+	void SetPrimitives(const std::vector<Primitive*>& new_primitives);
 
 	virtual Vector3& Position();
 
@@ -51,7 +50,7 @@ public:
 	virtual void Draw(Renderer& renderer) = 0;
 
 	// Draw function can be different in other implementations
-	virtual void DrawWireframe(Renderer& renderer) {};
+	virtual void DrawWireframe(Renderer& renderer) {}
 };
 
 #endif // !INTERFACE_DRAWABLE

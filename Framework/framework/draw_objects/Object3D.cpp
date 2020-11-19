@@ -34,10 +34,10 @@ void Object3D::Draw(Renderer& renderer)
 	LoadGLTransform(renderer, object_position_);
 	LoadGLBuffers();
 
-	// draw all primitives
+	// Draw all primitives
 	unsigned first_index_position = 0;
 	glUniform4fv(color_loc, 1, value_ptr(primary_color));
-	for (auto* primitive : primitives)
+	for (auto* primitive : primitives_)
 	{
 		primitive->Draw((void*)first_index_position);
 		first_index_position += primitive->get_indices().size() * sizeof(GLuint);
@@ -57,7 +57,7 @@ void Object3D::DrawWireframe(Renderer& renderer)
 	
 	unsigned first_index_position = 0;
 	glUniform4fv(color_loc, 1, value_ptr(edge_color));
-	for (auto* primitive : primitives)
+	for (auto* primitive : primitives_)
 	{
 		primitive->DrawBorder((void*)first_index_position);
 		first_index_position += primitive->get_indices().size() * sizeof(GLuint);

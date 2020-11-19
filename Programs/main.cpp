@@ -6,6 +6,7 @@
 #include "programs_source/ProgramMultipleObjects.h"
 #include "programs_source/GridVisualization.h"
 #include "programs_source/SpaceMetricGrid.h"
+#include "../Programs/programs_source/gravity_simulation/SimulateGravityProgram.h"
 
 const char* shader_path = "D:/coding/c_c++/GraphicalFramework/Framework/framework/shaders/main_shaders.shader";
 
@@ -19,7 +20,7 @@ int run_3d_test()
 	return ProgramInputHandler::RunProgram(new Test3DObjectsProgram(60.f), shader_path, 800, 600);
 }
 
-int run_gravity_simulation()
+int run_grid_simulation()
 {
 	const float grid_resolution = 2.f / 5; // from -1 to 1 there are N cells
 	const int intermediate_points = 1;
@@ -47,8 +48,16 @@ int run_space_metric_grid()
 	return ProgramInputHandler::RunProgram(new SpaceMetricGrid(60.f), shader_path, 800, 600);
 }
 
+int run_gravity_simulation()
+{
+	return ProgramInputHandler::RunProgram(
+		new SimulationProgram(
+			60, -1, { 0.01, 0.1}
+		),
+		shader_path, 600, 600);
+}
+
 int main()
 {
-	// call functions from above to use various programs
-	return run_multiple_3d_objects();
+	return run_gravity_simulation();
 }

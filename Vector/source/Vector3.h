@@ -31,7 +31,7 @@ public:
 	float DistanceSquared(const Vector3& other) const;
 	float Distance(const Vector3& other) const;
 	Vector3 Direction(const Vector3& other) const;
-	Vector3 Direction(const Vector3& other, float distance_sqr) const;
+	Vector3 Direction(const Vector3& other, float distance) const;
 
 	float ScalarMultiply(const Vector3& other) const;
 	Vector3 Cross(const Vector3& other) const;
@@ -49,9 +49,10 @@ public:
 	// inverse operation to scale()
 	Vector3 ScaleInv(const Vector3& other) const;
 
+	Vector3 Rotate(float x_angle = 0, float y_angle = 0, float z_angle = 0) const;
+	
 
 	Vector3& operator=(const Vector3& other) = default;
-	Vector3& operator=(const glm::vec3& other);
 	
 	Vector3 operator+(const Vector3& other) const;
 	Vector3 operator-(const Vector3& other) const;
@@ -64,6 +65,11 @@ public:
 	bool operator==(const Vector3& other) const;
 	bool operator!=(const Vector3& other) const;
 };
+
+inline Vector3 operator*(float a, const Vector3& vec)
+{
+	return vec * a;
+}
 
 
 #endif // !GRAVITY_SIMULATION_VECTOR

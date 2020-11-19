@@ -9,9 +9,8 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Gravity simulation">
+      <UniqueIdentifier>{95ab1cc9-bf70-40b4-8af2-de660fa47573}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +25,24 @@
     </ClCompile>
     <ClCompile Include="programs_source\SpaceMetricGrid.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="programs_source\gravity_simulation\ConsoleDisplay.cpp">
+      <Filter>Gravity simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="programs_source\gravity_simulation\Simulation.cpp">
+      <Filter>Gravity simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="programs_source\gravity_simulation\vector_editor\VectorSelector.cpp">
+      <Filter>Gravity simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="programs_source\gravity_simulation\objects\CelestialBody.cpp">
+      <Filter>Gravity simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="programs_source\gravity_simulation\objects\GravityObject.cpp">
+      <Filter>Gravity simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="programs_source\gravity_simulation\vector_editor\VectorFigure.cpp">
+      <Filter>Gravity simulation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +60,36 @@
     </ClInclude>
     <ClInclude Include="programs_source\SpaceMetricGrid.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\ConsoleDisplay.h">
+      <Filter>Gravity simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\Simulation.h">
+      <Filter>Gravity simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\UniverseConstants.h">
+      <Filter>Gravity simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\vector_editor\VectorSelector.h">
+      <Filter>Gravity simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\objects\CelestialBody.h">
+      <Filter>Gravity simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\objects\Displayable.h">
+      <Filter>Gravity simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\objects\GravityObject.h">
+      <Filter>Gravity simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\vector_editor\VectorFigure.h">
+      <Filter>Gravity simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\SimulateGravityProgram.h">
+      <Filter>Gravity simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="programs_source\gravity_simulation\TestMoveObject.h">
+      <Filter>Gravity simulation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

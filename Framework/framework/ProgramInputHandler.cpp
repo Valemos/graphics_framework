@@ -119,6 +119,7 @@ int ProgramInputHandler::RunProgram(Program* program, const std::string& shader_
 			continue;
 		}
 
+		ClearScreen();
 		if (program->Step() != 0)
 		{
 			break;
@@ -231,10 +232,13 @@ void ProgramInputHandler::CallbackMouseButton(GLFWwindow* window, int button, in
 
 void ProgramInputHandler::CallbackMouseMoved(GLFWwindow* window, double xpos, double ypos)
 {
-	*mouse_position_ = Vector3{ static_cast<float>(xpos) / window_size_.x * 2 - 1, static_cast<float>(ypos) / window_size_.x * 2 - 1 };
+	*mouse_position_ = {
+		static_cast<float>(xpos) / window_size_.x * 2 - 1,
+		-static_cast<float>(ypos) / window_size_.y * 2 + 1
+	};
 }
 
-void APIENTRY ProgramInputHandler::CallbackGlError(GLenum source, GLenum type, unsigned id, GLenum severity, GLsizei length,
+void ProgramInputHandler::CallbackGlError(GLenum source, GLenum type, unsigned id, GLenum severity, GLsizei length,
 	const char* message, const void* userParam)
 {
 
