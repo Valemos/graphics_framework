@@ -33,7 +33,7 @@ public:
 	Vector3 Direction(const Vector3& other) const;
 	Vector3 Direction(const Vector3& other, float distance) const;
 
-	float ScalarMultiply(const Vector3& other) const;
+	float Dot(const Vector3& other) const;
 	Vector3 Cross(const Vector3& other) const;
 
 	float LengthSqr() const;	

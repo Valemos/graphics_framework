@@ -22,10 +22,12 @@ class CelestialBody : public GravityObject, public Displayable
 public:
 	std::string name; 
 	
-	CelestialBody(std::string name, Vector3 color, UniverseConstants* constants, float radius, float surfaceGravity = 0.f, float mass = 0.f);
+	CelestialBody(std::string name, Vector3 color, UniverseConstants* constants);
 
 	CelestialBody* CheckCollision(const std::vector<CelestialBody*>& bodies);
 
+	void SetRadius(float radius) override;
+	
 	void InitCirclePoints();
 	void Draw(Renderer& renderer) const;
 	

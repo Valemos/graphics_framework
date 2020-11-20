@@ -26,13 +26,7 @@
     <ClCompile Include="programs_source\SpaceMetricGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="programs_source\gravity_simulation\ConsoleDisplay.cpp">
-      <Filter>Gravity simulation</Filter>
-    </ClCompile>
     <ClCompile Include="programs_source\gravity_simulation\Simulation.cpp">
-      <Filter>Gravity simulation</Filter>
-    </ClCompile>
-    <ClCompile Include="programs_source\gravity_simulation\vector_editor\VectorSelector.cpp">
       <Filter>Gravity simulation</Filter>
     </ClCompile>
     <ClCompile Include="programs_source\gravity_simulation\objects\CelestialBody.cpp">
@@ -42,6 +36,9 @@
       <Filter>Gravity simulation</Filter>
     </ClCompile>
     <ClCompile Include="programs_source\gravity_simulation\vector_editor\VectorFigure.cpp">
+      <Filter>Gravity simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="programs_source\gravity_simulation\SimulationProgram.cpp">
       <Filter>Gravity simulation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -61,16 +58,10 @@
     <ClInclude Include="programs_source\SpaceMetricGrid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="programs_source\gravity_simulation\ConsoleDisplay.h">
-      <Filter>Gravity simulation</Filter>
-    </ClInclude>
     <ClInclude Include="programs_source\gravity_simulation\Simulation.h">
       <Filter>Gravity simulation</Filter>
     </ClInclude>
     <ClInclude Include="programs_source\gravity_simulation\UniverseConstants.h">
-      <Filter>Gravity simulation</Filter>
-    </ClInclude>
-    <ClInclude Include="programs_source\gravity_simulation\vector_editor\VectorSelector.h">
       <Filter>Gravity simulation</Filter>
     </ClInclude>
     <ClInclude Include="programs_source\gravity_simulation\objects\CelestialBody.h">
@@ -85,10 +76,10 @@
     <ClInclude Include="programs_source\gravity_simulation\vector_editor\VectorFigure.h">
       <Filter>Gravity simulation</Filter>
     </ClInclude>
-    <ClInclude Include="programs_source\gravity_simulation\SimulateGravityProgram.h">
+    <ClInclude Include="programs_source\gravity_simulation\TestMoveObject.h">
       <Filter>Gravity simulation</Filter>
     </ClInclude>
-    <ClInclude Include="programs_source\gravity_simulation\TestMoveObject.h">
+    <ClInclude Include="programs_source\gravity_simulation\SimulationProgram.h">
       <Filter>Gravity simulation</Filter>
     </ClInclude>
   </ItemGroup>

@@ -148,12 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="programs_source\gravity_simulation\ConsoleDisplay.cpp" />
     <ClCompile Include="programs_source\gravity_simulation\objects\CelestialBody.cpp" />
     <ClCompile Include="programs_source\gravity_simulation\objects\GravityObject.cpp" />
     <ClCompile Include="programs_source\gravity_simulation\Simulation.cpp" />
+    <ClCompile Include="programs_source\gravity_simulation\SimulationProgram.cpp" />
     <ClCompile Include="programs_source\gravity_simulation\vector_editor\VectorFigure.cpp" />
-    <ClCompile Include="programs_source\gravity_simulation\vector_editor\VectorSelector.cpp" />
     <ClCompile Include="programs_source\GridVisualization.cpp" />
     <ClCompile Include="programs_source\ProgramMultipleObjects.cpp" />
     <ClCompile Include="programs_source\SpaceMetricGrid.cpp" />
@@ -164,16 +163,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="programs_source\gravity_simulation\ConsoleDisplay.h" />
     <ClInclude Include="programs_source\gravity_simulation\objects\CelestialBody.h" />
     <ClInclude Include="programs_source\gravity_simulation\objects\Displayable.h" />
     <ClInclude Include="programs_source\gravity_simulation\objects\GravityObject.h" />
-    <ClInclude Include="programs_source\gravity_simulation\SimulateGravityProgram.h" />
+    <ClInclude Include="programs_source\gravity_simulation\SimulationProgram.h" />
     <ClInclude Include="programs_source\gravity_simulation\Simulation.h" />
     <ClInclude Include="programs_source\gravity_simulation\TestMoveObject.h" />
     <ClInclude Include="programs_source\gravity_simulation\UniverseConstants.h" />
     <ClInclude Include="programs_source\gravity_simulation\vector_editor\VectorFigure.h" />
-    <ClInclude Include="programs_source\gravity_simulation\vector_editor\VectorSelector.h" />
     <ClInclude Include="programs_source\GridVisualization.h" />
     <ClInclude Include="programs_source\ProgramMultipleObjects.h" />
     <ClInclude Include="programs_source\SpaceMetricGrid.h" />

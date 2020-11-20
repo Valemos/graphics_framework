@@ -1,23 +1,31 @@
 #include "GridVisualization.h"
 
+#include "ProgramInputHandler.h"
+#include "ButtonHandler.h"
+
+
 double GridVisualization::s_last_space_press = 0;
 bool GridVisualization::s_space_pressed = false;
 
-int GridVisualization::HandleSpace(void*)
+int GridVisualization::HandleSpace(Program* param)
 {
+    auto program = dynamic_cast<GridVisualization*> (param);
 	if (!s_space_pressed && glfwGetTime() - s_last_space_press > 0.2)
 	{
-		s_space_pressed = true;
+        if (!program->attraction_targets_.empty())
+        {
+            program->attraction_targets_.pop_back();
+        }
+        s_last_space_press = glfwGetTime();
 	}
 	return 0;
 }
 
 int GridVisualization::Init()
-{
-    auto handlers = std::vector<ButtonHandler>{
+{;
+    ProgramInputHandler::AddButtonHandlers({
         ButtonHandler(Key::Space, HandleSpace)
-    };
-    ProgramInputHandler::AddButtonHandlers(handlers);
+    });
 
     points_grid_ = std::vector< std::vector<Vector3> >(grid_height_count_);
 
@@ -45,29 +53,19 @@ int GridVisualization::Init()
     main_grid_->SetBorderWidth(0.2);
     main_grid_->Position() = { 0, 0 };
 
-    return 0;
+    return program_continue;
 }
 
 int GridVisualization::Step()
 {
-    if (s_space_pressed)
-	{
-		if (!attraction_targets_.empty())
-		{
-		    attraction_targets_.pop_back();
-		}
-		s_space_pressed = false;
-		s_last_space_press = glfwGetTime();
-    }
-
-    if (ProgramInputHandler::clicked_position_ != nullptr)
+    if (ProgramInputHandler::clicked_position != nullptr)
     {
-        auto* result_coordinate = ProgramInputHandler::clicked_position_;
+        auto* result_coordinate = ProgramInputHandler::clicked_position;
         result_coordinate->y = -result_coordinate->y;
         attraction_targets_.emplace_back(*result_coordinate);
 
-        delete ProgramInputHandler::clicked_position_;
-        ProgramInputHandler::clicked_position_ = nullptr;
+        delete ProgramInputHandler::clicked_position;
+        ProgramInputHandler::clicked_position = nullptr;
     }
 
     if (!attraction_targets_.empty())
@@ -76,8 +74,9 @@ int GridVisualization::Step()
     }
 
     ProgramInputHandler::ClearScreen();
-    main_grid_->Draw(ProgramInputHandler::renderer_);
-    return 0;
+    main_grid_->Draw(ProgramInputHandler::renderer);
+	
+    return ProgramInputHandler::HandleButtons(this);
 }
 
 Vector3& GridVisualization::ShiftTowardsPoint(Vector3& point, Vector3& target, float coefficient, float accuracy) const

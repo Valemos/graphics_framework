@@ -3,6 +3,8 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
+class Program;
+
 enum class Key
 {
 	Unknown = GLFW_KEY_UNKNOWN,
@@ -57,17 +59,23 @@ enum class Key
 };
 
 
-typedef int (*KeyHandler) (void*);
+typedef int (*KeyHandler) (Program*);
+typedef bool ButtonState;
 
 class ButtonHandler
 {
 	Key key_type_ = Key::Unknown;
 	KeyHandler handler_;
-	
+	ButtonState button_state_;
+
 public:
 	ButtonHandler(Key key_type, KeyHandler function_handler);
+
+	ButtonState GetButtonState() const;
+	void SetButtonState(ButtonState state);
 	KeyHandler GetHandler() const;
 	Key GetType() const;
-	int Handle(void* parameters) const;
+
+	int Handle(Program* program) const;
 	int Handle() const;
 };

@@ -41,10 +41,10 @@ class ProgramMultipleObjects : public Program
 public:
 	ProgramMultipleObjects(float fps);
 
-	static int HandlePlus(void*);
-	static int HandleMinus(void*);
-	static int HandlePerspectiveMode(void*);
-	static int HandleOrthogonalMode(void*);
+	static int HandlePlus(Program*);
+	static int HandleMinus(Program*);
+	static int HandlePerspectiveMode(Program*);
+	static int HandleOrthogonalMode(Program*);
 	void UpdateCameraSphericalCoordinate();
 
 	float TaskSurfaceFunction(float x, float y) const;

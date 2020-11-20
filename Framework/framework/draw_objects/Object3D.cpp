@@ -17,7 +17,7 @@ void Object3D::LoadGLTransform(Renderer& renderer, const Vector3& position) cons
 	transform = translate(transform, position.ToGlm());
 
 	// camera transform
-	const float window_aspect_ratio = ProgramInputHandler::window_size_.x / ProgramInputHandler::window_size_.y;
+	const float window_aspect_ratio = ProgramInputHandler::window_size.x / ProgramInputHandler::window_size.y;
 	auto& camera = renderer.get_camera();
 	transform = camera.GetProjection(window_aspect_ratio) * camera.get_view_matrix() * transform;
 

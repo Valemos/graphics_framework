@@ -4,7 +4,7 @@
 
 void TriangleFan::Draw(const void* offset) const
 {
-	glDrawElements(GL_TRIANGLE_FAN, vertex_indices_.size(), GL_UNSIGNED_INT, offset);
+	glDrawElements(GL_POLYGON, vertex_indices_.size(), GL_UNSIGNED_INT, offset);
 }
 
 std::vector<unsigned> TriangleFan::get_triangle_indices() const
@@ -29,4 +29,5 @@ unsigned TriangleFan::get_triangle_indices_count() const
 
 void TriangleFan::DrawBorder(const void* offset) const
 {
+	glDrawElements(GL_LINE_LOOP, vertex_indices_.size(), GL_UNSIGNED_INT, offset);
 }

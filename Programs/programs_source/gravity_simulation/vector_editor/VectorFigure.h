@@ -11,7 +11,7 @@ class VectorFigure : public Figure2D
 	float width_;
 	
 public:
-	VectorFigure(Vector3 color);
+	VectorFigure(Vector3 color, float length = 1.f, float width=0.5f);
 
 	void SetStart(Vector3 start);
 	void SetEnd(Vector3 end);

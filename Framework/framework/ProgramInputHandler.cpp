@@ -6,37 +6,37 @@
 #include "Renderer.h"
 
 GLFWwindow* ProgramInputHandler::main_window_ = nullptr;
-Vector3 ProgramInputHandler::window_size_ = { 0.0, 0.0 };
-Renderer ProgramInputHandler::renderer_ = Renderer();
+Vector3 ProgramInputHandler::window_size = { 0.0, 0.0 };
+Renderer ProgramInputHandler::renderer = Renderer();
 
-Vector3* ProgramInputHandler::mouse_position_ = new Vector3{0.0, 0.0};
-Vector3* ProgramInputHandler::clicked_position_ = nullptr;
+Vector3* ProgramInputHandler::mouse_position = new Vector3{0.0, 0.0};
+Vector3* ProgramInputHandler::clicked_position = nullptr;
 
-Vector3* ProgramInputHandler::keyboard_move_dir_ = new Vector3{ 0.0, 0.0 };
+Vector3* ProgramInputHandler::keyboard_move_dir = new Vector3{ 0.0, 0.0 };
 
 // default button handlers
 
-static int default_handler_w(void*)
+static int default_handler_w(Program* program)
 {
-	ProgramInputHandler::keyboard_move_dir_->y += 1;
+	ProgramInputHandler::keyboard_move_dir->y += 1;
 	return 0;
 };
 
-static int default_handler_s(void*)
+static int default_handler_s(Program* program)
 {
-	ProgramInputHandler::keyboard_move_dir_->y -= 1;
+	ProgramInputHandler::keyboard_move_dir->y -= 1;
 	return 0;
 };
 
-static int default_handler_a(void*)
+static int default_handler_a(Program* program)
 {
-	ProgramInputHandler::keyboard_move_dir_->x -= 1;
+	ProgramInputHandler::keyboard_move_dir->x -= 1;
 	return 0;
 };
 
-static int default_handler_d(void*)
+static int default_handler_d(Program* program)
 {
-	ProgramInputHandler::keyboard_move_dir_->x += 1;
+	ProgramInputHandler::keyboard_move_dir->x += 1;
 	return 0;
 };
 
@@ -47,30 +47,29 @@ const std::vector<ButtonHandler> ProgramInputHandler::default_handlers = {
 	ButtonHandler(Key::D, default_handler_d)
 };
 
-std::vector<ButtonHandler> ProgramInputHandler::button_handlers_(
+std::vector<ButtonHandler> ProgramInputHandler::button_handlers(
 	default_handlers.begin(), 
 	default_handlers.end());
 
 
 ProgramInputHandler::~ProgramInputHandler()
 {
-	delete mouse_position_;
-	delete clicked_position_;
-	delete keyboard_move_dir_;
+	delete mouse_position;
+	delete clicked_position;
+	delete keyboard_move_dir;
 }
 
 int ProgramInputHandler::RunProgram(Program* program, const std::string& shader_path, int width, int height)
 {
-	window_size_ = { static_cast<float>(width), static_cast<float>(height) };
+	window_size = { static_cast<float>(width), static_cast<float>(height) };
 
     // create window
 	if (!glfwInit()) {
 		return -1;
 	}
 
-	
 	/* Create a windowed mode window and its OpenGL context */
-	main_window_ = glfwCreateWindow(static_cast<int>(window_size_.x), static_cast<int>(window_size_.y), "Program", NULL, NULL);
+	main_window_ = glfwCreateWindow(static_cast<int>(window_size.x), static_cast<int>(window_size.y), program->window_name.c_str(), NULL, NULL);
 	if (!main_window_)
 	{
 		glfwTerminate();
@@ -102,35 +101,55 @@ int ProgramInputHandler::RunProgram(Program* program, const std::string& shader_
 	glfwSetCursorPosCallback(main_window_, CallbackMouseMoved);
 	glfwSetMouseButtonCallback(main_window_, CallbackMouseButton);
 
-    renderer_.LoadShadersFromFile(shader_path);
+    renderer.LoadShadersFromFile(shader_path);
 
 	glEnable(GL_DEPTH_TEST);
 	
-	glViewport(0, 0, static_cast<int>(window_size_.x), static_cast<int>(window_size_.y));
-	program->Init();
-	program->previousUpdateTime = glfwGetTime();
-	
-	while (!glfwWindowShouldClose(GetWindow())) {
+	glViewport(0, 0, static_cast<int>(window_size.x), static_cast<int>(window_size.y));
 
-		glfwPollEvents();
+	// enter program loop
+	bool program_restart = false;
+	do
+	{
+		program->Init();
+		program->previous_update_time = glfwGetTime();
 
-		if (glfwGetTime() - program->previousUpdateTime < program->desiredUpdateTime)
-		{
-			continue;
+		while (!glfwWindowShouldClose(GetWindow())) {
+
+			glfwPollEvents();
+
+			if (glfwGetTime() - program->previous_update_time < program->desired_update_time)
+			{
+				continue;
+			}
+
+			ClearScreen();
+			const int return_code = program->Step();
+
+			// decide what to do with return code
+			if (return_code == Program::program_continue)
+			{
+				glfwSwapBuffers(GetWindow());
+				program->previous_update_time = glfwGetTime();
+			}
+			else if (return_code == Program::program_restart)
+			{
+				program_restart = true;
+				program->Finish();
+				break;
+			}
+			else if (return_code == Program::program_finish)
+			{
+				program_restart = false;
+				break;
+			}
 		}
+	} while (program_restart && !glfwWindowShouldClose(GetWindow()));
 
-		ClearScreen();
-		if (program->Step() != 0)
-		{
-			break;
-		}
-		
-		glfwSwapBuffers(GetWindow());
-		program->previousUpdateTime = glfwGetTime();
-	}
-
+	program->Finish();
 	glfwTerminate();
-	return program->Finish();
+
+	return Program::program_continue;
 }
 
 void ProgramInputHandler::ClearScreen()
@@ -155,39 +174,52 @@ GLFWwindow* ProgramInputHandler::GetWindow()
 
 void ProgramInputHandler::CallbackKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	*keyboard_move_dir_ = { 0, 0 };
-
-	for (auto handler : button_handlers_)
+	for (auto& handler : button_handlers)
 	{
 		const int key_status = glfwGetKey(window, static_cast<int>(handler.GetType()));
 		if (key_status == GLFW_PRESS)
 		{
-			if (handler.Handle() != 0)
-			{
-				std::cout << "button " << static_cast<int>(handler.GetType()) << " unhandled" << std::endl;
-			}
+			handler.SetButtonState(true);
 		}
 	}
-
-	keyboard_move_dir_->Normalize();
 }
 
-void ProgramInputHandler::AddButtonHandlers(std::vector<ButtonHandler>& handlers)
+void ProgramInputHandler::AddButtonHandlers(std::vector<ButtonHandler> handlers)
 {
-	button_handlers_.insert(button_handlers_.end(), handlers.begin(), handlers.end());
+	button_handlers.insert(button_handlers.end(), handlers.begin(), handlers.end());
+}
+
+int ProgramInputHandler::HandleButtons(Program* program)
+{
+	*keyboard_move_dir = { 0, 0 };
+	auto return_code = Program::program_continue;
+
+	for (auto& handler : button_handlers)
+	{
+		if (handler.GetButtonState())
+		{
+			const auto new_code = handler.Handle(program);
+			return_code = new_code != Program::program_continue ? new_code : return_code;
+			
+			handler.SetButtonState(false);
+		}
+	}
+	
+	keyboard_move_dir->Normalize();
+	return return_code;
 }
 
 void ProgramInputHandler::RemoveButtonHandlers(std::vector<Key>& key_types)
 {
 	auto new_handlers = std::vector<ButtonHandler>();
-	new_handlers.reserve(button_handlers_.size());
-	for (auto it_handler = button_handlers_.begin(); it_handler != button_handlers_.end();)
+	new_handlers.reserve(button_handlers.size());
+	for (auto it_handler = button_handlers.begin(); it_handler != button_handlers.end();)
 	{
 		for (auto it_key = key_types.begin(); it_key != key_types.end();)
 		{
 			if (it_handler->GetType() == *it_key)
 			{
-				button_handlers_.erase(it_handler);
+				button_handlers.erase(it_handler);
 				key_types.erase(it_key);
 			}
 			else
@@ -203,14 +235,14 @@ void ProgramInputHandler::CallbackWindowResize(GLFWwindow* window, int width, in
 {	
 	glViewport(0, 0, width, height);
 
-	const auto prev_scale = renderer_.GetGlobalScale();
-	renderer_.SetGlobalScale({
-		prev_scale.x * window_size_.x / width, 
-		prev_scale.y * window_size_.y / height,
+	const auto prev_scale = renderer.GetGlobalScale();
+	renderer.SetGlobalScale({
+		prev_scale.x * window_size.x / width, 
+		prev_scale.y * window_size.y / height,
 		prev_scale.z
 	});
 	
-	window_size_ = { static_cast<float>(width), static_cast<float>(height) };
+	window_size = { static_cast<float>(width), static_cast<float>(height) };
 }
 
 void ProgramInputHandler::CallbackMouseButton(GLFWwindow* window, int button, int action, int mods)
@@ -219,12 +251,12 @@ void ProgramInputHandler::CallbackMouseButton(GLFWwindow* window, int button, in
 	{
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
-		delete clicked_position_;
+		delete clicked_position;
 
 		// convert clicked position to NDC
-		clicked_position_ = new Vector3{
-			static_cast<float>(xpos) / window_size_.x * 2 - 1,
-			static_cast<float>(ypos) / window_size_.y * 2 - 1,
+		clicked_position = new Vector3{
+			static_cast<float>(xpos) / window_size.x * 2 - 1,
+			static_cast<float>(ypos) / window_size.y * 2 - 1,
 			0
 		};
 	}
@@ -232,13 +264,14 @@ void ProgramInputHandler::CallbackMouseButton(GLFWwindow* window, int button, in
 
 void ProgramInputHandler::CallbackMouseMoved(GLFWwindow* window, double xpos, double ypos)
 {
-	*mouse_position_ = {
-		static_cast<float>(xpos) / window_size_.x * 2 - 1,
-		-static_cast<float>(ypos) / window_size_.y * 2 + 1
+	const auto global_scale = renderer.GetGlobalScale();
+	*mouse_position = {
+		(static_cast<float>(xpos) / window_size.x * 2 - 1) / global_scale.x,
+		(-static_cast<float>(ypos) / window_size.y * 2 + 1) / global_scale.y
 	};
 }
 
-void ProgramInputHandler::CallbackGlError(GLenum source, GLenum type, unsigned id, GLenum severity, GLsizei length,
+void APIENTRY ProgramInputHandler::CallbackGlError(GLenum source, GLenum type, unsigned id, GLenum severity, GLsizei length,
 	const char* message, const void* userParam)
 {
 

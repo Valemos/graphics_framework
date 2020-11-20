@@ -12,7 +12,7 @@ int main()
 	
 
 	std::cout << v1.Normal().Str() << std::endl;
-	std::cout << v1.ScalarMultiply(v2) << std::endl;
+	std::cout << v1.Dot(v2) << std::endl;
 	std::cout << v2.Distance(v3) << std::endl;
 	std::cout << v3.Distance(v2) << std::endl;
 	std::cout << v4.Rotate(0, 0, 3.141592 * 0.5).Str() << std::endl;

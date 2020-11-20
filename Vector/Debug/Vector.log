@@ -1,7 +1,2 @@
 ﻿  Vector3.cpp
-  test_vector.cpp
-D:\coding\c_c++\GraphicalFramework\Vector\test_vector.cpp(18,45): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\coding\c_c++\GraphicalFramework\Vector\test_vector.cpp(19,40): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\coding\c_c++\GraphicalFramework\Vector\test_vector.cpp(20,45): warning C4305: 'argument': truncation from 'double' to 'float'
-  Generating Code...
   Vector.vcxproj -> D:\coding\c_c++\GraphicalFramework\Debug\Vector.exe

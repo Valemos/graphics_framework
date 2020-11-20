@@ -8,16 +8,16 @@
 #include "draw_objects/Triangle.h"
 #include "draw_objects/TriangleFan.h"
 
-VectorFigure::VectorFigure(Vector3 color)
+VectorFigure::VectorFigure(Vector3 color, float length, float width)
 {
 	SetFillColor(color.x, color.y, color.z);
 	SetBorderColor(0, 0, 0);
 
 	rotation_angle_ = 0;
 	length_ = 1;
-	width_ = 0.25;
-	point_start_ = { 0, 0 };
-	point_end_ = { length_, 0 };
+	width_ = width;
+	point_start_ = { 0, 0};
+	point_end_ = { length_, 0};
 	
 	InitBuffers(
 		{
@@ -36,7 +36,7 @@ void VectorFigure::SetStart(Vector3 start)
 	point_start_ = start;
 	object_position_ = start;
 	length_ = point_start_.Distance(point_end_);
-	point_end_ = Vector3{ 1, 0 }.Rotate(0, 0, rotation_angle_) * length_ + start;
+	point_end_ = Vector3{ 1, 0}.Rotate(0, 0, rotation_angle_) * length_ + start;
 }
 
 void VectorFigure::SetEnd(Vector3 end)

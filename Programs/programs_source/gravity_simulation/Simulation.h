@@ -1,26 +1,26 @@
 #ifndef GRAVITY_SIMULATION
 #define GRAVITY_SIMULATION
 
-#include <mutex>
+class Renderer;
+
+#include <Windows.h>
+#include <iostream>
 #include <vector>
 #include "Vector3.h"
 #include "UniverseConstants.h"
 #include "objects/CelestialBody.h"
-#include "ConsoleDisplay.h"
-#include "Program.h"
 
-class Renderer;
-class ConsoleDisplay;
-class CelestialBody;
-class UniverseConstants;
 
 class Simulation
 {
+	
 	std::vector<CelestialBody*> objects_;
+	HANDLE console_handle_;
 
 public:
 
-	Simulation() = default;
+	Simulation();
+	~Simulation();
 	
 	//Manage simulated objects
 	void AddCelestialBody(CelestialBody* gObject);
@@ -30,6 +30,7 @@ public:
 
 	void ResetSimulation();
 	bool SimulateStep(const UniverseConstants& constants);
+	void ShowInformation(const UniverseConstants& constants, std::string info, bool rewrite);
 
 	/// for container of CelestialBody's object pointers 
 	/// calculates acceleration due to gravity

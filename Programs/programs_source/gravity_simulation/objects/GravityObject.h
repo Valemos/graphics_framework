@@ -16,19 +16,30 @@ protected:
 
 public:
 
-	GravityObject(float radius, float surfaceGravity, float mass, const UniverseConstants& constants);
+	GravityObject();
 	virtual ~GravityObject() = default;
 
-	void UpdateSpeed(Vector3 acceleration, const UniverseConstants& constants);
+	static float MassGravityEquation(float surface_gravity, float radius, float gravity_constant);
+	static float MassDensityEquation(float density, float radius);
+	static float GravityEquation(float mass, float radius, float gravity_constant);
+	static float DensityMassEquation(float mass, float radius);
+	static float RadiusEquation(float mass, float density);
 	
+	void UpdateSpeed(Vector3 acceleration, const UniverseConstants& constants);
 	void UpdatePosition();
 	void RevertPosition();
 
+	void SetMass(float mass);
+	void SetDensity(float density, const UniverseConstants& constants);
+	virtual void SetRadius(float radius);
+	void SetSurfaceGravity(float gravity, const UniverseConstants& constants);
+	float GetSurfaceGravity(const UniverseConstants& constants) const;
+	
 	void SetSpeed(Vector3 speed) {
 		speed_ = speed;
 	}
 
-	Vector3 Speed() const
+	const Vector3& Speed() const
 	{
 		return speed_;
 	}
@@ -37,15 +48,15 @@ public:
 		position_ = position;
 	}
 	
-	Vector3 Position() const {
+	const Vector3& GetPosition() const {
 		return position_;
 	}
 
-	float Mass() const {
+	float GetMass() const {
 		return mass_;
 	}
-
-	float Radius() const {
+	
+	float GetRadius() const {
 		return radius_;
 	}
 };

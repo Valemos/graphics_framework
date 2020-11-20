@@ -5,14 +5,12 @@
 #include "../UniverseConstants.h"
 
 
-CelestialBody::CelestialBody(const std::string name, Vector3 color, UniverseConstants* constants, float radius, float surfaceGravity, float mass) :
-	GravityObject(radius, surfaceGravity, mass, *constants),
-	constants_(constants),
-	name(name)
+CelestialBody::CelestialBody(const std::string name, Vector3 color, UniverseConstants* constants) : GravityObject(),
+	constants_(constants), name(name)
 {
 	circle_ = new Figure2D();
 	InitCirclePoints();
-	circle_->SetScale(radius, radius);
+	circle_->SetScale(radius_, radius_);
 	circle_->SetFillColor(color.x, color.y, color.z);
 	circle_->SetBorderColor(0, 0, 0);
 }
@@ -22,14 +20,21 @@ CelestialBody* CelestialBody::CheckCollision(const std::vector<CelestialBody*>& 
 	// we check for collision with any object
 	for (auto* body : bodies) {
 		if (body != this) {
-			float distance = this->Position().Distance(body->Position());
-			if (distance < this->Radius() + body->Radius()) {
+			float distance = this->GetPosition().Distance(body->GetPosition());
+			if (distance < this->GetRadius() + body->GetRadius()) {
 				return body;
 			}
 		}
 	}
 
 	return nullptr;
+}
+
+void CelestialBody::SetRadius(float radius)
+{
+	// mass stays the same, surface gravity and density changes
+	radius_ = radius;
+	circle_->SetScale(radius, radius);
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
@@ -56,15 +61,16 @@ void CelestialBody::Draw(Renderer& renderer) const
 {
 	circle_->Position() = position_;
 	circle_->Draw(renderer);
+	circle_->DrawWireframe(renderer);
 }
 
 void CelestialBody::Display()
 {
 	printf("\n-----------\n%s\n-----------\nRadius:\t%.3f\nPos:\tX: %.1f\tY: %.1f\nSpd:\tX: %.2f\tY: %.2f\n", 
 		this->name.c_str(),
-		this->Radius(),
-		this->Position().x,
-		this->Position().y,
+		this->GetRadius(),
+		this->GetPosition().x,
+		this->GetPosition().y,
 		this->Speed().x,
 		this->Speed().y);
 }

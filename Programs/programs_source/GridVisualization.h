@@ -1,8 +1,6 @@
 #pragma once
 
-#include "ProgramInputHandler.h"
 #include "Program.h"
-#include "ButtonHandler.h"
 #include "2d_objects/Grid2D.h"
 #include "draw_objects/Triangle.h"
 #include "Vector3.h"
@@ -33,7 +31,7 @@ public:
     {
     }
 
-    static int HandleSpace(void*);
+    static int HandleSpace(Program*);
 	
     // Inherited via Program
     int Init() override;

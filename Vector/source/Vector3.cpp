@@ -55,9 +55,8 @@ Vector3 Vector3::Direction(const Vector3& other, float distance) const
 		(z - other.z) / distance);
 }
 
-float Vector3::ScalarMultiply(const Vector3& other) const
+float Vector3::Dot(const Vector3& other) const
 {
-	// scalar multiplication of vectors
 	return x * other.x + y * other.y + z * other.z;
 }
 
