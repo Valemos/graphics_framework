@@ -1,4 +1,5 @@
 #include "ButtonHandler.h"
+#include "Program.h"
 
 
 ButtonHandler::ButtonHandler(Key key_type, KeyHandler function_handler):
@@ -26,12 +27,12 @@ Key ButtonHandler::GetType() const
 	return key_type_;
 }
 
-int ButtonHandler::Handle(Program* program) const
+Program::ProgramState ButtonHandler::Handle(Program* program) const
 {
 	return handler_(program);
 }
 
-int ButtonHandler::Handle() const
+Program::ProgramState ButtonHandler::Handle() const
 {
 	return handler_(nullptr);
 }

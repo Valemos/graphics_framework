@@ -1,7 +1,7 @@
 #include "CelestialBody.h"
 
 #include "Vector3.h"
-#include "draw_objects/TriangleFan.h"
+#include "draw_objects/primitives/TriangleFan.h"
 #include "../UniverseConstants.h"
 
 
@@ -54,7 +54,7 @@ void CelestialBody::InitCirclePoints()
 		angle += angle_step;
 	}
 
-	circle_->InitBuffers(vertices, {new TriangleFan(indices)});
+    circle_->InitPrimitiveBuffers(vertices, {new TriangleFan(indices)});
 }
 
 void CelestialBody::Draw(Renderer& renderer) const

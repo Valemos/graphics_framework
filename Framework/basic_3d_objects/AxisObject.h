@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 
 #include "../draw_objects/Object3D.h"
-#include "../draw_objects/Line.h"
+#include "draw_objects/primitives/Line.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "../Renderer.h"
 
@@ -41,7 +41,7 @@ public:
 			new Quad({3, 0, 4, 7})
 		};
 
-		InitBuffers(vertices, primitives);
+        InitPrimitiveBuffers(vertices, primitives);
 	}
 };
 

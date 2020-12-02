@@ -2,7 +2,7 @@
 
 #include "Program.h"
 #include "2d_objects/Grid2D.h"
-#include "draw_objects/Triangle.h"
+#include "draw_objects/primitives/Triangle.h"
 #include "Vector3.h"
 
 

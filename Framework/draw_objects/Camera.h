@@ -16,7 +16,7 @@ class Camera
 {
 	DrawMode draw_mode_ = DrawMode::Perspective;
 	
-	glm::mat4 view_matrix_;
+	glm::mat4 view_matrix_{};
 	Vector3 camera_position_;
 	Vector3 camera_target_;
 	Vector3 camera_direction_;
@@ -33,7 +33,8 @@ public:
 	
 	Camera(const Vector3& camera_position, const Vector3& camera_target, const Vector3& camera_up = { 0, 1, 0 })
 		: camera_position_(camera_position),
-		  camera_target_(camera_target)
+		  camera_target_(camera_target),
+		  view_matrix_(glm::identity<glm::mat4>())
 	{
 		UpdateCameraUp(camera_up);
 		UpdateViewMatrix();

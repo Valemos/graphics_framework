@@ -6,10 +6,10 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(D:/coding/cpp_libs/GLM)
 include_directories(D:/coding/cpp_libs/GLEW/include)
 include_directories(D:/coding/cpp_libs/GLFW/include)
-include_directories(Framework/framework)
-include_directories(Framework/framework/2d_objects)
-include_directories(Framework/framework/basic_3d_objects)
-include_directories(Framework/framework/draw_objects)
+include_directories(Framework)
+include_directories(Framework/2d_objects)
+include_directories(Framework/basic_3d_objects)
+include_directories(Framework/draw_objects)
 include_directories(Programs/programs_source)
 include_directories(Programs/programs_source/gravity_simulation)
 include_directories(Programs/programs_source/gravity_simulation/objects)
@@ -17,40 +17,39 @@ include_directories(Programs/programs_source/gravity_simulation/vector_editor)
 include_directories(Vector/source)
 
 add_library(GraphicalFramework
-        Framework/framework/2d_objects/Grid2D.cpp
-        Framework/framework/2d_objects/Grid2D.h
-        Framework/framework/basic_3d_objects/AxisObject.h
-        Framework/framework/basic_3d_objects/Cube.h
-        Framework/framework/basic_3d_objects/Dodecahedron.h
-        Framework/framework/basic_3d_objects/Sphere.h
-        Framework/framework/basic_3d_objects/Surface.h
-        Framework/framework/draw_objects/Camera.cpp
-        Framework/framework/draw_objects/Camera.h
-        Framework/framework/draw_objects/Drawable.cpp
-        Framework/framework/draw_objects/Drawable.h
-        Framework/framework/draw_objects/Figure2D.cpp
-        Framework/framework/draw_objects/Figure2D.h
-        Framework/framework/draw_objects/Line.cpp
-        Framework/framework/draw_objects/Line.h
-        Framework/framework/draw_objects/Object3D.cpp
-        Framework/framework/draw_objects/Object3D.h
-        Framework/framework/draw_objects/Primitive.cpp
-        Framework/framework/draw_objects/Primitive.h
-        Framework/framework/draw_objects/Quad.cpp
-        Framework/framework/draw_objects/Quad.h
-        Framework/framework/draw_objects/Triangle.cpp
-        Framework/framework/draw_objects/Triangle.h
-        Framework/framework/draw_objects/TriangleFan.cpp
-        Framework/framework/draw_objects/TriangleFan.h
-        Framework/framework/ButtonHandler.cpp
-        Framework/framework/ButtonHandler.h
-        Framework/framework/Program.h
-        Framework/framework/ProgramInputHandler.cpp
-        Framework/framework/ProgramInputHandler.h
-        Framework/framework/Renderer.cpp
-        Framework/framework/Renderer.h
+        Framework/2d_objects/Grid2D.cpp
+        Framework/2d_objects/Grid2D.h
+        Framework/basic_3d_objects/AxisObject.h
+        Framework/basic_3d_objects/Cube.h
+        Framework/basic_3d_objects/Dodecahedron.h
+        Framework/basic_3d_objects/Sphere.h
+        Framework/basic_3d_objects/Surface.h
+        Framework/draw_objects/Camera.cpp
+        Framework/draw_objects/Camera.h
+        Framework/draw_objects/Drawable.h
+        Framework/draw_objects/Figure2D.cpp
+        Framework/draw_objects/Figure2D.h
+        Framework/draw_objects/primitives/Line.cpp
+        Framework/draw_objects/primitives/Line.h
+        Framework/draw_objects/Object3D.cpp
+        Framework/draw_objects/Object3D.h
+        Framework/draw_objects/primitives/Primitive.cpp
+        Framework/draw_objects/primitives/Primitive.h
+        Framework/draw_objects/primitives/Quad.cpp
+        Framework/draw_objects/primitives/Quad.h
+        Framework/draw_objects/primitives/Triangle.cpp
+        Framework/draw_objects/primitives/Triangle.h
+        Framework/draw_objects/primitives/TriangleFan.cpp
+        Framework/draw_objects/primitives/TriangleFan.h
+        Framework/ButtonHandler.cpp
+        Framework/ButtonHandler.h
+        Framework/Program.h
+        Framework/ProgramInputHandler.cpp
+        Framework/ProgramInputHandler.h
+        Framework/Renderer.cpp
+        Framework/Renderer.h
         Vector/source/Vector3.cpp
-        Vector/source/Vector3.h)
+        Vector/source/Vector3.h Framework/draw_objects/NormalPrimitives.cpp Framework/draw_objects/NormalPrimitives.h Framework/draw_objects/VertexPrimitives.cpp Framework/draw_objects/VertexPrimitives.h)
 
 
 add_definitions(-DGLEW_STATIC)

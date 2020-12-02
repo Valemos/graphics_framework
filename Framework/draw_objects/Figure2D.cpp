@@ -2,7 +2,7 @@
 
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "Primitive.h"
+#include "draw_objects/primitives/Primitive.h"
 
 
 void Figure2D::SetFillColor(float r, float g, float b)

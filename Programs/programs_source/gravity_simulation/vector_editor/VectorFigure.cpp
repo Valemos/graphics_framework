@@ -5,8 +5,8 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "Renderer.h"
-#include "draw_objects/Triangle.h"
-#include "draw_objects/TriangleFan.h"
+#include "draw_objects/primitives/Triangle.h"
+#include "draw_objects/primitives/TriangleFan.h"
 
 VectorFigure::VectorFigure(Vector3 color, float length, float width)
 {
@@ -18,17 +18,17 @@ VectorFigure::VectorFigure(Vector3 color, float length, float width)
 	width_ = width;
 	point_start_ = { 0, 0};
 	point_end_ = { length_, 0};
-	
-	InitBuffers(
-		{
-			{0, 0},
-			{width_, -width_ / 2},
-			point_end_,
-			{width_, width_ / 2}
-		},
-		{
-			new TriangleFan({0, 1, 2, 3})
-		});
+
+    InitPrimitiveBuffers(
+            {
+                    {0, 0},
+                    {width_, -width_ / 2},
+                    point_end_,
+                    {width_, width_ / 2}
+            },
+            {
+                    new TriangleFan({0, 1, 2, 3})
+            });
 }
 
 void VectorFigure::SetStart(Vector3 start)

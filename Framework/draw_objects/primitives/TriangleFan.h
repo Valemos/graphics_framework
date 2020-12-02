@@ -1,6 +1,6 @@
 #pragma once
 
-#include "draw_objects/Primitive.h"
+#include "Primitive.h"
 
 class TriangleFan : public Primitive
 {

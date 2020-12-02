@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../draw_objects/Object3D.h"
-#include "../draw_objects/Quad.h"
+#include "draw_objects/primitives/Quad.h"
 
 class Cube : public Object3D
 {
@@ -36,15 +36,15 @@ public:
 		cube_vertices.push_back(cur_vertex);
 
 		// Load to GL buffer
-		InitBuffers(
-			cube_vertices,
-			{
-				new Quad({0, 1, 2, 3}),
-				new Quad({4, 5, 6, 7}),
-				new Quad({6, 5, 2, 1}),
-				new Quad({0, 3, 4, 7}),
-				new Quad({7, 6, 1, 0}),
-				new Quad({2, 3, 4, 5})
-			});
+        InitPrimitiveBuffers(
+                cube_vertices,
+                {
+                        new Quad({0, 1, 2, 3}),
+                        new Quad({4, 5, 6, 7}),
+                        new Quad({6, 5, 2, 1}),
+                        new Quad({0, 3, 4, 7}),
+                        new Quad({7, 6, 1, 0}),
+                        new Quad({2, 3, 4, 5})
+                });
 	}
 };

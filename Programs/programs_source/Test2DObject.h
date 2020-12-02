@@ -2,8 +2,8 @@
 
 #include "Program.h"
 #include "draw_objects/Figure2D.h"
-#include "draw_objects/Quad.h"
-#include "draw_objects/Triangle.h"
+#include "draw_objects/primitives/Quad.h"
+#include "draw_objects/primitives/Triangle.h"
 
 
 class Test2DProgram : public Program
@@ -37,12 +37,12 @@ public:
 			p3 = { 1.f, 0.5f },
 			p4 = { -1.f, 1.f };
 
-		task_figure_->InitBuffers(
-			{ p0, p1, p2, p3, p4 },
-			{
-				new Quad({ 0, 2, 3, 1 }),
-				new Triangle({ 0, 2, 4 })
-			});
+        task_figure_->InitPrimitiveBuffers(
+                {p0, p1, p2, p3, p4},
+                {
+                        new Quad({0, 2, 3, 1}),
+                        new Triangle({0, 2, 4})
+                });
 
 		task_figure_->Position() = Vector3{0, 0, 0};
 		

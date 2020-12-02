@@ -1,8 +1,8 @@
 #pragma once
 
 #include "draw_objects/Object3D.h"
-#include "draw_objects/Triangle.h"
-#include "draw_objects/Quad.h"
+#include "draw_objects/primitives/Triangle.h"
+#include "draw_objects/primitives/Quad.h"
 #include <math.h>
 
 class Dodecahedron : public Object3D
@@ -142,6 +142,6 @@ public:
 		roof_primitives = CreateRoofPrimitives(cube_top, top, 3, false);
 		primitives.insert(primitives.end(), roof_primitives.begin(), roof_primitives.end());
 
-		InitBuffers(vertices, primitives);
+        InitPrimitiveBuffers(vertices, primitives);
 	}
 };

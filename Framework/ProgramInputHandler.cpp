@@ -16,28 +16,28 @@ Vector3* ProgramInputHandler::keyboard_move_dir = new Vector3{ 0.0, 0.0 };
 
 // default button handlers
 
-static int default_handler_w(Program* program)
+static Program::ProgramState default_handler_w(Program*)
 {
 	ProgramInputHandler::keyboard_move_dir->y += 1;
-	return 0;
+	return Program::program_continue;
 };
 
-static int default_handler_s(Program*)
+static Program::ProgramState default_handler_s(Program*)
 {
 	ProgramInputHandler::keyboard_move_dir->y -= 1;
-	return 0;
+	return Program::program_continue;
 };
 
-static int default_handler_a(Program*)
+static Program::ProgramState default_handler_a(Program*)
 {
 	ProgramInputHandler::keyboard_move_dir->x -= 1;
-	return 0;
+	return Program::program_continue;
 };
 
-static int default_handler_d(Program* program)
+static Program::ProgramState default_handler_d(Program* program)
 {
 	ProgramInputHandler::keyboard_move_dir->x += 1;
-	return 0;
+	return Program::program_continue;
 };
 
 const std::vector<ButtonHandler> ProgramInputHandler::default_handlers = {

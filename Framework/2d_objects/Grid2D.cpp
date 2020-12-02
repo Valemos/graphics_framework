@@ -1,6 +1,6 @@
 #include "Grid2D.h"
 
-#include "../draw_objects/Line.h"
+#include "draw_objects/primitives/Line.h"
 
 Grid2D::Grid2D(std::vector<std::vector<Vector3>>& points_array, int intermediate_count)
 {
@@ -88,8 +88,8 @@ Grid2D::Grid2D(std::vector<std::vector<Vector3>>& points_array, int intermediate
 		}
 	}
 
-	
-	InitBuffers(vertices, primitives);
+
+    InitPrimitiveBuffers(vertices, primitives);
 }
 
 

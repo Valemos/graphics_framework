@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../draw_objects/Object3D.h"
-#include "../draw_objects/Triangle.h"
-#include "../draw_objects/Quad.h"
+#include "draw_objects/primitives/Triangle.h"
+#include "draw_objects/primitives/Quad.h"
 
 class Surface : public Object3D
 {
@@ -47,6 +47,6 @@ public:
 			}
 		}
 
-		InitBuffers(vertices, primitives);
+        InitPrimitiveBuffers(vertices, primitives);
 	}
 };

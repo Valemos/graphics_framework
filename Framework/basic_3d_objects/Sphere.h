@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../framework/draw_objects/Object3D.h"
-#include "../framework/draw_objects/Triangle.h"
+#include "draw_objects/primitives/Triangle.h"
 #include "cmath"
 
 class Sphere : public Object3D
@@ -100,6 +100,6 @@ public:
 				prev_triangles = new_triangles;
 			}
 		}
-		InitBuffers(vertices, *prev_triangles);
+        InitPrimitiveBuffers(vertices, *prev_triangles);
 	}
 };

@@ -1,7 +1,7 @@
 #include "SpaceMetricGrid.h"
 
 #include "ProgramInputHandler.h"
-#include "draw_objects/Line.h"
+#include "draw_objects/primitives/Line.h"
 #include <math.h>
 
 
@@ -97,7 +97,7 @@ int SpaceMetricGrid::Init()
 		primitives.emplace_back(new Line(indices));
 	}
 
-	figure_->InitBuffers(vertices, primitives);
+    figure_->InitPrimitiveBuffers(vertices, primitives);
 	figure_->Position() = Vector3{ 0, 0 };
 	figure_->SetBorderColor(0, 1, 0);
 	figure_->SetBorderWidth(1);

@@ -2,6 +2,7 @@
 
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
+#include "Program.h"
 
 class Program;
 
@@ -59,7 +60,7 @@ enum class Key
 };
 
 
-typedef int (*KeyHandler) (Program*);
+typedef Program::ProgramState (*KeyHandler) (Program*);
 typedef bool ButtonState;
 
 class ButtonHandler
@@ -76,6 +77,6 @@ public:
 	KeyHandler GetHandler() const;
 	Key GetType() const;
 
-	int Handle(Program* program) const;
-	int Handle() const;
+	Program::ProgramState Handle(Program* program) const;
+	Program::ProgramState Handle() const;
 };
