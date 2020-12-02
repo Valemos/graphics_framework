@@ -12,6 +12,8 @@ void NormalPrimitives::SetNormalsFromPrimitives(const std::vector<Vector3>& vert
 
     // calculate normals for each vertex in primitives
     for (auto* primitive : primitives){
-
+        for (int i = 0; i < primitive->get_indices().size(); i++){
+            // get two consecutive
+        }
     }
 }

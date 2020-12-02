@@ -8,7 +8,7 @@
 
 class Object3D : public Drawable, public VertexPrimitives, public NormalPrimitives // and TexturePrimitives?
 {
-    void LoadGLTransform(Renderer &renderer, const Vector3 &position) const override;
+    void LoadGlTransform(Renderer &renderer, const Vector3 &position) const override;
 
 public:
 	glm::vec3 primary_color{};

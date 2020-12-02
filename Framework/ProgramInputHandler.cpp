@@ -104,6 +104,7 @@ int ProgramInputHandler::RunProgram(Program* program, const std::string& shader_
     renderer.LoadShadersFromFile(shader_path);
 
 	glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 	
 	glViewport(0, 0, static_cast<int>(window_size.x), static_cast<int>(window_size.y));
 

@@ -18,6 +18,6 @@ public:
 	Vector3 GetStart() const;
 	Vector3 GetEnd() const;
 	
-	void LoadGLTransform(Renderer& renderer, const Vector3& position) const override;
+	void LoadGlTransform(Renderer& renderer, const Vector3& position) const override;
 };
 

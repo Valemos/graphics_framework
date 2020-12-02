@@ -25,7 +25,7 @@ void Figure2D::SetScale(float x_scale, float y_scale, float z_scale)
 	figure_scale_ = glm::vec3(x_scale, y_scale, z_scale);
 }
 
-void Figure2D::LoadGLTransform(Renderer& renderer, const Vector3& position) const
+void Figure2D::LoadGlTransform(Renderer& renderer, const Vector3& position) const
 {
 	const unsigned int shader_program = renderer.get_shader_program();
 	static const auto transform_loc = glGetUniformLocation(shader_program, "transform");
@@ -45,8 +45,8 @@ void Figure2D::Draw(Renderer& renderer)
 	
 	static const auto color_loc = glGetUniformLocation(shader_program, "fillColor");
 
-	LoadGLTransform(renderer, object_position_);
-	LoadGLBuffers();
+	LoadGlTransform(renderer, object_position_);
+	LoadGlBuffers();
 
 	glUniform4fv(color_loc, 1, value_ptr(fill_color_));
 	unsigned first_index_position = 0;
@@ -64,8 +64,8 @@ void Figure2D::DrawWireframe(Renderer& renderer)
 	static const auto transform_loc = glGetUniformLocation(shader_program, "transform");
 	static const auto color_loc = glGetUniformLocation(shader_program, "fillColor");
 
-	LoadGLTransform(renderer, object_position_);
-	LoadGLBuffers();
+    LoadGlTransform(renderer, object_position_);
+	LoadGlBuffers();
 
 	glLineWidth(border_width_);
 	glUniform4fv(color_loc, 1, value_ptr(border_color_));
@@ -75,4 +75,12 @@ void Figure2D::DrawWireframe(Renderer& renderer)
 		primitive->DrawBorder((void*)first_index_position);
 		first_index_position += primitive->get_indices().size() * sizeof(GLuint);
 	}
+}
+
+void Figure2D::InitGlBuffers() {
+
+}
+
+void Figure2D::LoadGlBuffers() {
+
 }

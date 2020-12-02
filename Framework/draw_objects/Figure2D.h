@@ -6,9 +6,10 @@
 #include "../Renderer.h"
 #include "Drawable.h"
 #include <glm/glm.hpp>
+#include "VertexPrimitives.h"
 
 
-class Figure2D : public Drawable
+class Figure2D : public Drawable, public VertexPrimitives
 {
 
 protected:
@@ -21,7 +22,7 @@ public:
     std::string name;
 
 	Figure2D() = default;
-	~Figure2D() override = default;
+	~Figure2D() = default;
 
 	void SetFillColor(float r, float g, float b);
 	void SetBorderColor(float r, float g, float b);
@@ -29,9 +30,12 @@ public:
 	void SetScale(float x_scale, float y_scale, float z_scale = 1.f);
 
 	// before Draw must initialize primitives and load buffers to OpenGL
-	void LoadGLTransform(Renderer& renderer, const Vector3& position) const override;
+	void LoadGlTransform(Renderer& renderer, const Vector3& position) const override;
     void Draw(Renderer& renderer) override;
 	void DrawWireframe(Renderer& renderer) override;
+
+    void InitGlBuffers() override;
+    void LoadGlBuffers() override;
 };
 
 #endif // !GL_LAB1_FIGURE

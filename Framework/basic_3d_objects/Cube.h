@@ -36,15 +36,16 @@ public:
 		cube_vertices.push_back(cur_vertex);
 
 		// Load to GL buffer
-        InitPrimitiveBuffers(
-                cube_vertices,
+        SetVertices(cube_vertices);
+        SetPrimitives(
                 {
-                        new Quad({0, 1, 2, 3}),
-                        new Quad({4, 5, 6, 7}),
-                        new Quad({6, 5, 2, 1}),
-                        new Quad({0, 3, 4, 7}),
-                        new Quad({7, 6, 1, 0}),
-                        new Quad({2, 3, 4, 5})
+                    new Quad({0, 1, 2, 3}),
+                    new Quad({4, 5, 6, 7}),
+                    new Quad({6, 5, 2, 1}),
+                    new Quad({0, 3, 4, 7}),
+                    new Quad({7, 6, 1, 0}),
+                    new Quad({2, 3, 4, 5})
                 });
+        InitGlBuffers();
 	}
 };

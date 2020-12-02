@@ -8,7 +8,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 
-void Object3D::LoadGLTransform(Renderer& renderer, const Vector3& position) const
+void Object3D::LoadGlTransform(Renderer& renderer, const Vector3& position) const
 {
 	// calculate local space transform matrix
 	glm::mat4 transform = glm::mat4(1.0f);
@@ -32,7 +32,7 @@ void Object3D::Draw(Renderer& renderer)
 	glUseProgram(shader_program);
 	static const auto color_loc = glGetUniformLocation(shader_program, "fillColor");
 
-	LoadGLTransform(renderer, object_position_);
+    LoadGlTransform(renderer, object_position_);
 	LoadGlBuffers();
 
 	// Draw all primitives
@@ -51,7 +51,7 @@ void Object3D::DrawWireframe(Renderer& renderer)
 	glUseProgram(shader_program);
 	static const auto color_loc = glGetUniformLocation(shader_program, "fillColor");
 
-	LoadGLTransform(renderer, object_position_);
+    LoadGlTransform(renderer, object_position_);
 	LoadGlBuffers();
 
 	glLineWidth(2.f);
@@ -78,10 +78,9 @@ void Object3D::InitGlBuffers() {
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id_);
     glBufferData(GL_ARRAY_BUFFER, (vertex_buffer_.size() + normals_buffer_.size()) * sizeof(float), 0, GL_STATIC_DRAW);
 
-
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*) 0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*) (vertex_buffer_.size() * sizeof(float)));
+//    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*) (vertex_buffer_.size() * sizeof(float)));
 }
 
 void Object3D::LoadGlBuffers() {
@@ -96,6 +95,6 @@ void Object3D::LoadGlBuffers() {
     // vertices data
     glBufferSubData(GL_ARRAY_BUFFER, 0, vertex_buffer_.size() * sizeof(float), vertex_buffer_.data());
     // bind normals data to the end of main buffer
-    glBufferSubData(GL_ARRAY_BUFFER, vertex_buffer_.size() * sizeof(float), normals_buffer_.size() * sizeof(float), normals_buffer_.data());
+//    glBufferSubData(GL_ARRAY_BUFFER, vertex_buffer_.size() * sizeof(float), normals_buffer_.size() * sizeof(float), normals_buffer_.data());
 
 }

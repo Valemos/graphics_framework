@@ -58,7 +58,7 @@ Vector3 VectorFigure::GetEnd() const
 	return point_end_;
 }
 
-void VectorFigure::LoadGLTransform(Renderer& renderer, const Vector3& position) const
+void VectorFigure::LoadGlTransform(Renderer& renderer, const Vector3& position) const
 {
 	const unsigned int shader_program = renderer.get_shader_program();
 	static const auto transform_loc = glGetUniformLocation(shader_program, "transform");

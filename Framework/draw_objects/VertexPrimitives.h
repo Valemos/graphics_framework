@@ -9,7 +9,6 @@
 class VertexPrimitives {
 
 protected:
-    Vector3 object_position_;
 
     unsigned int vertex_buffer_id_ = 0;
     std::vector<float> vertex_buffer_;
@@ -29,7 +28,6 @@ public:
     // loads all necessary data to graphics card
     void SetVertices(const std::vector<Vector3>& vertices);
     void SetPrimitives(const std::vector<Primitive*>& new_primitives);
-
 };
 
 
