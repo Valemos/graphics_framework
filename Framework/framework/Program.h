@@ -17,7 +17,7 @@ public:
 	double desired_update_time;
 	double previous_update_time;
 
-	Program(float fps, std::string name = "Program"): window_name(name)
+	explicit Program(float fps, std::string& name = (std::string &) "Program"): window_name(name)
 	{
 		desired_update_time = 1.0 / fps;
 		previous_update_time = 0.0;

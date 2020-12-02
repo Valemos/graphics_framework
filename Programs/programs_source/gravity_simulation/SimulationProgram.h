@@ -43,7 +43,8 @@ public:
 		ProgramInputHandler::AddButtonHandlers({
 			ButtonHandler(Key::Space, HandleSpace),
 			ButtonHandler(Key::Q, HandleQ),
-			ButtonHandler(Key::R, HandleR)
+			ButtonHandler(Key::R, HandleR),
+			ButtonHandler(Key::D, HandleD),
 		});
 	}
 
@@ -56,12 +57,13 @@ public:
 	static int HandleSpace(Program* program);
 	static int HandleQ(Program* program);
 	static int HandleR(Program* program);
+	static int HandleD(Program* program);
 
-	friend static int create_planet(SimulationProgram* program);
-	friend static int planet_position_selection(SimulationProgram* program);
-	friend static int planet_radius_selection(SimulationProgram* program);
-	friend static int planet_speed_selection(SimulationProgram* program);
-	friend static int gravity_simulation(SimulationProgram* program);
+	friend int create_planet(SimulationProgram* program);
+	friend int planet_position_selection(SimulationProgram* program);
+	friend int planet_radius_selection(SimulationProgram* program);
+	friend int planet_speed_selection(SimulationProgram* program);
+	friend int gravity_simulation(SimulationProgram* program);
 	
 	int Init() override;
 	int Step() override;

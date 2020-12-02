@@ -2,7 +2,7 @@
 
 #include "Drawable.h"
 #include "Vector3.h"
-#include <glm/glm.hpp>"
+#include <glm/glm.hpp>
 
 class Object3D : public Drawable
 {

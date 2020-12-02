@@ -22,13 +22,13 @@ static int default_handler_w(Program* program)
 	return 0;
 };
 
-static int default_handler_s(Program* program)
+static int default_handler_s(Program*)
 {
 	ProgramInputHandler::keyboard_move_dir->y -= 1;
 	return 0;
 };
 
-static int default_handler_a(Program* program)
+static int default_handler_a(Program*)
 {
 	ProgramInputHandler::keyboard_move_dir->x -= 1;
 	return 0;
@@ -42,7 +42,7 @@ static int default_handler_d(Program* program)
 
 const std::vector<ButtonHandler> ProgramInputHandler::default_handlers = {
 	ButtonHandler(Key::W, default_handler_w),
-	ButtonHandler(Key::A, default_handler_a),
+    ButtonHandler(Key::A, default_handler_a),
 	ButtonHandler(Key::S, default_handler_s),
 	ButtonHandler(Key::D, default_handler_d)
 };
@@ -157,14 +157,9 @@ void ProgramInputHandler::ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void ProgramInputHandler::SetClearColor(double r, double g, double b, double a)
-{
-	glClearColor(r, g, b, a);
-}
-
 void ProgramInputHandler::SetClearColor(int r, int g, int b, int a)
 {
-	glClearColor(r / 255.f, g / 255.f, b / 255.f, a / 255.f);
+	glClearColor((float)r / 255.f, (float)g / 255.f, (float)b / 255.f, (float)a / 255.f);
 }
 
 GLFWwindow* ProgramInputHandler::GetWindow()

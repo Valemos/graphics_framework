@@ -94,10 +94,10 @@ void Simulation::ShowInformation(const UniverseConstants& constants, std::string
 
 		// show accelerations to other objects
 		for (CelestialBody* current_object : objects_) {
-			if (current_object != body) {
-				const Vector3 acceleration = Simulation::CalculateAcceleration(objects_, body, constants);
-				const float dist = sqrt(body->GetPosition().DistanceSquared(current_object->GetPosition()));
-				printf("\nAccl to %s\tX: %.3f Y: %.3f", current_object->name.c_str(), acceleration.x, acceleration.y);
+            const Vector3 acceleration = Simulation::CalculateAcceleration(objects_, body, constants);
+            printf("\nAcceleration:\tX: %.3f Y: %.3f", acceleration.x, acceleration.y);
+            if (current_object != body) {
+				const float dist = body->GetPosition().Distance(current_object->GetPosition());
 				printf("\nDist to %s\t%.3f", current_object->name.c_str(), dist);
 			}
 		}

@@ -21,7 +21,9 @@ int create_planet(SimulationProgram* program)
 		Vector3(rand() % 256, rand() % 256, rand() % 256) / 255,
 		&program->constants_
 	);
-	
+
+    planet->SetSurfaceGravity(50.f, program->constants_);
+
 	program->simulation_->AddCelestialBody(planet);
 	program->controlled_object_ = planet;
 
@@ -47,8 +49,7 @@ int planet_position_selection(SimulationProgram* program)
 
 int planet_radius_selection(SimulationProgram* program)
 {
-	const auto radius =
-		program->controlled_object_->GetPosition().Distance(*ProgramInputHandler::mouse_position);
+	const auto radius = program->controlled_object_->GetPosition().Distance(*ProgramInputHandler::mouse_position);
 
 	program->controlled_object_->SetRadius(radius);
 
@@ -96,7 +97,7 @@ int gravity_simulation(SimulationProgram* program)
 	}
 
 	return program->simulation_->SimulateStep(program->constants_) ? 
-		Program::program_continue : Program::program_finish;
+	       Program::program_continue : Program::program_finish;
 }
 
 int SimulationProgram::HandleSpace(Program* program)
@@ -106,14 +107,22 @@ int SimulationProgram::HandleSpace(Program* program)
 	return program_continue;
 }
 
-int SimulationProgram::HandleQ(Program* program)
+int SimulationProgram::HandleQ(Program*)
 {
 	return program_finish;
 }
 
-int SimulationProgram::HandleR(Program* program)
+int SimulationProgram::HandleR(Program*)
 {
 	return program_restart;
+}
+
+int SimulationProgram::HandleD(Program* program) {
+    auto* sym_program = dynamic_cast<SimulationProgram*>(program);
+
+    sym_program->simulation_->ShowInformation(sym_program->constants_, "", true);
+
+    return program_continue;
 }
 
 int SimulationProgram::Init()
@@ -134,7 +143,7 @@ int SimulationProgram::Init()
 
 	auto* Earth = new CelestialBody("Earth", Vector3{27, 100, 10} / 255.f, &constants_);
 	Earth->SetRadius(50.f);
-	Earth->SetSurfaceGravity(9.8f, constants_);
+	Earth->SetSurfaceGravity(50.f, constants_);
 	Earth->SetPosition({900.f, 0.f});
 	
 
@@ -161,7 +170,7 @@ int SimulationProgram::Init()
 
 int SimulationProgram::Step()
 {
-	int return_code = state_function_(this);
+	state_function_(this);
 	
 	// Draw objects
 	for (auto* object : simulation_->Objects())

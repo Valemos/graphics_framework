@@ -27,7 +27,6 @@ public:
 	~ProgramInputHandler();
 
 	static void ClearScreen();
-	static void SetClearColor(double r, double g, double b, double a = 1.0);
 	static void SetClearColor(int r, int g, int b, int a = 255);
 	
 	static int RunProgram(Program*, const std::string& shader_path, int width = 100, int height = 100);
