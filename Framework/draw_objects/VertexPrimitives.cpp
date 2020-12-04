@@ -11,7 +11,7 @@ VertexPrimitives::~VertexPrimitives() {
     index_buffer_.clear();
 }
 
-void VertexPrimitives::SetVertices(const std::vector<Vector3>& vertices)
+void VertexPrimitives::SetVertexBuffer(const std::vector<Vector3>& vertices)
 {
     vertex_buffer_.clear();
     vertex_buffer_.reserve(vertices.size() * 3);
@@ -25,12 +25,15 @@ void VertexPrimitives::SetVertices(const std::vector<Vector3>& vertices)
 
 void VertexPrimitives::SetPrimitives(const std::vector<Primitive*>& new_primitives)
 {
+    // we create triangles for each primitive
+
     for (auto* prim : primitives_)
     {
         delete prim;
     }
     primitives_.clear();
     primitives_ = new_primitives;
+
 
     unsigned indices_count = 0;
     for (auto* prim : primitives_)
@@ -46,4 +49,21 @@ void VertexPrimitives::SetPrimitives(const std::vector<Primitive*>& new_primitiv
         auto indices = prim->get_indices();
         index_buffer_.insert(index_buffer_.end(), indices.begin(), indices.end());
     }
+}
+
+std::vector<Triangle*>& VertexPrimitives::GetTriangles(const std::vector<Primitive *> &primitives) {
+
+    for (auto* triangle : triangles_){
+        delete triangle;
+    }
+    triangles_.clear();
+    triangles_.reserve(primitives.size());
+
+    for (auto* prim : primitives) {
+        auto indices = prim->get_triangle_indices();
+        for (auto it = indices.begin(); it != indices.end(); it += 3){
+            triangles_.emplace_back(new Triangle(std::vector<unsigned>(it, (it + 3))));
+        }
+    }
+    return triangles_;
 }

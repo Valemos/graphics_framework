@@ -88,7 +88,7 @@ Grid2D::Grid2D(std::vector<std::vector<Vector3>>& points_array, int intermediate
 		}
 	}
 
-    SetVertices(vertices);
+    SetVertexBuffer(vertices);
 	SetPrimitives(primitives);
 	InitGlBuffers();
 }

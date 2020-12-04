@@ -31,7 +31,7 @@ public:
     {
     }
 
-    static int HandleSpace(Program*);
+    static Program::ProgramState HandleSpace(Program *param);
 	
     // Inherited via Program
     int Init() override;

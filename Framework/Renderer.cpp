@@ -15,7 +15,7 @@ void Renderer::LoadShadersFromFile(const std::string& file_path)
     shader_program_ = InitShaders(program_code);
 }
 
-int Renderer::get_shader_program() const
+unsigned int Renderer::get_shader_program() const
 {
     return shader_program_;
 }

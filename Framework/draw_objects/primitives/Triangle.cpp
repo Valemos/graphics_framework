@@ -15,15 +15,15 @@ Triangle::Triangle(const std::vector<unsigned int>& positions) : Primitive(posit
 
 std::vector<unsigned> Triangle::get_triangle_indices() const
 {
-	return vertex_indices_;
+	return indices_;
 }
 
 unsigned Triangle::get_triangle_indices_count() const
 {
-	return vertex_indices_.size();
+	return indices_.size();
 }
 
 void Triangle::Draw(const void* offset) const
 {
-	glDrawElements(GL_TRIANGLES, vertex_indices_.size(), GL_UNSIGNED_INT, offset);
+	glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, offset);
 }

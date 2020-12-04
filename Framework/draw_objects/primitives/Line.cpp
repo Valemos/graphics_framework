@@ -4,15 +4,15 @@
 
 std::vector<unsigned> Line::get_triangle_indices() const
 {
-	return vertex_indices_;
+	return indices_;
 }
 
 unsigned Line::get_triangle_indices_count() const
 {
-	return vertex_indices_.size();
+	return indices_.size();
 }
 
 void Line::Draw(const void* offset) const
 {
-	glDrawElements(GL_LINE_STRIP, vertex_indices_.size(), GL_UNSIGNED_INT, offset);
+	glDrawElements(GL_LINE_STRIP, indices_.size(), GL_UNSIGNED_INT, offset);
 }

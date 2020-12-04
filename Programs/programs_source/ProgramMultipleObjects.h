@@ -5,12 +5,11 @@
 #include "basic_3d_objects/Dodecahedron.h"
 #include "basic_3d_objects/Surface.h"
 #include "basic_3d_objects/AxisObject.h"
+#include "SphericalCamera.h"
 
-// for resetting console output
+// to reset console output
 #include "Windows.h"
 
-static constexpr float pi = 3.141592653589793f;
-static constexpr float pi2 = pi * 2;
 
 class ProgramMultipleObjects : public Program
 {
@@ -22,32 +21,18 @@ class ProgramMultipleObjects : public Program
 	Object3D* draw_objects_[5];
 
 	// control camera with spherical coordinates
-	const float top_angle_ = 0.f;
-	const float bot_angle_ = pi;
-	float theta_angle_ = 90.f / 180 * pi;
-	float phi_angle_ = 90.f / 180 * pi;
-	float radius_ = 20.f;
-
-	static const float s_camera_move_speed;
-	static float s_increment_zoom_value_;
-	Vector3 camera_position_;
-	Vector3 camera_up_{ 0, 1, 0 };
-	Vector3 camera_down_{ 0, -1, 0 };
-	Vector3 current_camera_up_ = camera_up_;
-
-	// controls zoom in orthogonal mode
-	float ortho_projection_dim_ = radius_;
+	static bool s_update_camera_;
+    static SphericalCamera* s_camera_controller_;
 
 public:
-	ProgramMultipleObjects(float fps);
+	explicit ProgramMultipleObjects(float fps);
 
-	static int HandlePlus(Program*);
-	static int HandleMinus(Program*);
-	static int HandlePerspectiveMode(Program*);
-	static int HandleOrthogonalMode(Program*);
-	void UpdateCameraSphericalCoordinate();
+	static Program::ProgramState HandlePlus(Program*);
+	static Program::ProgramState HandleMinus(Program*);
+	static Program::ProgramState HandlePerspectiveMode(Program*);
+	static Program::ProgramState HandleOrthogonalMode(Program*);
 
-	float TaskSurfaceFunction(float x, float y) const;
+	static float TaskSurfaceFunction(float x, float y) ;
 
 	int Init() override;
 	int Step() override;

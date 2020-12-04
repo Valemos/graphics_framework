@@ -49,7 +49,14 @@ add_library(GraphicalFramework
         Framework/Renderer.cpp
         Framework/Renderer.h
         Vector/source/Vector3.cpp
-        Vector/source/Vector3.h Framework/draw_objects/NormalPrimitives.cpp Framework/draw_objects/NormalPrimitives.h Framework/draw_objects/VertexPrimitives.cpp Framework/draw_objects/VertexPrimitives.h)
+        Vector/source/Vector3.h
+        Framework/draw_objects/NormalMapped.cpp
+        Framework/draw_objects/NormalMapped.h
+        Framework/draw_objects/VertexPrimitives.cpp
+        Framework/draw_objects/VertexPrimitives.h
+        Test/test_main.cpp
+        Framework/SphericalCamera.cpp
+        Framework/SphericalCamera.h Framework/draw_objects/LightSource.cpp Framework/draw_objects/LightSource.h)
 
 
 add_definitions(-DGLEW_STATIC)
@@ -65,8 +72,8 @@ add_executable(Programs
         Programs/programs_source/ProgramMultipleObjects.h
         Programs/programs_source/SpaceMetricGrid.cpp
         Programs/programs_source/SpaceMetricGrid.h
-        Programs/programs_source/Test2DObject.h
-        Programs/programs_source/Test3DObject.h
+        Test/Test2DObject.h
+        Test/Test3DObject.h
         Programs/main.cpp)
 
 target_link_libraries(Programs GraphicalFramework)
@@ -95,3 +102,11 @@ add_executable(lab3
         Programs/programs_source/lab3_lighting/lab3_main.cpp)
 
 target_link_libraries(lab3 GraphicalFramework)
+
+add_executable(test
+        Test/TestNormals.h
+        Test/Test2DObject.h
+        Test/Test3DObject.h
+        Test/test_main.cpp)
+
+target_link_libraries(test GraphicalFramework)

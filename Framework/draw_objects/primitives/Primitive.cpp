@@ -3,21 +3,21 @@
 
 Primitive::Primitive(const std::vector<unsigned int>& indices)
 {
-	vertex_indices_ = indices;
+    indices_ = indices;
 }
 
 void Primitive::DrawBorder(const void* offset) const
 {
-	glDrawElements(GL_LINE_LOOP, vertex_indices_.size(), GL_UNSIGNED_INT, offset);
+	glDrawElements(GL_LINE_LOOP, indices_.size(), GL_UNSIGNED_INT, offset);
 }
 
 const std::vector<unsigned>& Primitive::get_indices() const
 {
-	return vertex_indices_;
+	return indices_;
 }
 
 void Primitive::set_indices(const std::vector<unsigned>& indices_new)
 {
-	vertex_indices_.clear();
-	vertex_indices_ = indices_new;
+	indices_.clear();
+    indices_ = indices_new;
 }

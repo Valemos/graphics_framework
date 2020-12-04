@@ -7,7 +7,7 @@
 double GridVisualization::s_last_space_press = 0;
 bool GridVisualization::s_space_pressed = false;
 
-int GridVisualization::HandleSpace(Program* param)
+Program::ProgramState GridVisualization::HandleSpace(Program* param)
 {
     auto program = dynamic_cast<GridVisualization*> (param);
 	if (!s_space_pressed && glfwGetTime() - s_last_space_press > 0.2)
@@ -18,7 +18,7 @@ int GridVisualization::HandleSpace(Program* param)
         }
         s_last_space_press = glfwGetTime();
 	}
-	return 0;
+	return program_continue;
 }
 
 int GridVisualization::Init()

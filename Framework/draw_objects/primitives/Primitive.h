@@ -20,7 +20,7 @@ public:
 
 protected:
 	// all primitives can have different number of points included
-	std::vector<unsigned int> vertex_indices_;
+	std::vector<unsigned int> indices_;
 };
 
 #endif

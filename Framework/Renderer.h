@@ -8,6 +8,7 @@
 
 #include "Vector3.h"
 #include "draw_objects/Camera.h"
+#include "LightSource.h"
 
 struct ShaderSourceCode {
         std::string Vertex;
@@ -17,16 +18,17 @@ struct ShaderSourceCode {
 class Renderer
 {
 public:
+    LightSource light_source;
+
 	Renderer();
 
     void LoadShadersFromFile(const std::string& file_path);
-	int get_shader_program() const;
+	unsigned int get_shader_program() const;
 	Camera& get_camera();
 	void SetGlobalScale(glm::vec3 global_scale);
 	glm::vec3 GetGlobalScale() const;
 
 private:
-	
 	Camera main_camera_ = Camera({0, 0, 0}, {0, 0, 0});
 	
 	unsigned int shader_program_;

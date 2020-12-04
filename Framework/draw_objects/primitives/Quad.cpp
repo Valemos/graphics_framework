@@ -18,8 +18,8 @@ std::vector<unsigned> Quad::get_triangle_indices() const
 	// for each 4 points of quad we create two triangles
 	std::vector<unsigned int> triangles;
 	triangles.reserve(get_triangle_indices_count());
-	auto it = vertex_indices_.begin();
-	while (it != vertex_indices_.end())
+	auto it = indices_.begin();
+	while (it != indices_.end())
 	{
 		triangles.push_back(*it);
 		triangles.push_back(*(it + 1));
@@ -35,10 +35,10 @@ std::vector<unsigned> Quad::get_triangle_indices() const
 
 unsigned Quad::get_triangle_indices_count() const
 {
-	return vertex_indices_.size() / 2 * 3;
+	return indices_.size() / 2 * 3;
 }
 
 void Quad::Draw(const void* offset) const
 {
-	glDrawElements(GL_QUADS, vertex_indices_.size(), GL_UNSIGNED_INT, offset);
+	glDrawElements(GL_QUADS, indices_.size(), GL_UNSIGNED_INT, offset);
 }

@@ -1,6 +1,9 @@
-#include <ProgramInputHandler.h>
+#include "ProgramInputHandler.h"
 #include "LightingLab3.h"
 #include <vector>
+
+
+SphericalCamera* LightingLab3::s_camera_controller_ = nullptr;
 
 LightingLab3::LightingLab3(float fps, std::string name) : Program(fps, name)
 {
@@ -8,42 +11,48 @@ LightingLab3::LightingLab3(float fps, std::string name) : Program(fps, name)
 
 int LightingLab3::Init() {
 
-    cubes_[0] = new Cube(
+    objects_[0] = new Cube(
             (Vector3{255, 146, 56} / 255).ToGlm(),
             {0, 0, 0}
             );
-    cubes_[0]->Position() = {1, 0, 0};
+    objects_[0]->Position() = {-0.5, -0.5, -0.5};
+    objects_[0]->CreateObject();
 
-    // create second cube untouched by lighting
-    renderer_no_lighting_.LoadShadersFromFile(R"(D:\coding\c_c++\GraphicalFramework\Framework\shaders\main_shaders.shader)");
-
-    cubes_[1] = new Cube(
+    objects_[1] = new Cube(
             (Vector3{255, 146, 56} / 255).ToGlm(),
             {0, 0, 0}
             );
-    cubes_[1]->Position() = {-2, 0, 0};
+    objects_[1]->Position() = {-2, -2, -2};
+    objects_[1]->CreateObject();
 
-    /// init cameras
-    setup_camera(renderer_no_lighting_.get_camera());
-    setup_camera(ProgramInputHandler::renderer.get_camera());
+    /// init camera
+    s_camera_controller_ = new SphericalCamera(ProgramInputHandler::renderer.get_camera(),
+                                               {0, 0, 0},
+                                               {0, 1, 0},
+                                               5,
+                                               120.f,
+                                               60.f);
 
-    ProgramInputHandler::SetClearColor(57, 103, 173);
+    s_camera_controller_->get_camera().set_draw_mode(DrawMode::Perspective);
+
+    ProgramInputHandler::renderer.light_source.position = {10, 5, 10};
+    ProgramInputHandler::renderer.light_source.color = {1, 1, 1};
+
+    ProgramInputHandler::SetClearColor(0, 10, 50);
     return program_continue;
-}
-
-void LightingLab3::setup_camera(Camera &camera) {
-    camera.UpdateCameraPosition({6, 3, 5});
-    camera.UpdateCameraTarget({0, 0, 0});
-    camera.UpdateCameraUp({0, 1, 0});
-    camera.set_draw_mode(DrawMode::Perspective);
 }
 
 int LightingLab3::Step() {
-    ProgramInputHandler::ClearScreen();
 
-    cubes_[0]->Draw(ProgramInputHandler::renderer);
-    cubes_[1]->Draw(renderer_no_lighting_);
+//    s_camera_controller_->MoveCamera(*ProgramInputHandler::keyboard_move_dir);
+    if (ProgramInputHandler::keyboard_move_dir->Length() > VECTOR_FLOAT_ACCURACY){
+        ProgramInputHandler::renderer.light_source.position += *ProgramInputHandler::keyboard_move_dir * 0.1;
+    }
 
-    return program_continue;
+
+    for (auto* cube : objects_){
+        cube->Draw(ProgramInputHandler::renderer);
+    }
+
+    return ProgramInputHandler::HandleButtons(this);
 }
-

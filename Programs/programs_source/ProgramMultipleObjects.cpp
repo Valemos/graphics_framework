@@ -3,16 +3,14 @@
 #include "ProgramMultipleObjects.h"
 
 #include <iostream>
-#include "math.h"
 
 // for additional key keyboard callback
 #include "ProgramInputHandler.h"
 #include "ButtonHandler.h"
 
 
-const float ProgramMultipleObjects::s_camera_move_speed = 0.1;
-float ProgramMultipleObjects::s_increment_zoom_value_ = 0;
-
+SphericalCamera* ProgramMultipleObjects::s_camera_controller_ = nullptr;
+bool ProgramMultipleObjects::s_update_camera_ = false;
 
 ProgramMultipleObjects::ProgramMultipleObjects(float fps):
 	Program(fps), axis_(nullptr), draw_objects_{}
@@ -28,33 +26,39 @@ ProgramMultipleObjects::ProgramMultipleObjects(float fps):
 	ProgramInputHandler::AddButtonHandlers(handlers);
 }
 
-int ProgramMultipleObjects::HandlePlus(Program*)
+float ProgramMultipleObjects::TaskSurfaceFunction(float x, float y)
 {
-	s_increment_zoom_value_ -= s_camera_move_speed;
-	return 0;
+    return sin(x) * sqrt(y);
 }
 
-int ProgramMultipleObjects::HandleMinus(Program*)
+Program::ProgramState ProgramMultipleObjects::HandlePlus(Program*)
 {
-	s_increment_zoom_value_ += s_camera_move_speed;
-	return 0;
+    if (s_camera_controller_ != nullptr) {
+        s_camera_controller_->DecrementRadius();
+        s_update_camera_ = true;
+    }
+	return program_continue;
 }
 
-int ProgramMultipleObjects::HandlePerspectiveMode(Program*)
+Program::ProgramState ProgramMultipleObjects::HandleMinus(Program*)
 {
-	ProgramInputHandler::renderer.get_camera().set_draw_mode(DrawMode::Perspective);
-	return 0;
+    if (s_camera_controller_ != nullptr){
+        s_camera_controller_->IncrementRadius();
+        s_update_camera_ = true;
+    }
+	return program_continue;
 }
 
-int ProgramMultipleObjects::HandleOrthogonalMode(Program*)
+Program::ProgramState ProgramMultipleObjects::HandlePerspectiveMode(Program*)
 {
-	ProgramInputHandler::renderer.get_camera().set_draw_mode(DrawMode::Orthogonal);
-	return 0;
+    s_camera_controller_->get_camera().set_draw_mode(DrawMode::Perspective);
+	return program_continue;
 }
 
-float ProgramMultipleObjects::TaskSurfaceFunction(float x, float y) const
+Program::ProgramState ProgramMultipleObjects::HandleOrthogonalMode(Program*)
 {
-	return sin(x) * sqrt(y);
+	s_camera_controller_->get_camera().set_draw_mode(DrawMode::Orthogonal);
+	return program_continue;
 }
 
 int ProgramMultipleObjects::Init()
@@ -71,13 +75,15 @@ int ProgramMultipleObjects::Init()
 	std::vector<std::vector<float>> values;
 	values.resize(y_count);
 
-	for (int y = 0; y < y_count; ++y)
+	for (float y = 0; y < y_count;)
 	{
 		values[y].resize(x_count, 0);
-		for (int x = 0; x < x_count; ++x)
+		for (float x = 0; x < x_count;)
 		{
 			values[y][x] = TaskSurfaceFunction(x * plot_step, y * plot_step);
+            x += 1.f;
 		}
+        y += 1.f;
 	}
 
 	draw_objects_[0] = new Surface(values, {0.0, 171 / 255.0, 88 / 255.0}, {0, 0, 0});
@@ -98,10 +104,11 @@ int ProgramMultipleObjects::Init()
 	draw_objects_[4]->Position() = Vector3{-2, -4, 0};
 
 
-	UpdateCameraSphericalCoordinate();
-	ProgramInputHandler::renderer.get_camera().UpdateCameraTarget({0, 0, 0});
-	ProgramInputHandler::renderer.get_camera().UpdateCameraUp(current_camera_up_);
-	ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(ortho_projection_dim_);
+    s_camera_controller_ = new SphericalCamera(ProgramInputHandler::renderer.get_camera(),
+                                               {0, 0, -5},
+                                               {0, 0, 0},
+                                               {0, 1, 0},
+                                               0.1);
 
 	ProgramInputHandler::SetClearColor(0, 146, 250);
 	return 0;
@@ -111,68 +118,15 @@ int ProgramMultipleObjects::Step()
 {
 	const auto keyboard_input = *ProgramInputHandler::keyboard_move_dir;
 
-	if (abs(s_increment_zoom_value_) > VECTOR_FLOAT_ACCURACY)
+	if (s_update_camera_)
 	{
-		radius_ += s_increment_zoom_value_;
-		ortho_projection_dim_ += s_increment_zoom_value_;
-		s_increment_zoom_value_ = 0;
-
-		// controls zoom in orthogonal projection
-		ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(ortho_projection_dim_);
-		UpdateCameraSphericalCoordinate();
+	    // update if zoomed and not updated during move
+	    s_camera_controller_->UpdatePosition();
+        s_update_camera_ = false;
 	}
 
-	bool update_coordinate = false;
-	if (abs(keyboard_input.x) > VECTOR_FLOAT_ACCURACY)
-	{
-		phi_angle_ += keyboard_input.x * s_camera_move_speed;
+    s_camera_controller_->MoveCamera(keyboard_input);
 
-		if (abs(phi_angle_) - pi2 > VECTOR_FLOAT_ACCURACY)
-		{
-			phi_angle_ += phi_angle_ < 0 ? pi2 : -pi2;
-		}
-		update_coordinate = true;
-	}
-
-	if (abs(keyboard_input.y) > VECTOR_FLOAT_ACCURACY)
-	{
-		float prev_theta_angle = theta_angle_;
-		theta_angle_ += keyboard_input.y * s_camera_move_speed;
-
-		// modify theta_angle to be in range [0, 2*PI]
-		if (theta_angle_ < 0)
-		{
-			theta_angle_ += pi2;
-		}
-		else if (theta_angle_ - pi2 > VECTOR_FLOAT_ACCURACY)
-		{
-			theta_angle_ -= pi2;
-		}
-
-		// make next angle the biggest no matter if angle decreases or increases
-		float next_theta_angle = theta_angle_;
-		if (prev_theta_angle > theta_angle_)
-		{
-			next_theta_angle = prev_theta_angle;
-			prev_theta_angle = theta_angle_;
-		}
-
-		// must change up vector when theta passes 0 degrees and 180 degrees
-		// to maintain the same orientation relative to center of a scene
-		if (prev_theta_angle < bot_angle_ && bot_angle_ < next_theta_angle ||
-			prev_theta_angle < top_angle_ && top_angle_ < next_theta_angle)
-		{
-			current_camera_up_ = current_camera_up_ * -1;
-		}
-
-		update_coordinate = true;
-	}
-
-	if (update_coordinate)
-	{
-		UpdateCameraSphericalCoordinate();
-		ProgramInputHandler::renderer.get_camera().UpdateCameraUp(current_camera_up_);
-	}
 
 	ProgramInputHandler::ClearScreen();
 
@@ -187,15 +141,5 @@ int ProgramMultipleObjects::Step()
 	SetConsoleCursorPosition(console_handle_, {0, 0});
 	std::cout << "Camera:" << std::endl;
 	std::cout << ProgramInputHandler::renderer.get_camera().Str() << std::endl;
-	std::cout << "theta: " << theta_angle_ / pi * 180 << "\tphi: " << phi_angle_ / pi * 180 << std::endl;
-	std::cout << "camera up: " << current_camera_up_.Str() << std::endl;
 	return 0;
-}
-
-void ProgramMultipleObjects::UpdateCameraSphericalCoordinate()
-{
-	camera_position_.x = radius_ * sin(theta_angle_) * cos(phi_angle_);
-	camera_position_.z = radius_ * sin(theta_angle_) * sin(phi_angle_);
-	camera_position_.y = radius_ * cos(theta_angle_);
-	ProgramInputHandler::renderer.get_camera().UpdateCameraPosition(camera_position_);
 }

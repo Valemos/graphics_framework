@@ -7,7 +7,7 @@
 class Quad : public Primitive
 {
 public:
-	Quad(const std::vector<unsigned int>& positions);
+	explicit Quad(const std::vector<unsigned int>& positions);
 
 	std::vector<unsigned> get_triangle_indices() const override;
 	unsigned get_triangle_indices_count() const override;

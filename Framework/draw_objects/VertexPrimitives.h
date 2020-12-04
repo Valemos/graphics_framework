@@ -2,6 +2,7 @@
 #define GRAPHICALFRAMEWORK_VERTEXPRIMITIVES_H
 
 #include <draw_objects/primitives/Primitive.h>
+#include <draw_objects/primitives/Triangle.h>
 #include <Vector3.h>
 #include <vector>
 
@@ -17,17 +18,16 @@ protected:
     unsigned int index_buffer_id_ = 0;
     std::vector<unsigned int> index_buffer_;
 
-    unsigned int vertex_array_object_id_ = 0;
-
+    unsigned int VAO_id = 0;
     std::vector<Primitive*> primitives_;
+    std::vector<Triangle*> triangles_;
 
 public:
     ~VertexPrimitives();
 
-    // we must call this function at least once before all Draw calls
-    // loads all necessary data to graphics card
-    void SetVertices(const std::vector<Vector3>& vertices);
+    void SetVertexBuffer(const std::vector<Vector3>& vertices);
     void SetPrimitives(const std::vector<Primitive*>& new_primitives);
+    std::vector<Triangle*>& GetTriangles(const std::vector<Primitive*>& primitives);
 };
 
 

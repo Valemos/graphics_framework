@@ -3,11 +3,13 @@
 
 #include "Program.h"
 #include "Cube.h"
+#include "SphericalCamera.h"
 
 class LightingLab3 : public Program {
 
-    Cube* cubes_[2]{};
-    Renderer renderer_no_lighting_{};
+    Cube* objects_[2]{};
+
+    static SphericalCamera* s_camera_controller_;
 
 public:
 
@@ -15,8 +17,6 @@ public:
 
     int Init() override;
     int Step() override;
-
-    static void setup_camera(Camera &camera) ;
 };
 
 
