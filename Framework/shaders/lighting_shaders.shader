@@ -33,7 +33,7 @@ out vec4 fragmentColor;
 
 void main()
 {
-    float ambient = 0.05;
+    float ambient = 0.1;
     float specularStrength = 0.5;
 
     // calculate diffuse
@@ -44,10 +44,9 @@ void main()
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, Normal);
 
-    float spec = pow(max(dot(reflectDir, viewDir), 0.0), 16);
+    float spec = pow(max(dot(reflectDir, viewDir), 0.0), 32);
     vec3 specular = specularStrength * spec * lightColor;
 
     vec3 result = (ambient + diffuse + specular) * lightColor * fillColor.xyz;
     fragmentColor = vec4(result, 1.0);
-    // fragmentColor = vec4((Normal + 1)/2, 1.0);
 };

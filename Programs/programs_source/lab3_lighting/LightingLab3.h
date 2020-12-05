@@ -7,8 +7,8 @@
 
 class LightingLab3 : public Program {
 
-    Cube* objects_[2]{};
-
+    float cur_light_angle_;
+    Object3D* objects_[2]{};
     static SphericalCamera* s_camera_controller_;
 
 public:
