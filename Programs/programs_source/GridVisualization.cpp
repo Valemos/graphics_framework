@@ -74,7 +74,7 @@ int GridVisualization::Step()
     }
 
     ProgramInputHandler::ClearScreen();
-    main_grid_->Draw(ProgramInputHandler::renderer);
+    main_grid_->Draw(ProgramInputHandler::renderer_light_textured);
 	
     return ProgramInputHandler::HandleButtons(this);
 }

@@ -26,7 +26,7 @@ public:
 	{
 		testBody = new CelestialBody("Test", { 0.0, 0.0, 1.0 }, new UniverseConstants{ 0.1f, 0.1f });
 		
-		ProgramInputHandler::renderer.SetGlobalScale({ 1.0 / 20, 1.0 / 20, 1.0 });
+		ProgramInputHandler::renderer_light_textured.SetGlobalScale({1.0 / 20, 1.0 / 20, 1.0 });
 
 		position = { 0.f, 0.f };
 
@@ -47,7 +47,7 @@ public:
 		}
 
 		glClear(GL_COLOR_BUFFER_BIT);
-		testBody->Draw(ProgramInputHandler::renderer);
+		testBody->Draw(ProgramInputHandler::renderer_light_textured);
 
 		std::cout << testBody->GetPosition().x << " - " << testBody->GetPosition().y << std::endl;
 		return 0;

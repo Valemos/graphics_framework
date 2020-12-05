@@ -133,7 +133,7 @@ int SimulationProgram::Init()
 	
 	// this scale defines units of measurement related to simulation objects
 	constants_.coordinate_scale = {1 / 1800.f, 1 / 1800.f, 1};
-	ProgramInputHandler::renderer.SetGlobalScale(constants_.coordinate_scale.ToGlm());
+	ProgramInputHandler::renderer_light_textured.SetGlobalScale(constants_.coordinate_scale.ToGlm());
 
 
 	//auto* Sun = new CelestialBody("Sun",Vector3{250, 213, 27} / 255.f, &constants_);
@@ -175,13 +175,13 @@ int SimulationProgram::Step()
 	// Draw objects
 	for (auto* object : simulation_->Objects())
 	{
-		object->Draw(ProgramInputHandler::renderer);
+		object->Draw(ProgramInputHandler::renderer_light_textured);
 	}
 
 	if (state_function_ == planet_speed_selection)
 	{
-		vector_speed_->Draw(ProgramInputHandler::renderer);
-		vector_speed_->DrawWireframe(ProgramInputHandler::renderer);
+		vector_speed_->Draw(ProgramInputHandler::renderer_light_textured);
+		vector_speed_->DrawWireframe(ProgramInputHandler::renderer_light_textured);
 	}
 
  	return ProgramInputHandler::HandleButtons(this);

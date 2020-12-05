@@ -6,13 +6,15 @@
 #include "VertexPrimitives.h"
 #include "NormalMapped.h"
 
-class Object3D : public Drawable, public VertexPrimitives, public NormalMapped // and TexturePrimitives?
+class Object3D : public Drawable, public VertexPrimitives, public NormalMapped
 {
-    unsigned object_buffer_id_;
-    std::vector<float> object_buffer_;
-
+protected:
+    void LoadGlObjectProperties(Renderer &renderer) const override;
     void LoadGlTransform(Renderer &renderer, const Vector3 &position) const override;
+    virtual void LoadGlLightSources(Renderer &renderer) const;
 
+    unsigned object_buffer_id_ = -1;
+    std::vector<float> object_buffer_;
 public:
 	glm::vec3 primary_color{};
 	glm::vec3 edge_color{};

@@ -10,6 +10,7 @@ protected:
     Vector3 object_position_;
 
     virtual void LoadGlTransform(Renderer& renderer, const Vector3& position) const = 0;
+    virtual void LoadGlObjectProperties(Renderer& renderer) const = 0;
 
 public:
 	virtual void InitGlBuffers() = 0;

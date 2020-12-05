@@ -104,7 +104,7 @@ int ProgramMultipleObjects::Init()
 	draw_objects_[4]->Position() = Vector3{-2, -4, 0};
 
 
-    s_camera_controller_ = new SphericalCamera(ProgramInputHandler::renderer.get_camera(),
+    s_camera_controller_ = new SphericalCamera(ProgramInputHandler::renderer_light_textured.get_camera(),
                                                {0, 0, -5},
                                                {0, 0, 0},
                                                {0, 1, 0},
@@ -130,16 +130,16 @@ int ProgramMultipleObjects::Step()
 
 	ProgramInputHandler::ClearScreen();
 
-	draw_objects_[0]->Draw(ProgramInputHandler::renderer);
-	draw_objects_[1]->Draw(ProgramInputHandler::renderer);
-	draw_objects_[2]->DrawWireframe(ProgramInputHandler::renderer);
-	draw_objects_[3]->Draw(ProgramInputHandler::renderer);
-	draw_objects_[4]->DrawWireframe(ProgramInputHandler::renderer);
+	draw_objects_[0]->Draw(ProgramInputHandler::renderer_light_textured);
+	draw_objects_[1]->Draw(ProgramInputHandler::renderer_light_textured);
+	draw_objects_[2]->DrawWireframe(ProgramInputHandler::renderer_light_textured);
+	draw_objects_[3]->Draw(ProgramInputHandler::renderer_light_textured);
+	draw_objects_[4]->DrawWireframe(ProgramInputHandler::renderer_light_textured);
 
-	axis_->Draw(ProgramInputHandler::renderer);
+	axis_->Draw(ProgramInputHandler::renderer_light_textured);
 
 	SetConsoleCursorPosition(console_handle_, {0, 0});
 	std::cout << "Camera:" << std::endl;
-	std::cout << ProgramInputHandler::renderer.get_camera().Str() << std::endl;
+	std::cout << ProgramInputHandler::renderer_light_textured.get_camera().Str() << std::endl;
 	return 0;
 }

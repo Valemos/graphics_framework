@@ -71,13 +71,13 @@ public:
 
 	static int HandlePerspectiveMode(Program*)
 	{
-		ProgramInputHandler::renderer.get_camera().set_draw_mode(DrawMode::Perspective);
+		ProgramInputHandler::renderer_light_textured.get_camera().set_draw_mode(DrawMode::Perspective);
 		return 0;
 	}
 
 	static int HandleOrthogonalMode(Program*)
 	{
-		ProgramInputHandler::renderer.get_camera().set_draw_mode(DrawMode::Orthogonal);
+		ProgramInputHandler::renderer_light_textured.get_camera().set_draw_mode(DrawMode::Orthogonal);
 		return 0;
 	}
 
@@ -91,10 +91,10 @@ public:
 		draw_object_->Position() = object_position_;
 
 		UpdateCameraSphericalCoordinate();
-		ProgramInputHandler::renderer.get_camera().UpdateCameraPosition(camera_position_);
-		ProgramInputHandler::renderer.get_camera().UpdateCameraTarget(draw_object_->Position());
-		ProgramInputHandler::renderer.get_camera().UpdateCameraUp({0, 1, 0});
-		ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
+		ProgramInputHandler::renderer_light_textured.get_camera().UpdateCameraPosition(camera_position_);
+		ProgramInputHandler::renderer_light_textured.get_camera().UpdateCameraTarget(draw_object_->Position());
+		ProgramInputHandler::renderer_light_textured.get_camera().UpdateCameraUp({0, 1, 0});
+		ProgramInputHandler::renderer_light_textured.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
 		
 		ProgramInputHandler::SetClearColor(0, 146, 250);
 		return 0;
@@ -108,7 +108,7 @@ public:
 		{
 			radius_ += g_increment_zoom_value;
 			orthogonal_projection_dimension += g_increment_zoom_value;
-			ProgramInputHandler::renderer.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
+			ProgramInputHandler::renderer_light_textured.get_camera().SetOrthoMinimalDimention(orthogonal_projection_dimension);
 			UpdateCameraSphericalCoordinate();
 			g_increment_zoom_value = 0;
 		}
@@ -121,9 +121,9 @@ public:
 		}
 
 		ProgramInputHandler::ClearScreen();
-		axis_->Draw(ProgramInputHandler::renderer);
-		draw_object_->Draw(ProgramInputHandler::renderer);
-		draw_object_->DrawWireframe(ProgramInputHandler::renderer);
+		axis_->Draw(ProgramInputHandler::renderer_light_textured);
+		draw_object_->Draw(ProgramInputHandler::renderer_light_textured);
+		draw_object_->DrawWireframe(ProgramInputHandler::renderer_light_textured);
 		
 		SetConsoleCursorPosition(console_handle_, {0, 0});
 		std::cout << "pos " << camera_position_.Str() << std::endl;
@@ -135,6 +135,6 @@ public:
 		camera_position_.x = radius_ * sin(theta_angle_) * cos(phi_angle_);
 		camera_position_.y = radius_ * cos(theta_angle_);
 		camera_position_.z = radius_ * sin(theta_angle_) * sin(phi_angle_);
-		ProgramInputHandler::renderer.get_camera().UpdateCameraPosition(camera_position_);
+		ProgramInputHandler::renderer_light_textured.get_camera().UpdateCameraPosition(camera_position_);
 	}
 };

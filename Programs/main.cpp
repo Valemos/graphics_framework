@@ -26,7 +26,7 @@ int run_grid_simulation()
 
 int run_space_metric_grid()
 {
-    ProgramInputHandler::renderer.SetGlobalScale({6 / 8.f, 1, 1});
+    ProgramInputHandler::renderer_light_textured.SetGlobalScale({6 / 8.f, 1, 1});
     return ProgramInputHandler::RunProgram(new SpaceMetricGrid(60.f), shader_path, 800, 600);
 }
 

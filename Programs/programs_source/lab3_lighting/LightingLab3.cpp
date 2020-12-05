@@ -1,8 +1,8 @@
 #include "ProgramInputHandler.h"
 #include "LightingLab3.h"
 #include <vector>
-#include "Sphere.h"
 #include "Surface.h"
+#include "TexturedSphere.h"
 
 SphericalCamera* LightingLab3::s_camera_controller_ = nullptr;
 
@@ -17,9 +17,13 @@ LightingLab3::LightingLab3(float fps, std::string name) : Program(fps, name)
 
 int LightingLab3::Init() {
 
-    objects_[0] = new Sphere(
-            (Vector3{97, 194, 45} / 255).ToGlm(),
+    grass_texture_ = new Texture(R"(D:\coding\c_c++\GraphicalFramework\Programs\programs_source\lab3_lighting\grass.jpg)");
+    grass_texture_->Create();
+
+    objects_[0] = new TexturedSphere(
+            *grass_texture_,
             {0, 0, 0},
+            {1, 1, 1},
             4);
     objects_[0]->Position() = {0, 0, 0};
     objects_[0]->CreateObject();
@@ -53,7 +57,7 @@ int LightingLab3::Init() {
 
 
     /// init camera
-    s_camera_controller_ = new SphericalCamera(ProgramInputHandler::renderer.get_camera(),
+    s_camera_controller_ = new SphericalCamera(ProgramInputHandler::renderer_light_textured.get_camera(),
                                                {0, 0, 0},
                                                {0, 1, 0},
                                                10,
@@ -62,12 +66,11 @@ int LightingLab3::Init() {
     s_camera_controller_->get_camera().set_draw_mode(DrawMode::Perspective);
 
     Vector3 pos = {-5, 5, -5};
-    ProgramInputHandler::renderer.light_source.position = pos;
+    ProgramInputHandler::renderer_light_textured.light_source.position = pos;
     cur_light_angle_ = atan2(pos.z, pos.x);
 
+    ProgramInputHandler::renderer_light_textured.light_source.color = {1, 1, 1};
 
-
-    ProgramInputHandler::renderer.light_source.color = {1, 1, 1};
 
     ProgramInputHandler::SetClearColor(0, 10, 50);
     return program_continue;
@@ -77,7 +80,7 @@ int LightingLab3::Step() {
 
     s_camera_controller_->MoveCamera(*ProgramInputHandler::keyboard_move_dir);
 
-    auto pos = ProgramInputHandler::renderer.light_source.position;
+    auto pos = ProgramInputHandler::renderer_light_textured.light_source.position;
     pos.y = 0;
     auto radius = pos.Length();
     cur_light_angle_ += 0.05;
@@ -87,13 +90,10 @@ int LightingLab3::Step() {
     pos.x = radius * cos(cur_light_angle_);
     pos.z = radius * sin(cur_light_angle_);
 
-    ProgramInputHandler::renderer.light_source.position = pos;
+    ProgramInputHandler::renderer_light_textured.light_source.position = pos;
 
-    for (auto* cube : objects_){
-        if (cube != nullptr){
-            cube->Draw(ProgramInputHandler::renderer);
-        }
-    }
+    objects_[0]->Draw(ProgramInputHandler::renderer_light_textured);
+    objects_[1]->Draw(ProgramInputHandler::renderer_light_color);
 
     return ProgramInputHandler::HandleButtons(this);
 }

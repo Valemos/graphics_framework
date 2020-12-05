@@ -8,6 +8,20 @@
 #include "glm/gtc/type_ptr.hpp"
 
 
+void Object3D::LoadGlLightSources(Renderer &renderer) const {
+
+    // calculate light position
+    static const auto light_pos_loc = glGetUniformLocation(renderer.get_shader_program(), "lightPos");
+    glUniform3fv(light_pos_loc, 1, value_ptr(renderer.light_source.position.ToGlm()));
+
+    static const auto light_color_loc = glGetUniformLocation(renderer.get_shader_program(), "lightColor");
+    glUniform3fv(light_color_loc, 1, value_ptr(renderer.light_source.color.ToGlm()));
+
+    // load camera position
+    static const auto view_pos_loc = glGetUniformLocation(renderer.get_shader_program(), "viewPos");
+    glUniform3fv(view_pos_loc, 1, value_ptr(renderer.get_camera().get_position().ToGlm()));
+}
+
 void Object3D::LoadGlTransform(Renderer& renderer, const Vector3& position) const
 {
 	// calculate model transformation matrix
@@ -15,14 +29,7 @@ void Object3D::LoadGlTransform(Renderer& renderer, const Vector3& position) cons
 	model = scale(model, figure_scale);
     model = translate(model, position.ToGlm());
 
-    // calculate light position
-    static const auto light_pos_loc = glGetUniformLocation(renderer.get_shader_program(), "lightPos");
-    glUniform3fv(light_pos_loc, 1, value_ptr(renderer.light_source.position.ToGlm()));
-
-    // load camera position
-    static const auto view_pos_loc = glGetUniformLocation(renderer.get_shader_program(), "viewPos");
-    glUniform3fv(view_pos_loc, 1, value_ptr(renderer.get_camera().get_position().ToGlm()));
-
+    LoadGlLightSources(renderer);
 
     // camera transform
 	const float window_aspect_ratio = ProgramInputHandler::window_size.x / ProgramInputHandler::window_size.y;
@@ -36,19 +43,23 @@ void Object3D::LoadGlTransform(Renderer& renderer, const Vector3& position) cons
 	glUniformMatrix4fv(model_transform_loc, 1, GL_FALSE, value_ptr(model));
 }
 
+void Object3D::LoadGlObjectProperties(Renderer &renderer) const {
+    static const auto is_textured_loc = glGetUniformLocation(renderer.get_shader_program(), "isTextured");
+    glUniform1i(is_textured_loc, false);
+    static const auto color_loc = glGetUniformLocation(renderer.get_shader_program(), "fillColor");
+    glUniform4fv(color_loc, 1, value_ptr(primary_color));
+}
+
 void Object3D::Draw(Renderer& renderer)
 {
 	const unsigned int shader_program = renderer.get_shader_program();
 	glUseProgram(shader_program);
-	static const auto color_loc = glGetUniformLocation(shader_program, "fillColor");
-    static const auto light_color_loc = glGetUniformLocation(shader_program, "lightColor");
-    glUniform3fv(light_color_loc, 1, value_ptr(renderer.light_source.color.ToGlm()));
 
     LoadGlTransform(renderer, object_position_);
+    LoadGlObjectProperties(renderer);
     LoadGlBuffers();
 
-	// Draw all triangles at once
-	glUniform4fv(color_loc, 1, value_ptr(primary_color));
+    // Draw all triangles at once
 	glDrawArrays(GL_TRIANGLES, 0, object_buffer_.size() / 6);
 }
 
@@ -56,23 +67,19 @@ void Object3D::DrawWireframe(Renderer& renderer)
 {
 	const unsigned int shader_program = renderer.get_shader_program();
 	glUseProgram(shader_program);
-	static const auto color_loc = glGetUniformLocation(shader_program, "fillColor");
-    static const auto light_pos_loc = glGetUniformLocation(shader_program, "lightPos");
-    static const auto light_color_loc = glGetUniformLocation(shader_program, "lightColor");
-
-    glUniform4fv(light_pos_loc, 1, value_ptr(renderer.light_source.position.ToGlm()));
-    glUniform4fv(light_color_loc, 1, value_ptr(renderer.light_source.color.ToGlm()));
 
     LoadGlTransform(renderer, object_position_);
-	LoadGlBuffers();
+    LoadGlBuffers();
 
-	glLineWidth(5.f);
 
-	unsigned first_pos = 0;
-	glUniform4fv(color_loc, 1, value_ptr(edge_color));
-	for (auto* tri : triangles_)
+    static const auto color_loc = glGetUniformLocation(shader_program, "fillColor");
+    glUniform4fv(color_loc, 1, value_ptr(edge_color));
+
+    glLineWidth(5.f);
+    unsigned first_pos = 0;
+    for (auto* tri : triangles_)
 	{
-	    glDrawArrays(GL_LINE, first_pos++, 3);
+	    glDrawArrays(GL_LINE_LOOP, first_pos++, 3);
     }
 }
 

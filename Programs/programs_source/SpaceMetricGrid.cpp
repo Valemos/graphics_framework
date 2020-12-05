@@ -109,6 +109,6 @@ int SpaceMetricGrid::Init()
 int SpaceMetricGrid::Step()
 {
 	ProgramInputHandler::ClearScreen();
-	figure_->Draw(ProgramInputHandler::renderer);
+	figure_->Draw(ProgramInputHandler::renderer_light_textured);
 	return 0;
 }

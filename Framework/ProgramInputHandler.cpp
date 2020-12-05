@@ -7,7 +7,8 @@
 
 GLFWwindow* ProgramInputHandler::main_window_ = nullptr;
 Vector3 ProgramInputHandler::window_size = { 0.0, 0.0 };
-Renderer ProgramInputHandler::renderer = Renderer();
+Renderer ProgramInputHandler::renderer_light_textured = Renderer();
+Renderer ProgramInputHandler::renderer_light_color = Renderer();
 
 Vector3* ProgramInputHandler::mouse_position = new Vector3{0.0, 0.0};
 Vector3* ProgramInputHandler::clicked_position = nullptr;
@@ -59,7 +60,7 @@ ProgramInputHandler::~ProgramInputHandler()
 	delete keyboard_move_dir;
 }
 
-int ProgramInputHandler::RunProgram(Program* program, const std::string& shader_path, int width, int height)
+int ProgramInputHandler::RunProgram(Program* program, const std::string& shader_folder, int width, int height)
 {
 	window_size = { static_cast<float>(width), static_cast<float>(height) };
 
@@ -101,7 +102,8 @@ int ProgramInputHandler::RunProgram(Program* program, const std::string& shader_
 	glfwSetCursorPosCallback(main_window_, CallbackMouseMoved);
 	glfwSetMouseButtonCallback(main_window_, CallbackMouseButton);
 
-    renderer.LoadShadersFromFile(shader_path);
+    renderer_light_textured.LoadShadersFromFile(shader_folder + "texture_lighting_shaders.shader");
+    renderer_light_color.LoadShadersFromFile(shader_folder + "lighting_shaders.shader");
 
 	glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -231,8 +233,8 @@ void ProgramInputHandler::CallbackWindowResize(GLFWwindow* window, int width, in
 {	
 	glViewport(0, 0, width, height);
 
-	const auto prev_scale = renderer.GetGlobalScale();
-	renderer.SetGlobalScale({
+	const auto prev_scale = renderer_light_textured.GetGlobalScale();
+	renderer_light_textured.SetGlobalScale({
 		prev_scale.x * window_size.x / width, 
 		prev_scale.y * window_size.y / height,
 		prev_scale.z
@@ -260,7 +262,7 @@ void ProgramInputHandler::CallbackMouseButton(GLFWwindow* window, int button, in
 
 void ProgramInputHandler::CallbackMouseMoved(GLFWwindow* window, double xpos, double ypos)
 {
-	const auto global_scale = renderer.GetGlobalScale();
+	const auto global_scale = renderer_light_textured.GetGlobalScale();
 	*mouse_position = {
 		(static_cast<float>(xpos) / window_size.x * 2 - 1) / global_scale.x,
 		(-static_cast<float>(ypos) / window_size.y * 2 + 1) / global_scale.y

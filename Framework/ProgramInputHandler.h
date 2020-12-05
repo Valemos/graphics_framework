@@ -22,14 +22,15 @@ public:
 	static Vector3* keyboard_move_dir;
 	static std::vector<ButtonHandler> button_handlers;
 	static const std::vector<ButtonHandler> default_handlers;
-	static Renderer renderer;
+	static Renderer renderer_light_textured;
+	static Renderer renderer_light_color;
 
 	~ProgramInputHandler();
 
 	static void ClearScreen();
 	static void SetClearColor(int r, int g, int b, int a = 255);
 	
-	static int RunProgram(Program*, const std::string& shader_path, int width = 100, int height = 100);
+	static int RunProgram(Program*, const std::string& shader_folder, int width = 100, int height = 100);
 	
 	static GLFWwindow* GetWindow();
 	static void CallbackKeyboard(GLFWwindow* window, int key, int scancode, int action, int mods);

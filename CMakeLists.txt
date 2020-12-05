@@ -15,6 +15,7 @@ include_directories(Programs/programs_source/gravity_simulation)
 include_directories(Programs/programs_source/gravity_simulation/objects)
 include_directories(Programs/programs_source/gravity_simulation/vector_editor)
 include_directories(Vector/source)
+include_directories(D:/coding/cpp_libs/stb_image)
 
 add_library(GraphicalFramework
         Framework/2d_objects/Grid2D.cpp
@@ -56,7 +57,7 @@ add_library(GraphicalFramework
         Framework/draw_objects/VertexPrimitives.h
         Test/test_main.cpp
         Framework/SphericalCamera.cpp
-        Framework/SphericalCamera.h Framework/draw_objects/LightSource.cpp Framework/draw_objects/LightSource.h)
+        Framework/SphericalCamera.h Framework/draw_objects/LightSource.cpp Framework/draw_objects/LightSource.h Framework/draw_objects/TexturedObject3d.cpp Framework/draw_objects/TexturedObject3d.h Framework/draw_objects/Texture.cpp Framework/draw_objects/Texture.h Framework/basic_3d_objects/TexturedSphere.cpp Framework/basic_3d_objects/TexturedSphere.h)
 
 
 add_definitions(-DGLEW_STATIC)
