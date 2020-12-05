@@ -104,11 +104,11 @@ int ProgramMultipleObjects::Init()
 	draw_objects_[4]->Position() = Vector3{-2, -4, 0};
 
 
-    s_camera_controller_ = new SphericalCamera(ProgramInputHandler::renderer_light_textured.get_camera(),
-                                               {0, 0, -5},
-                                               {0, 0, 0},
-                                               {0, 1, 0},
-                                               0.1);
+    s_camera_controller_ = new SphericalCamera(
+            {0, 0, -5},
+            {0, 0, 0},
+            {0, 1, 0},
+            0.1, 0, 0);
 
 	ProgramInputHandler::SetClearColor(0, 146, 250);
 	return 0;
@@ -121,7 +121,7 @@ int ProgramMultipleObjects::Step()
 	if (s_update_camera_)
 	{
 	    // update if zoomed and not updated during move
-	    s_camera_controller_->UpdatePosition();
+        s_camera_controller_->UpdatePosition();
         s_update_camera_ = false;
 	}
 

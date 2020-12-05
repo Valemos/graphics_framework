@@ -10,8 +10,6 @@ static constexpr float pi2 = pi * 2;
 
 class SphericalCamera {
 
-    Camera& camera_;
-
     Vector3 camera_position_;
     Vector3 camera_target_;
     Vector3 camera_up_;
@@ -27,11 +25,10 @@ class SphericalCamera {
 public:
 
 
-    SphericalCamera(Camera &camera,
-                    Vector3 camera_target, Vector3 camera_up,
-                    float radius = 1.f,
-                    float phi_deg = 90.f, float theta_deg = 90.f,
-                    float camera_speed = 0.15f);
+    SphericalCamera(Vector3 camera_target, Vector3 camera_up, float radius, float phi_deg,
+                    float theta_deg, float camera_speed);
+
+    void UpdateCamera(Camera &camera);
 
     void UpdatePosition();
 

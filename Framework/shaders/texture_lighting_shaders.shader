@@ -31,7 +31,7 @@ uniform sampler2D object_texture;
 
 in vec3 FragPos;
 in vec3 Normal;
-int vec2 TexCoord;
+in vec2 TexCoord;
 
 out vec4 fragmentColor;
 

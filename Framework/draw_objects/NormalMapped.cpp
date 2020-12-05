@@ -1,7 +1,9 @@
 #include <draw_objects/primitives/Triangle.h>
 #include "NormalMapped.h"
 
-std::vector<Vector3>& NormalMapped::GetNormals(const std::vector<Vector3>& vertices, const std::vector<Triangle*>& triangles) {
+std::vector<Vector3>& NormalMapped::GetNormals(
+        const std::vector<Vector3>& vertices,
+        const std::vector<Triangle*>& triangles) {
 
     // reserve space for normals
     normals_.clear();

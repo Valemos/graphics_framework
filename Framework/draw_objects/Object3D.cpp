@@ -44,8 +44,6 @@ void Object3D::LoadGlTransform(Renderer& renderer, const Vector3& position) cons
 }
 
 void Object3D::LoadGlObjectProperties(Renderer &renderer) const {
-    static const auto is_textured_loc = glGetUniformLocation(renderer.get_shader_program(), "isTextured");
-    glUniform1i(is_textured_loc, false);
     static const auto color_loc = glGetUniformLocation(renderer.get_shader_program(), "fillColor");
     glUniform4fv(color_loc, 1, value_ptr(primary_color));
 }
@@ -59,8 +57,8 @@ void Object3D::Draw(Renderer& renderer)
     LoadGlObjectProperties(renderer);
     LoadGlBuffers();
 
-    // Draw all triangles at once
-	glDrawArrays(GL_TRIANGLES, 0, object_buffer_.size() / 6);
+    // Draw all triangles with single call
+	glDrawArrays(GL_TRIANGLES, 0, object_buffer_.size() / one_object_floats_);
 }
 
 void Object3D::DrawWireframe(Renderer& renderer)
@@ -98,6 +96,7 @@ void Object3D::InitGlBuffers() {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) (3 * sizeof(float)));
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    one_object_floats_ = 6;
 }
 
 void Object3D::LoadGlBuffers() {

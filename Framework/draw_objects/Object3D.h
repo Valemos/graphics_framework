@@ -14,6 +14,7 @@ protected:
     virtual void LoadGlLightSources(Renderer &renderer) const;
 
     unsigned object_buffer_id_ = -1;
+    unsigned one_object_floats_ = 1;
     std::vector<float> object_buffer_;
 public:
 	glm::vec3 primary_color{};

@@ -5,13 +5,10 @@
 TexturedObject3d::TexturedObject3d(const Texture& texture,
                                    const glm::vec3 &edgeColor,
                                    const glm::vec3 &figureScale) :
-        Object3D({0, 0, 0}, edgeColor, figureScale), texture_(nullptr) {
-    texture_ = texture;
+        Object3D({0, 0, 0}, edgeColor, figureScale), texture_(texture) {
 }
 
 void TexturedObject3d::LoadGlObjectProperties(Renderer &renderer) const {
-    static const auto is_textured_loc = glGetUniformLocation(renderer.get_shader_program(), "isTextured");
-    glUniform1i(is_textured_loc, true);
     glBindTexture(GL_TEXTURE_2D, texture_.get_id());
 }
 
@@ -30,6 +27,7 @@ void TexturedObject3d::InitGlBuffers() {
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
+    one_object_floats_ = 8;
 }
 
 void TexturedObject3d::LoadGlBuffers() {

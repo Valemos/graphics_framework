@@ -5,7 +5,7 @@
 #include "Texture.h"
 
 class TexturedObject3d : public Object3D {
-    Texture texture_;
+    const Texture& texture_;
 
 public:
     TexturedObject3d(const Texture &texture, const glm::vec3 &edgeColor, const glm::vec3 &figureScale);

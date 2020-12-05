@@ -52,7 +52,7 @@ bool Simulation::SimulateStep(const UniverseConstants& constants)
 {
 	for (auto body_it = objects_.begin(); body_it != objects_.end();) {
 		(*body_it)->UpdateSpeed(CalculateAcceleration(objects_, *body_it, constants), constants);
-		(*body_it)->UpdatePosition();
+        (*body_it)->UpdatePosition();
 
 		// if body outside border, remove it
 		if ((*body_it)->GetPosition().x > constants.border_left &&

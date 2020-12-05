@@ -4,9 +4,8 @@
 #include <iostream>
 
 
-SphericalCamera::SphericalCamera(Camera &camera, Vector3 camera_target, Vector3 camera_up, float radius,
-                                 float phi_deg, float theta_deg, float camera_speed):
-        camera_(camera),
+SphericalCamera::SphericalCamera(Vector3 camera_target, Vector3 camera_up, float radius, float phi_deg,
+                                 float theta_deg, float camera_speed) :
         camera_up_(camera_up),
         radius_(radius),
         phi_angle_(phi_deg / 180 * pi),
@@ -14,8 +13,6 @@ SphericalCamera::SphericalCamera(Camera &camera, Vector3 camera_target, Vector3 
         move_speed_(camera_speed)
 {
     UpdatePosition();
-    camera_.UpdateCameraTarget(camera_target_);
-    camera_.UpdateCameraUp(camera_up_);
 }
 
 void SphericalCamera::DecrementRadius() {
@@ -28,21 +25,16 @@ void SphericalCamera::IncrementRadius() {
     UpdatePosition();
 }
 
-Camera &SphericalCamera::get_camera() {
-    return camera_;
-}
-
 void SphericalCamera::UpdatePosition() {
     camera_position_.x = radius_ * sin(theta_angle_) * cos(phi_angle_);
     camera_position_.z = radius_ * sin(theta_angle_) * sin(phi_angle_);
     camera_position_.y = radius_ * cos(theta_angle_);
     camera_position_ += camera_target_;
-    camera_.UpdateCameraPosition(camera_position_);
 }
+
 
 void SphericalCamera::UpdateTarget(Vector3& new_target) {
     camera_target_ = new_target;
-    camera_.UpdateCameraTarget(camera_target_);
     UpdatePosition();
 }
 
@@ -89,7 +81,6 @@ void SphericalCamera::IncrementTheta(float amount) {
         prev_theta_angle < top_angle_ && top_angle_ < next_theta_angle)
     {
         camera_up_ = camera_up_ * -1;
-        camera_.UpdateCameraUp(camera_up_);
     }
 }
 
@@ -111,9 +102,18 @@ bool SphericalCamera::MoveCamera(const Vector3& direction) {
 
     if (update_coordinate){
         UpdatePosition();
-        std::cout << "t: " << theta_angle_ * 180 / pi << " p: " << phi_angle_ * 180 / pi <<
-            " up: " << camera_.get_up().Str() << std::endl;
     }
 
     return update_coordinate;
+}
+
+void SphericalCamera::UpdateCamera(Camera &camera) {
+    camera.UpdateCameraPosition(camera_position_);
+    camera.UpdateCameraTarget(camera_target_);
+    camera.UpdateCameraUp(camera_up_);
+    std::cout <<
+        "t: " << theta_angle_ * 180 / pi <<
+        " p: " << phi_angle_ * 180 / pi <<
+        " up: " << camera.get_up().Str() <<
+    std::endl;
 }
