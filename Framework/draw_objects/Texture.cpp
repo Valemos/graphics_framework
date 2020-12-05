@@ -29,6 +29,7 @@ void Texture::Create() {
     {
         std::cout << "Failed to load image " << image_file_ << std::endl;
     }
+    stbi_image_free(data);
 }
 
 unsigned int Texture::get_id() const {

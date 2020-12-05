@@ -57,7 +57,7 @@ add_library(GraphicalFramework
         Framework/draw_objects/VertexPrimitives.h
         Test/test_main.cpp
         Framework/SphericalCamera.cpp
-        Framework/SphericalCamera.h Framework/draw_objects/LightSource.cpp Framework/draw_objects/LightSource.h Framework/draw_objects/TexturedObject3d.cpp Framework/draw_objects/TexturedObject3d.h Framework/draw_objects/Texture.cpp Framework/draw_objects/Texture.h Framework/basic_3d_objects/TexturedSphere.cpp Framework/basic_3d_objects/TexturedSphere.h)
+        Framework/SphericalCamera.h Framework/draw_objects/LightSource.h Framework/draw_objects/TexturedObject3d.cpp Framework/draw_objects/TexturedObject3d.h Framework/draw_objects/Texture.cpp Framework/draw_objects/Texture.h Framework/basic_3d_objects/TexturedSphere.cpp Framework/basic_3d_objects/TexturedSphere.h)
 
 
 add_definitions(-DGLEW_STATIC)
